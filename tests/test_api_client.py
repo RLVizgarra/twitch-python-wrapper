@@ -3,8 +3,8 @@ import os
 from dotenv import load_dotenv
 
 from api.client import APIClient
-from api.enums import UserType, BroadcasterType
-from api.objects import User
+from api.enums import UserType, BroadcasterType, VideoType
+from api.objects import User, Video
 
 load_dotenv()
 
@@ -35,3 +35,16 @@ class TestAPIClient:
         assert twitchdev in x and twitch in x
         x = self.client.get_users(login="twitchdev", user_id="12826")
         assert twitchdev in x and twitch in x
+
+    def test_get_videos(self):
+        twitchdev_video = Video(id='335921245', user_id='141981764', user_login='twitchdev', user_name='TwitchDev',
+                                title='Twitch Developers 101',
+                                description='Welcome to Twitch development! Here is a quick overview of our products and information to help you get started.',
+                                created_at=1542231018, published_at=1542233070,
+                                url='https://www.twitch.tv/videos/335921245',
+                                thumbnail_url='https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/twitchdev/335921245/ce0f3a7f-57a3-4152-bc06-0c6610189fb3/thumb/index-0000000000-%{width}x%{height}.jpg',
+                                view_count=3078159, language='en', type=VideoType.UPLOAD, duration='3m21s',
+                                muted_segments=[],
+                                stream_id=None, viewable='public')
+
+        assert self.client.get_videos(video_id="335921245") == twitchdev_video

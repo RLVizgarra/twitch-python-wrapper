@@ -1,6 +1,7 @@
 from enum import Enum
 
-class UserType(Enum):
+
+class UserType(str, Enum):
     ADMIN = "admin"
     GLOBAL_MOD = "global_mod"
     STAFF = "staff"
@@ -9,10 +10,20 @@ class UserType(Enum):
     def __repr__(self):
         return f"{self.__class__.__name__}.{self.name}"
 
-class BroadcasterType(Enum):
+
+class BroadcasterType(str, Enum):
     AFFILIATE = "affiliate"
     PARTNER = "partner"
     NORMAL = ""
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}.{self.name}"
+
+
+class VideoType(str, Enum):
+    ARCHIVE = "archive"
+    HIGHLIGHT = "highlight"
+    UPLOAD = "upload"
 
     def __repr__(self):
         return f"{self.__class__.__name__}.{self.name}"
