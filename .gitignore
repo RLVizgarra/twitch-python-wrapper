@@ -1,3 +1,4 @@
 .idea/
 .venv/
+src/twitch_py_wrapper.egg-info
 .env

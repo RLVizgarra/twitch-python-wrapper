@@ -1,0 +1,32 @@
+[project]
+name = "twitch-py-wrapper"
+version = "0.1.0"
+description = "A Python wrapper for the Twitch API, EventSub and Authentication"
+authors = [
+    { name = "RLVizgarra", email = "rodrigolionvizgarra@gmail.com" }
+]
+#license = { file = "LICENSE" }
+#readme = "README.md"
+dependencies = [
+    "httpx",
+    "python-dateutil"
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "python-dotenv"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[project.urls]
+Homepage = "https://github.com/RLVizgarra/py-twitch"

@@ -3,6 +3,7 @@ from enum import Enum
 
 from api.enums import UserType, BroadcasterType
 
+
 @dataclass
 class User:
     id: str
