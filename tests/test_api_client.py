@@ -43,7 +43,7 @@ class TestAPIClient:
                                 created_at=1542231018, published_at=1542233070,
                                 url='https://www.twitch.tv/videos/335921245',
                                 thumbnail_url='https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/twitchdev/335921245/ce0f3a7f-57a3-4152-bc06-0c6610189fb3/thumb/index-0000000000-%{width}x%{height}.jpg',
-                                view_count=3078159, language='en', type=VideoType.UPLOAD, duration='3m21s',
+                                view_count=1863062, language='en', type=VideoType.UPLOAD, duration='3m21s',
                                 muted_segments=[],
                                 stream_id=None, viewable='public')
 

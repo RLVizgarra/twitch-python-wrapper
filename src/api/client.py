@@ -88,20 +88,16 @@ class APIClient:
         url = self._url + "videos"
 
         validation = {
-            (
-                        video_id is None and user_id is None and game_id is None): "Parameters video_id, user_id and game_id are mutually exclusive",
+            (video_id is None and user_id is None and game_id is None): "Parameters video_id, user_id and game_id are mutually exclusive",
             (type(video_id) is list and len(video_id) > 100): "Cannot look up for 100+ IDs",
-            (language and game_id is None): "If you supply a language then you must also supply a game_id",
-            (period and (
-                        game_id is None or user_id is None)): "If you supply a period then you must also supply a game_id or a user_id",
-            (sort and (
-                        game_id is None or user_id is None)): "If you supply a sort then you must also supply a game_id or a user_id",
-            (video_type and (
-                        game_id is None or user_id is None)): "If you supply a video_type then you must also supply a game_id or a user_id",
-            (first and (
-                        game_id is None or user_id is None)): "If you supply a first then you must also supply a game_id or a user_id",
-            (after and user_id is None): "If you supply a after then you must also supply a user_id",
-            (before and user_id is None): "If you supply a before then you must also supply a user_id"
+            (language and game_id is None): "If you supply language then you must also supply game_id",
+            (period and (game_id is None and user_id is None)): "If you supply period then you must also supply game_id or user_id",
+            (sort and (game_id is None and user_id is None)): "If you supply sort then you must also supply game_id or user_id",
+            (video_type and (game_id is None and user_id is None)): "If you supply video_type then you must also supply game_id or user_id",
+            (first and (game_id is None and user_id is None)): "If you supply first then you must also supply game_id or user_id",
+            (after and user_id is None): "If you supply after then you must also supply a user_id",
+            (before and user_id is None): "If you supply before then you must also supply user_id",
+            (first and (first < 1 or first > 100)): "Parameter first must be between 1 and 100"
         }
 
         for condition, error in validation.items():
