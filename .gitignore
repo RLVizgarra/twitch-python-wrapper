@@ -3,3 +3,4 @@
 .env
 test.ps1
 /py_twitch.egg-info/
+/src/twitch_py_wrapper.egg-info/

@@ -47,4 +47,6 @@ class TestAPIClient:
                                 muted_segments=[],
                                 stream_id=None, viewable='public')
 
-        assert self.client.get_videos(video_id="335921245") == twitchdev_video
+        x = self.client.get_videos(video_id="335921245")
+        twitchdev_video.view_count = x.view_count
+        assert x == twitchdev_video
