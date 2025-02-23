@@ -1,10 +1,12 @@
+from datetime import datetime
 from typing import Literal
 
 import httpx
+import pytz
 from dateutil import parser
 
 from api.enums import UserType, BroadcasterType, VideoType
-from api.objects import User, Video, Pagination, MutedSegment
+from api.objects import User, Video, Pagination, MutedSegment, Clip
 
 
 class APIClient:
@@ -24,38 +26,31 @@ class APIClient:
                   login: str | list[str] = None) -> User | list[User] | None:
         url = self._url + "users"
 
-        if user_id is None and login is None:
-            raise ValueError("Parameters user_id and login are mutually exclusive")
-
         sum_of_lookups = 0
 
-        if type(user_id) is list:
-            sum_of_lookups += len(user_id)
-        elif user_id:
-            sum_of_lookups += 1
+        if type(user_id) is list: sum_of_lookups += len(user_id)
+        elif user_id: sum_of_lookups += 1
 
-        if type(login) is list:
-            sum_of_lookups += len(login)
-        elif login:
-            sum_of_lookups += 1
+        if type(login) is list: sum_of_lookups += len(login)
+        elif login: sum_of_lookups += 1
 
-        if sum_of_lookups > 100:
-            raise ValueError("Cannot look up for 100+ IDs and/or logins")
+        validation = {
+            (user_id is None and login is None): "Parameters user_id and login are mutually exclusive",
+            (sum_of_lookups > 100): "Cannot look up for 100+ IDs and/or logins"
+        }
 
-        parameters: dict
-        if user_id and login:
-            parameters = {"id": user_id, "login": login}
-        elif user_id:
-            parameters = {"id": user_id}
-        else:
-            parameters = {"login": login}
+        for condition, error in validation.items():
+            if condition: raise ValueError(error)
+
+        if user_id and login: parameters = {"id": user_id, "login": login}
+        elif user_id: parameters = {"id": user_id}
+        else: parameters = {"login": login}
 
         req = httpx.get(url, params=parameters, headers=self.__headers, timeout=self._timeout)
         req.raise_for_status()
         res = req.json()["data"]
 
-        if len(res) < 1:
-            return None
+        if len(res) < 1: return None
 
         users = list()
         for user in res:
@@ -70,8 +65,8 @@ class APIClient:
                               email=user["email"] if "email" in user else None,
                               created_at=int(parser.isoparse(user["created_at"]).timestamp())))
 
-        if len(users) < 2:
-            return users[0]
+        if len(users) < 2: return users[0]
+
         return users
 
     def get_videos(self,
@@ -101,18 +96,12 @@ class APIClient:
         }
 
         for condition, error in validation.items():
-            if condition:
-                raise ValueError(error)
+            if condition: raise ValueError(error)
 
-        parameters: dict
-        if video_id:
-            parameters = {"id": video_id}
-        elif user_id and game_id:
-            parameters = {"user_id": user_id, "game_id": game_id}
-        elif user_id:
-            parameters = {"user_id": user_id}
-        else:
-            parameters = {"game_id": game_id}
+        if video_id: parameters = {"id": video_id}
+        elif user_id and game_id: parameters = {"user_id": user_id, "game_id": game_id}
+        elif user_id: parameters = {"user_id": user_id}
+        else: parameters = {"game_id": game_id}
 
         optional_params = {
             "language": language,
@@ -125,19 +114,16 @@ class APIClient:
         }
 
         for key, value in optional_params.items():
-            if value is not None:
-                parameters[key] = value
+            if value: parameters[key] = value
 
         req = httpx.get(url, params=parameters, headers=self.__headers, timeout=self._timeout)
 
-        if req.status_code == 404:
-            return None
+        if req.status_code == 404: return None
 
         req.raise_for_status()
         res = req.json()
 
-        if len(res["data"]) < 1:
-            return None
+        if len(res["data"]) < 1: return None
 
         videos = list()
         for video in res["data"]:
@@ -163,10 +149,82 @@ class APIClient:
                                 duration=video["duration"],
                                 muted_segments=muted_segments))
 
-        if len(videos) < 2:
-            return videos[0]
+        if len(videos) < 2: return videos[0]
 
-        if len(res["pagination"]) > 0:
-            return videos, Pagination(res["pagination"]["cursor"])
+        if len(res["pagination"]) > 0: return videos, Pagination(res["pagination"]["cursor"])
 
         return videos
+
+    def get_clips(self,
+                  broadcaster_id: str = None,
+                  game_id: str = None,
+                  clip_id: str | list[str] = None,
+                  started_at: int = None,
+                  ended_at: int = None,
+                  first: int = None,
+                  before: Pagination = None,
+                  after: Pagination = None,
+                  is_featured: bool = None) -> Clip | list[Clip] | tuple[list[Clip], Pagination] | None:
+        url = self._url + "clips"
+
+        validation = {
+            (broadcaster_id is None and game_id is None and clip_id is None): "Parameters broadcaster_id, game_id and clip_id are mutually exclusive",
+            (type(clip_id) is list and len(clip_id) > 100): "Cannot look up for 100+ IDs",
+            (first and (first < 1 or first > 100)): "Parameter first must be between 1 and 100"
+        }
+
+        for condition, error in validation.items():
+            if condition: raise ValueError(error)
+
+        if clip_id: parameters = {"id": clip_id}
+        elif broadcaster_id and game_id: parameters = {"broadcaster_id": broadcaster_id, "game_id": game_id}
+        elif broadcaster_id: parameters = {"broadcaster_id": broadcaster_id}
+        else: parameters = {"game_id": game_id}
+
+        optional_params = {
+            "started_at": datetime.fromtimestamp(started_at, tz=pytz.utc).isoformat("T")[:-6] + "Z" if started_at else None,
+            "ended_at": datetime.fromtimestamp(ended_at, tz=pytz.utc).isoformat("T")[:-6] + "Z" if ended_at else None,
+            "first": first,
+            "before": before.cursor if before else None,
+            "after": after.cursor if after else None,
+            "is_featured": is_featured
+        }
+
+        for key, value in optional_params.items():
+            if value: parameters[key] = value
+
+        req = httpx.get(url, params=parameters, headers=self.__headers, timeout=self._timeout)
+
+        if req.status_code == 404:
+            return None
+
+        req.raise_for_status()
+        res = req.json()
+
+        if len(res["data"]) < 1: return None
+
+        clips = list()
+        for clip in res["data"]:
+            clips.append(Clip(id=clip["id"],
+                              url=clip["url"],
+                              embed_url=clip["embed_url"],
+                              broadcaster_id=clip["broadcaster_id"],
+                              broadcaster_name=clip["broadcaster_name"],
+                              creator_id=clip["creator_id"],
+                              creator_name=clip["creator_name"],
+                              video_id=clip["video_id"] if clip["video_id"] != "" else None,
+                              game_id=clip["game_id"],
+                              language=clip["language"],
+                              title=clip["title"],
+                              view_count=clip["view_count"],
+                              created_at=int(parser.isoparse(clip["created_at"]).timestamp()),
+                              thumbnail_url=clip["thumbnail_url"],
+                              duration=clip["duration"],
+                              vod_offset=clip["vod_offset"],
+                              is_featured=clip["is_featured"]))
+
+        if len(clips) < 2: return clips[0]
+
+        if len(res["pagination"]) > 0: return clips, Pagination(res["pagination"]["cursor"])
+
+        return clips

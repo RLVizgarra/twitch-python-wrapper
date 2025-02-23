@@ -9,7 +9,8 @@ authors = [
 #readme = "README.md"
 dependencies = [
     "httpx",
-    "python-dateutil"
+    "python-dateutil",
+    "pytz"
 ]
 
 [build-system]

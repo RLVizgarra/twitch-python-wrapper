@@ -47,6 +47,7 @@ class MutedSegment:
 @dataclass
 class Video:
     id: str
+    stream_id: str | None
     user_id: str
     user_login: str
     user_name: str
@@ -56,13 +57,12 @@ class Video:
     published_at: int
     url: str
     thumbnail_url: str
+    viewable: str
     view_count: int
     language: str
     type: VideoType
     duration: str
     muted_segments: list[MutedSegment]
-    stream_id: str | None
-    viewable: str = "public"
 
     def __repr__(self):
         attributes = ", ".join(
@@ -70,6 +70,29 @@ class Video:
             for key, value in self.__dict__.items()
         )
         return f"Video({attributes})"
+
+    def __iter__(self):
+        return iter(self.__dict__.items())
+
+@dataclass
+class Clip:
+    id: str
+    url: str
+    embed_url: str
+    broadcaster_id: str
+    broadcaster_name: str
+    creator_id: str
+    creator_name: str
+    video_id: str | None
+    game_id: str
+    language: str
+    title: str
+    view_count: int
+    created_at: int
+    thumbnail_url: str
+    duration: float
+    vod_offset: int
+    is_featured: bool
 
     def __iter__(self):
         return iter(self.__dict__.items())
