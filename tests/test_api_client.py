@@ -6,7 +6,6 @@ from api.client import APIClient
 
 load_dotenv()
 
-
 class TestAPIClient:
     client = APIClient(os.getenv("CLIENT_ID"), os.getenv("APP_ACCESS_TOKEN"))
 

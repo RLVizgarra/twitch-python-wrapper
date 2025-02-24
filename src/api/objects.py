@@ -1,8 +1,7 @@
 from dataclasses import dataclass, field
-from enum import Enum
 from typing import Literal
 
-from api.enums import UserType, BroadcasterType, VideoType, CheermoteType, SubscriptionType
+from api.enums import *
 
 
 # https://dev.twitch.tv/docs/api/guide/#pagination

@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class CheermoteType(str, Enum):
     GLOBAL_FIRST_PARTY = "global_first_party"
     GLOBAL_THIRD_PARTY = "global_third_party"
