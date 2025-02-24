@@ -5,6 +5,7 @@ from typing import Literal
 from api.enums import UserType, BroadcasterType, VideoType, CheermoteType
 
 
+# https://dev.twitch.tv/docs/api/guide/#pagination
 @dataclass(frozen=True)
 class Pagination:
     cursor: str
@@ -39,6 +40,29 @@ class Cheermote:
             for key, value in self.__dict__.items()
         )
         return f"Cheermote({attributes})"
+
+    def __iter__(self):
+        return iter(self.__dict__.items())
+
+@dataclass(frozen=True)
+class Clip:
+    id: str
+    url: str
+    embed_url: str
+    broadcaster_id: str
+    broadcaster_name: str
+    creator_id: str
+    creator_name: str
+    video_id: str | None
+    game_id: str
+    language: str
+    title: str
+    view_count: int = field(hash=False)
+    created_at: int
+    thumbnail_url: str
+    duration: float
+    vod_offset: int
+    is_featured: bool
 
     def __iter__(self):
         return iter(self.__dict__.items())
@@ -102,29 +126,6 @@ class Video:
             for key, value in self.__dict__.items()
         )
         return f"Video({attributes})"
-
-    def __iter__(self):
-        return iter(self.__dict__.items())
-
-@dataclass(frozen=True)
-class Clip:
-    id: str
-    url: str
-    embed_url: str
-    broadcaster_id: str
-    broadcaster_name: str
-    creator_id: str
-    creator_name: str
-    video_id: str | None
-    game_id: str
-    language: str
-    title: str
-    view_count: int = field(hash=False)
-    created_at: int
-    thumbnail_url: str
-    duration: float
-    vod_offset: int
-    is_featured: bool
 
     def __iter__(self):
         return iter(self.__dict__.items())

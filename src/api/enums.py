@@ -8,6 +8,15 @@ class CheermoteType(str, Enum):
     DISPLAY_ONLY = "display_only"
     SPONSORED = "sponsored"
 
+
+class VideoType(str, Enum):
+    ARCHIVE = "archive"
+    HIGHLIGHT = "highlight"
+    UPLOAD = "upload"
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}.{self.name}"
+
 class UserType(str, Enum):
     ADMIN = "admin"
     GLOBAL_MOD = "global_mod"
@@ -22,15 +31,6 @@ class BroadcasterType(str, Enum):
     AFFILIATE = "affiliate"
     PARTNER = "partner"
     NORMAL = ""
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}.{self.name}"
-
-
-class VideoType(str, Enum):
-    ARCHIVE = "archive"
-    HIGHLIGHT = "highlight"
-    UPLOAD = "upload"
 
     def __repr__(self):
         return f"{self.__class__.__name__}.{self.name}"
