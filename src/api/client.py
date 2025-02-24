@@ -5,8 +5,9 @@ import httpx
 import pytz
 from dateutil import parser
 
-from api.enums import UserType, BroadcasterType, VideoType, CheermoteType
-from api.objects import User, Video, Pagination, MutedSegment, Clip, Cheermote, CheerTier
+from api.enums import UserType, BroadcasterType, VideoType, CheermoteType, SubscriptionType
+from api.objects import User, Video, Pagination, MutedSegment, Clip, Cheermote, CheerTier, SubscriptionTransport, \
+    Subscription
 
 
 class APIClient:
@@ -128,6 +129,68 @@ class APIClient:
 
         return tuple(clips)
 
+    # https://dev.twitch.tv/docs/api/reference/#create-eventsub-subscription
+    def create_eventsub_subscription(self,
+                                     subscription_type: SubscriptionType,
+                                     version: str,
+                                     condition: dict,
+                                     transport: SubscriptionTransport) -> tuple[Subscription, int, int, int]:
+        url = self._url + "eventsub/subscriptions"
+
+        validation = {
+            (transport.method == "webhook" and ((transport.callback is None or transport.secret is None) and (transport.session_id is not None or transport.conduit_id is not None))): "If transport.method is webhook then transport.callback and transport.secret must not be None and transport.session_id and transport.conduit_id must be None",
+            (transport.method == "websocket" and ((transport.session_id is None) and (transport.callback is not None or transport.secret is not None or transport.conduit_id is not None))): "If transport.method is websocket then transport.session_id must not be None and transport.callback, transport.secret and transport.conduit_id must be None",
+            (transport.method == "conduit" and ((transport.conduit_id is None) and (transport.callback is not None or transport.secret is not None or transport.session_id is not None))): "If transport.method is conduit then transport.conduit_id must not be None and transport.callback, transport.secret and transport.session_id must be None",
+        }
+
+        for condition, error in validation:
+            if condition: raise ValueError(error)
+
+        body = {
+            "type": subscription_type.value,
+            "version": version,
+            "condition": condition,
+            "transport": {
+                "method": transport.method
+            }
+        }
+        match transport.method:
+            case "webhook":
+                body["transport"]["callback"] = transport.callback
+                body["transport"]["secret"] = transport.secret
+            case "websocket":
+                body["transport"]["session_id"] = transport.session_id
+            case "conduit":
+                body["transport"]["conduit_id"] = transport.conduit_id
+
+        req = httpx.post(url, json=body, headers=self.__headers, timeout=self._timeout)
+        req.raise_for_status()
+        res = req.json()
+
+        sub = res["data"][0]
+        raw_res_transport = sub["transport"]
+        res_transport = SubscriptionTransport(method=raw_res_transport["method"])
+
+        match res_transport.method:
+            case "webhook":
+                res_transport.callback = raw_res_transport["callback"]
+                res_transport.secret = raw_res_transport["secret"]
+            case "websocket":
+                res_transport.session_id = raw_res_transport["session_id"]
+            case "conduit":
+                res_transport.conduit_id = raw_res_transport["conduit_id"]
+
+        subscription = Subscription(id=sub["id"],
+                                    status=sub["status"],
+                                    type=SubscriptionType(sub["type"]),
+                                    version=sub["version"],
+                                    condition=tuple(sorted((str(k), str(v)) for k, v in sub["condition"].items())),
+                                    created_at=int(parser.isoparse(sub["created_at"]).timestamp()),
+                                    transport=res_transport,
+                                    cost=sub["cost"])
+
+        return subscription, res["total"], res["total_cost"], res["max_total_cost"]
+
     # https://dev.twitch.tv/docs/api/reference/#get-users
     def get_users(self,
                   user_id: str | list[str] = None,
@@ -142,7 +205,7 @@ class APIClient:
         if type(login) is list: sum_of_lookups += len(login)
         elif login: sum_of_lookups += 1
 
-        # TODO: Remove check for user_id and login being mutually exclusive if token is user access token
+        # TODO: Remove check for user_id and login being mutually exclusive only if token is user access token
         validation = {
             (sum_of_lookups > 100): "Cannot look up for 100+ IDs and/or logins"
         }

@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Literal
 
-from api.enums import UserType, BroadcasterType, VideoType, CheermoteType
+from api.enums import UserType, BroadcasterType, VideoType, CheermoteType, SubscriptionType
 
 
 # https://dev.twitch.tv/docs/api/guide/#pagination
@@ -66,6 +66,28 @@ class Clip:
 
     def __iter__(self):
         return iter(self.__dict__.items())
+
+@dataclass
+class SubscriptionTransport:
+    method: Literal["webhook", "websocket", "conduit"]
+    callback: str = None
+    secret: str = None
+    session_id: str = None
+    conduit_id: str = None
+
+    def __iter__(self):
+        return iter(self.__dict__.items())
+
+@dataclass(frozen=True)
+class Subscription:
+    id: str
+    status: Literal["enabled", "webhook_callback_verification_pending"]
+    type: SubscriptionType
+    version: str
+    condition: tuple[tuple[str, str], ...]
+    created_at: int
+    transport: SubscriptionTransport
+    cost: int
 
 @dataclass(frozen=True)
 class User:
