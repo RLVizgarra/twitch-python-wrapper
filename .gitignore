@@ -1,5 +1,6 @@
 .idea/
 .venv/
+src/twitch_py_wrapper.egg-info/
 .env
 test.ps1
-/src/twitch_py_wrapper.egg-info/
+tests/manual_test.py
