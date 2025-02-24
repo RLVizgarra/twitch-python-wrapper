@@ -1,6 +1,13 @@
 from enum import Enum
 
 
+class CheermoteType(str, Enum):
+    GLOBAL_FIRST_PARTY = "global_first_party"
+    GLOBAL_THIRD_PARTY = "global_third_party"
+    CHANNEL_CUSTOM = "channel_custom"
+    DISPLAY_ONLY = "display_only"
+    SPONSORED = "sponsored"
+
 class UserType(str, Enum):
     ADMIN = "admin"
     GLOBAL_MOD = "global_mod"

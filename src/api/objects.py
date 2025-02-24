@@ -1,17 +1,49 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
+from typing import Literal
 
-from api.enums import UserType, BroadcasterType, VideoType
+from api.enums import UserType, BroadcasterType, VideoType, CheermoteType
 
 
-@dataclass
+@dataclass(frozen=True)
 class Pagination:
     cursor: str
 
     def __iter__(self):
         return iter(self.__dict__.items())
 
-@dataclass
+@dataclass(frozen=True)
+class CheerTier:
+    min_bits: int
+    id: Literal["1", "100", "500", "1000", "5000", "10000", "10000"]
+    color: str
+    images: tuple[tuple[str, str], ...]
+    can_cheer: bool
+    show_in_bits_card: bool
+
+    def __iter__(self):
+        return iter(self.__dict__.items())
+
+@dataclass(frozen=True)
+class Cheermote:
+    prefix: str
+    tiers: tuple[CheerTier, ...]
+    type: CheermoteType
+    order: int
+    last_update: int
+    is_charitable: bool
+
+    def __repr__(self):
+        attributes = ", ".join(
+            f"{key}={value if isinstance(value, Enum) else repr(value)}"
+            for key, value in self.__dict__.items()
+        )
+        return f"Cheermote({attributes})"
+
+    def __iter__(self):
+        return iter(self.__dict__.items())
+
+@dataclass(frozen=True)
 class User:
     id: str
     login: str
@@ -35,7 +67,7 @@ class User:
         return iter(self.__dict__.items())
 
 
-@dataclass
+@dataclass(frozen=True)
 class MutedSegment:
     duration: int
     offset: int
@@ -44,7 +76,7 @@ class MutedSegment:
         return iter(self.__dict__.items())
 
 
-@dataclass
+@dataclass(frozen=True)
 class Video:
     id: str
     stream_id: str | None
@@ -58,11 +90,11 @@ class Video:
     url: str
     thumbnail_url: str
     viewable: str
-    view_count: int
+    view_count: int = field(hash=False)
     language: str
     type: VideoType
     duration: str
-    muted_segments: list[MutedSegment]
+    muted_segments: tuple[MutedSegment, ...]
 
     def __repr__(self):
         attributes = ", ".join(
@@ -74,7 +106,7 @@ class Video:
     def __iter__(self):
         return iter(self.__dict__.items())
 
-@dataclass
+@dataclass(frozen=True)
 class Clip:
     id: str
     url: str
@@ -87,7 +119,7 @@ class Clip:
     game_id: str
     language: str
     title: str
-    view_count: int
+    view_count: int = field(hash=False)
     created_at: int
     thumbnail_url: str
     duration: float

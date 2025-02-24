@@ -5,8 +5,8 @@ import httpx
 import pytz
 from dateutil import parser
 
-from api.enums import UserType, BroadcasterType, VideoType
-from api.objects import User, Video, Pagination, MutedSegment, Clip
+from api.enums import UserType, BroadcasterType, VideoType, CheermoteType
+from api.objects import User, Video, Pagination, MutedSegment, Clip, Cheermote, CheerTier
 
 
 class APIClient:
@@ -21,9 +21,40 @@ class APIClient:
         }
         self._timeout = timeout
 
+    def get_cheermotes(self,
+                       broadcaster_id: str = None) -> tuple[Cheermote, ...]:
+        url = self._url + "bits/cheermotes"
+
+        if broadcaster_id: parameters = {"broadcaster_id": broadcaster_id}
+        else: parameters = {}
+
+        req = httpx.get(url, params=parameters, headers=self.__headers, timeout=self._timeout)
+        req.raise_for_status()
+        res = req.json()["data"]
+
+        cheermotes = list()
+        for cheermote in res:
+            cheer_tiers = list()
+            for tier in cheermote["tiers"]:
+                cheer_tiers.append(CheerTier(min_bits=tier["min_bits"],
+                                       id=tier["id"],
+                                       color=tier["color"],
+                                       images=tuple(sorted((str(k), str(v)) for k, v in tier["images"].items())),
+                                       can_cheer=tier["can_cheer"],
+                                       show_in_bits_card=tier["show_in_bits_card"]))
+
+            cheermotes.append(Cheermote(prefix=cheermote["prefix"],
+                                        tiers=tuple(cheer_tiers),
+                                        type=CheermoteType(cheermote["type"]),
+                                        order=cheermote["order"],
+                                        last_update=int(parser.isoparse(cheermote["last_updated"]).timestamp()),
+                                        is_charitable=cheermote["is_charitable"]))
+
+        return tuple(cheermotes)
+
     def get_users(self,
                   user_id: str | list[str] = None,
-                  login: str | list[str] = None) -> User | list[User] | None:
+                  login: str | list[str] = None) -> User | tuple[User] | None:
         url = self._url + "users"
 
         sum_of_lookups = 0
@@ -34,8 +65,8 @@ class APIClient:
         if type(login) is list: sum_of_lookups += len(login)
         elif login: sum_of_lookups += 1
 
+        # TODO: Remove check for user_id and login being mutually exclusive if token is user access token
         validation = {
-            (user_id is None and login is None): "Parameters user_id and login are mutually exclusive",
             (sum_of_lookups > 100): "Cannot look up for 100+ IDs and/or logins"
         }
 
@@ -44,7 +75,8 @@ class APIClient:
 
         if user_id and login: parameters = {"id": user_id, "login": login}
         elif user_id: parameters = {"id": user_id}
-        else: parameters = {"login": login}
+        elif login: parameters = {"login": login}
+        else: parameters = {}
 
         req = httpx.get(url, params=parameters, headers=self.__headers, timeout=self._timeout)
         req.raise_for_status()
@@ -67,7 +99,7 @@ class APIClient:
 
         if len(users) < 2: return users[0]
 
-        return users
+        return tuple(users)
 
     def get_videos(self,
                    video_id: str | list[str] = None,
@@ -79,7 +111,7 @@ class APIClient:
                    video_type: Literal["all", "archive", "highlight", "upload"] = None,
                    first: int = None,
                    after: Pagination = None,
-                   before: Pagination = None) -> Video | list[Video] | tuple[list[Video], Pagination] | None:
+                   before: Pagination = None) -> Video | tuple[Video, ...] | tuple[tuple[Video, ...], Pagination] | None:
         url = self._url + "videos"
 
         validation = {
@@ -147,13 +179,13 @@ class APIClient:
                                 language=video["language"],
                                 type=VideoType(video["type"]),
                                 duration=video["duration"],
-                                muted_segments=muted_segments))
+                                muted_segments=tuple(muted_segments)))
 
         if len(videos) < 2: return videos[0]
 
-        if len(res["pagination"]) > 0: return videos, Pagination(res["pagination"]["cursor"])
+        if len(res["pagination"]) > 0: return tuple(videos), Pagination(res["pagination"]["cursor"])
 
-        return videos
+        return tuple(videos)
 
     def get_clips(self,
                   broadcaster_id: str = None,
@@ -164,7 +196,7 @@ class APIClient:
                   first: int = None,
                   before: Pagination = None,
                   after: Pagination = None,
-                  is_featured: bool = None) -> Clip | list[Clip] | tuple[list[Clip], Pagination] | None:
+                  is_featured: bool = None) -> Clip | tuple[Clip, ...] | tuple[tuple[Clip, ...], Pagination] | None:
         url = self._url + "clips"
 
         validation = {
@@ -225,6 +257,6 @@ class APIClient:
 
         if len(clips) < 2: return clips[0]
 
-        if len(res["pagination"]) > 0: return clips, Pagination(res["pagination"]["cursor"])
+        if len(res["pagination"]) > 0: return tuple(clips), Pagination(res["pagination"]["cursor"])
 
-        return clips
+        return tuple(clips)
