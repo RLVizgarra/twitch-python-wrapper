@@ -5,6 +5,7 @@ import pytz
 from dateutil import parser
 
 from api.objects import *
+from shared_enums import SubscriptionType
 
 
 class APIClient:
@@ -137,11 +138,11 @@ class APIClient:
         validation = {
             (transport.method == "webhook" and ((transport.callback is None or transport.secret is None) and (transport.session_id is not None or transport.conduit_id is not None))): "If transport.method is webhook then transport.callback and transport.secret must not be None and transport.session_id and transport.conduit_id must be None",
             (transport.method == "websocket" and ((transport.session_id is None) and (transport.callback is not None or transport.secret is not None or transport.conduit_id is not None))): "If transport.method is websocket then transport.session_id must not be None and transport.callback, transport.secret and transport.conduit_id must be None",
-            (transport.method == "conduit" and ((transport.conduit_id is None) and (transport.callback is not None or transport.secret is not None or transport.session_id is not None))): "If transport.method is conduit then transport.conduit_id must not be None and transport.callback, transport.secret and transport.session_id must be None",
+            (transport.method == "conduit" and ((transport.conduit_id is None) and (transport.callback is not None or transport.secret is not None or transport.session_id is not None))): "If transport.method is conduit then transport.conduit_id must not be None and transport.callback, transport.secret and transport.session_id must be None"
         }
 
-        for condition, error in validation:
-            if condition: raise ValueError(error)
+        for validation_condition, error in validation.items():
+            if validation_condition: raise ValueError(error)
 
         body = {
             "type": subscription_type.value,

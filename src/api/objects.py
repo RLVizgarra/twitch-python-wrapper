@@ -2,6 +2,8 @@ from dataclasses import dataclass, field
 from typing import Literal
 
 from api.enums import *
+from shared_enums import SubscriptionType
+from shared_objects import SubscriptionTransport
 
 
 # https://dev.twitch.tv/docs/api/guide/#pagination
@@ -62,17 +64,6 @@ class Clip:
     duration: float
     vod_offset: int
     is_featured: bool
-
-    def __iter__(self):
-        return iter(self.__dict__.items())
-
-@dataclass
-class SubscriptionTransport:
-    method: Literal["webhook", "websocket", "conduit"]
-    callback: str = None
-    secret: str = None
-    session_id: str = None
-    conduit_id: str = None
 
     def __iter__(self):
         return iter(self.__dict__.items())
