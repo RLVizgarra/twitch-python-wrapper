@@ -10,7 +10,9 @@ authors = [
 dependencies = [
     "httpx",
     "python-dateutil",
-    "pytz"
+    "pytz",
+    "websockets",
+    "certifi"
 ]
 
 [build-system]
