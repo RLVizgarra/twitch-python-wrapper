@@ -1,8 +1,9 @@
 import httpx
+from dateutil.parser import isoparse
 
 from api.client import APIClient
 from api.enums import EmoteType, EmoteFormat, EmoteThemeMode
-from api.objects import Emote, ChatBadgeSet, ChatBadge, ChatSettings
+from api.objects import Emote, ChatBadgeSet, ChatBadge, ChatSettings, SharedChatSession, SharedChatSessionParticipant
 
 
 class Chat:
@@ -218,8 +219,26 @@ class Chat:
                             unique_chat_mode=res["unique_chat_mode"])
 
     # https://dev.twitch.tv/docs/api/reference/#get-shared-chat-session
-    def get_shared_chat_session(self):
-        pass
+    def get_shared_chat_session(self,
+                                broadcaster_id: str) -> SharedChatSession:
+        url = self.client._url + "shared_chat/session"
+
+        req = httpx.get(url,
+                        params={"broadcaster_id": broadcaster_id},
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()["data"][0]
+
+        participants = list()
+        for participant in res["participants"]:
+            participants.append(SharedChatSessionParticipant(broadcaster_id=participant["broadcaster_id"]))
+
+        return SharedChatSession(session_id=res["session_id"],
+                                 host_broadcaster_id=res["host_broadcaster_id"],
+                                 participants=tuple(participants),
+                                 created_at=int(isoparse(res["created_at"]).timestamp()),
+                                 updated_at=int(isoparse(res["updated_at"]).timestamp()))
 
     # https://dev.twitch.tv/docs/api/reference/#get-user-emotes
     def get_user_emotes(self):

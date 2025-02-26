@@ -103,6 +103,18 @@ class ChatSettings:
     unique_chat_mode: bool
 
 @dataclass(frozen=True)
+class SharedChatSessionParticipant:
+    broadcaster_id: str
+
+@dataclass(frozen=True)
+class SharedChatSession:
+    session_id: str
+    host_broadcaster_id: str
+    participants: tuple[SharedChatSessionParticipant, ...]
+    created_at: int
+    updated_at: int
+
+@dataclass(frozen=True)
 class Clip:
     id: str
     url: str
