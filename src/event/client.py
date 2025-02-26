@@ -6,7 +6,7 @@ from typing import Callable, Literal
 
 import certifi
 import websockets
-from dateutil import parser
+from dateutil.parser import isoparse
 
 from api.client import APIClient
 from event.enums import MessageType
@@ -97,7 +97,7 @@ class EventClient:
                         message = json.loads(raw_message)
                         metadata = Metadata(message_id=message["metadata"]["message_id"],
                                  message_type=MessageType(message["metadata"]["message_type"]),
-                                 message_timestamp=int(parser.isoparse(message["metadata"]["message_timestamp"]).timestamp()),
+                                 message_timestamp=int(isoparse(message["metadata"]["message_timestamp"]).timestamp()),
                                  subscription_type=SubscriptionType(message["metadata"]["subscription_type"]) if "subscription_type" in message["metadata"] else None,
                                  subscription_version=message["metadata"]["subscription_version"] if "subscription_version" in message["metadata"] else None)
                         payload = message["payload"]
