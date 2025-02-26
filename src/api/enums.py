@@ -25,7 +25,15 @@ class EmoteType(Enums):
     FOLLOWER = "follower"
     SUBSCRIPTIONS = "subscriptions"
 
-class VideoType(str, Enum):
+class EmoteFormat(Enums):
+    ANIMATED = "animated"
+    STATIC = "static"
+
+class EmoteThemeMode(Enums):
+    DARK = "dark"
+    LIGHT = "light"
+
+class VideoType(Enums):
     ARCHIVE = "archive"
     HIGHLIGHT = "highlight"
     UPLOAD = "upload"

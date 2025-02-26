@@ -1,4 +1,8 @@
+import httpx
+
 from api.client import APIClient
+from api.enums import EmoteType, EmoteFormat, EmoteThemeMode
+from api.objects import Emote
 
 
 class Chat:
@@ -10,8 +14,37 @@ class Chat:
         pass
 
     # https://dev.twitch.tv/docs/api/reference/#get-channel-emotes
-    def get_channel_emotes(self):
-        pass
+    def get_channel_emotes(self,
+                           broadcaster_id: str) -> tuple[Emote, str] | tuple[tuple[Emote, ...], str] | None:
+        url = self.client._url + "chat/emotes"
+
+        req = httpx.get(url, params={"broadcaster_id": broadcaster_id}, headers=self.client._headers, timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()
+
+        if len(res["data"]) < 1: return None
+
+        emotes = list()
+        for emote in res["data"]:
+            formats = list()
+            for emote_format in emote["format"]: formats.append(EmoteFormat(emote_format))
+            scales = list()
+            for scale in emote["scale"]: formats.append(scale)
+            themes_modes = list()
+            for theme_mode in emote["theme_mode"]: themes_modes.append(EmoteThemeMode(theme_mode))
+            emotes.append(Emote(id=emote["id"],
+                                name=emote["name"],
+                                images=tuple(sorted((str(k), str(v)) for k, v in emote["images"].items())),
+                                tier=emote["tier"] if emote["tier"] != "" else None,
+                                emote_type=EmoteType(emote["emote_type"]),
+                                emote_set_id=emote["emote_set_id"],
+                                format=tuple(formats),
+                                scale=tuple(scales),
+                                theme_mode=tuple(themes_modes)))
+
+        if len(emotes) < 2: return emotes[0], res["template"]
+
+        return tuple(emotes), res["template"]
 
     # https://dev.twitch.tv/docs/api/reference/#get-global-emotes
     def get_global_emotes(self):

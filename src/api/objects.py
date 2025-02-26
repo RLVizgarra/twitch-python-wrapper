@@ -60,6 +60,18 @@ class Channel:
     is_branded_content: bool
 
 @dataclass(frozen=True)
+class Emote:
+    id: str
+    name: str
+    images: tuple[tuple[str, str], ...]
+    tier: str | None
+    emote_type: EmoteType
+    emote_set_id: str
+    format: tuple[EmoteFormat, ...]
+    scale: tuple[Literal["1.0", "2.0", "3.0"], ...]
+    theme_mode: tuple[EmoteThemeMode, ...]
+
+@dataclass(frozen=True)
 class Clip:
     id: str
     url: str

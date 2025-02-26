@@ -42,3 +42,7 @@ class TestAPIClient:
         assert hash(self.client.channels.get_channel_information(broadcaster_id="141981764")) == -3908995204320117461
         assert hash(self.client.channels.get_channel_information(broadcaster_id="12826")) == -27976972557750373
         assert hash(self.client.channels.get_channel_information(broadcaster_id=["141981764", "12826"])) == -5573906658155913568
+
+    def test_get_channel_emotes(self):
+        assert hash(self.client.chat.get_channel_emotes(broadcaster_id="141981764")) == 1068135883675233598
+        assert hash(self.client.chat.get_channel_emotes(broadcaster_id="12826")) == 7332780091495282608
