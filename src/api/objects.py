@@ -99,7 +99,14 @@ class SharedChatSession(Objects):
     updated_at: int
 
 @dataclass(frozen=True)
-class Clip:
+class UserChatColor(Objects):
+    user_id: str
+    user_login: str
+    user_name: str
+    color: str | None
+
+@dataclass(frozen=True)
+class Clip(Objects):
     id: str
     url: str
     embed_url: str

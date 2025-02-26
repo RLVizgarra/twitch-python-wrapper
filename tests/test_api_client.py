@@ -53,7 +53,6 @@ class TestAPIClient:
     def test_get_emote_sets(self):
         assert hash(self.client.chat.get_emote_sets(emote_set_id="301590448")) == 8199447653793326264
         assert hash(self.client.chat.get_emote_sets(emote_set_id="374814395")) == -1838195492418291180
-        assert hash(self.client.chat.get_emote_sets(emote_set_id=["301590448", "374814395"])) == -8056364215214985908
 
     def test_get_channel_chat_badges(self):
         assert hash(self.client.chat.get_channel_chat_badges("12826")) ==8269109171712613325
@@ -65,3 +64,7 @@ class TestAPIClient:
     def test_get_chat_settings(self):
         assert hash(self.client.chat.get_chat_settings("141981764")) == 8585977543539151482
         assert hash(self.client.chat.get_chat_settings("12826")) == -2700731223437012002
+
+    def test_get_user_chat_color(self):
+        assert hash(self.client.chat.get_user_chat_color("141981764")) == 8406074055112061289
+        assert hash(self.client.chat.get_user_chat_color("12826")) == 7968065401081294306

@@ -3,7 +3,8 @@ from dateutil.parser import isoparse
 
 from api.client import APIClient
 from api.enums import EmoteType, EmoteFormat, EmoteThemeMode
-from api.objects import Emote, ChatBadgeSet, ChatBadge, ChatSettings, SharedChatSession, SharedChatSessionParticipant
+from api.objects import Emote, ChatBadgeSet, ChatBadge, ChatSettings, SharedChatSession, SharedChatSessionParticipant, \
+    UserChatColor
 
 
 class Chat:
@@ -261,8 +262,32 @@ class Chat:
         pass
 
     # https://dev.twitch.tv/docs/api/reference/#get-user-chat-color
-    def get_user_chat_color(self):
-        pass
+    def get_user_chat_color(self,
+                            user_id: str | list[str]) -> UserChatColor | tuple[UserChatColor, ...] | None:
+        url = self.client._url + "chat/color"
+
+        if isinstance(user_id, list) and (len(user_id) < 1 or len(user_id) > 100):
+            raise ValueError("Cannot look up for 100+ user IDs")
+
+        req = httpx.get(url,
+                        params={"user_id": user_id},
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()
+
+        if len(res["data"]) < 1: return None
+
+        users = list()
+        for user in res["data"]:
+            users.append(UserChatColor(user_id=user["user_id"],
+                                       user_login=user["user_login"],
+                                       user_name=user["user_name"],
+                                       color=user["color"] if user["color"] != "" else None))
+
+        if len(users) < 2: return users[0]
+
+        return tuple(users)
 
     # https://dev.twitch.tv/docs/api/reference/#update-user-chat-color
     def update_user_chat_color(self):
