@@ -126,6 +126,11 @@ class Clip(Objects):
     is_featured: bool
 
 @dataclass(frozen=True)
+class Conduit(Objects):
+    id: str
+    shard_count: int
+
+@dataclass(frozen=True)
 class Subscription(Objects):
     id: str
     status: Literal["enabled", "webhook_callback_verification_pending"]

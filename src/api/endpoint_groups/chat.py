@@ -133,12 +133,12 @@ class Chat:
                         headers=self.client._headers,
                         timeout=self.client._timeout)
         req.raise_for_status()
-        res = req.json()
+        res = req.json()["data"]
 
-        if len(res["data"]) < 1: return None
+        if len(res) < 1: return None
 
         badge_sets = list()
-        for badges_set in res["data"]:
+        for badges_set in res:
             badges = list()
             for badge in badges_set["versions"]:
                 badges.append(ChatBadge(id=badge["id"],
@@ -274,12 +274,12 @@ class Chat:
                         headers=self.client._headers,
                         timeout=self.client._timeout)
         req.raise_for_status()
-        res = req.json()
+        res = req.json()["data"]
 
-        if len(res["data"]) < 1: return None
+        if len(res) < 1: return None
 
         users = list()
-        for user in res["data"]:
+        for user in res:
             users.append(UserChatColor(user_id=user["user_id"],
                                        user_login=user["user_login"],
                                        user_name=user["user_name"],

@@ -22,12 +22,12 @@ class Channels:
                         headers=self.client._headers,
                         timeout=self.client._timeout)
         req.raise_for_status()
-        res = req.json()
+        res = req.json()["data"]
 
-        if len(res["data"]) < 1: return None
+        if len(res) < 1: return None
 
         channels = list()
-        for channel in res["data"]:
+        for channel in res:
             content_classification_labels = list()
             for label in channel["content_classification_labels"]:
                 content_classification_labels.append(ContentClassificationLabel(label))

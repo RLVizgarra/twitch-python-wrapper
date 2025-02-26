@@ -1,4 +1,7 @@
+import httpx
+
 from api.client import APIClient
+from api.objects import Conduit
 
 
 class Conduits:
@@ -6,8 +9,23 @@ class Conduits:
         self.client = client
 
     # https://dev.twitch.tv/docs/api/reference/#get-conduits
-    def get_conduits(self):
-        pass
+    def get_conduits(self) -> tuple[Conduit, ...] | None:
+        url = self.client._url + "eventsub/conduits"
+
+        req = httpx.get(url,
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()["data"]
+
+        if len(res) < 1: return None
+
+        conduits = list()
+        for conduit in res:
+            conduits.append(Conduit(id=conduit["id"],
+                                    shard_count=conduit["shard_count"]))
+
+        return tuple(conduits)
 
     # https://dev.twitch.tv/docs/api/reference/#create-conduits
     def create_conduits(self):
