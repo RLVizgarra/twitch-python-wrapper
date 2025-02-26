@@ -45,7 +45,10 @@ class EventSub:
             case "conduit":
                 body["transport"]["conduit_id"] = transport.conduit_id
 
-        req = httpx.post(url, json=body, headers=self.client._headers, timeout=self.client._timeout)
+        req = httpx.post(url,
+                         json=body,
+                         headers=self.client._headers,
+                         timeout=self.client._timeout)
         req.raise_for_status()
         res = req.json()
 

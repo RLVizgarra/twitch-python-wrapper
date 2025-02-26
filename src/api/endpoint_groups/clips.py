@@ -55,7 +55,10 @@ class Clips:
         for key, value in optional_params.items():
             if value: parameters[key] = value
 
-        req = httpx.get(url, params=parameters, headers=self.client._headers, timeout=self.client._timeout)
+        req = httpx.get(url,
+                        params=parameters,
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
 
         if req.status_code == 404:
             return None

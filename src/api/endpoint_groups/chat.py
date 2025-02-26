@@ -18,7 +18,10 @@ class Chat:
                            broadcaster_id: str) -> tuple[Emote, str] | tuple[tuple[Emote, ...], str] | None:
         url = self.client._url + "chat/emotes"
 
-        req = httpx.get(url, params={"broadcaster_id": broadcaster_id}, headers=self.client._headers, timeout=self.client._timeout)
+        req = httpx.get(url,
+                        params={"broadcaster_id": broadcaster_id},
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -51,7 +54,9 @@ class Chat:
     def get_global_emotes(self) -> tuple[tuple[Emote, ...], str] | None:
         url = self.client._url + "chat/emotes/global"
 
-        req = httpx.get(url, headers=self.client._headers, timeout=self.client._timeout)
+        req = httpx.get(url,
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -84,7 +89,10 @@ class Chat:
         if isinstance(emote_set_id, list) and (len(emote_set_id) < 1 or len(emote_set_id) > 25):
             raise ValueError("Cannot look up for 25+ emote set IDs")
 
-        req = httpx.get(url, params={"emote_set_id": emote_set_id}, headers=self.client._headers, timeout=self.client._timeout)
+        req = httpx.get(url,
+                        params={"emote_set_id": emote_set_id},
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
         req.raise_for_status()
         res = req.json()
 

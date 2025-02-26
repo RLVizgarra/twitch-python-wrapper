@@ -22,7 +22,10 @@ class Bits:
         if broadcaster_id: parameters = {"broadcaster_id": broadcaster_id}
         else: parameters = {}
 
-        req = httpx.get(url, params=parameters, headers=self.client._headers, timeout=self.client._timeout)
+        req = httpx.get(url,
+                        params=parameters,
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
         req.raise_for_status()
         res = req.json()["data"]
 
