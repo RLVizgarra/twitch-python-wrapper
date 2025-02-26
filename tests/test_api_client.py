@@ -37,3 +37,8 @@ class TestAPIClient:
 
     def test_get_cheermotes(self):
         assert hash(self.client.bits.get_cheermotes(broadcaster_id="141981764")) == -3447302537155689151
+
+    def test_get_channel_information(self):
+        assert hash(self.client.channels.get_channel_information(broadcaster_id="141981764")) == -3908995204320117461
+        assert hash(self.client.channels.get_channel_information(broadcaster_id="12826")) == -27976972557750373
+        assert hash(self.client.channels.get_channel_information(broadcaster_id=["141981764", "12826"])) == -5573906658155913568

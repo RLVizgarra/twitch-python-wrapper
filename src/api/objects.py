@@ -46,6 +46,20 @@ class Cheermote:
         return iter(self.__dict__.items())
 
 @dataclass(frozen=True)
+class Channel:
+    broadcaster_id: str
+    broadcaster_login: str
+    broadcaster_name: str
+    broadcaster_language: str
+    game_name: str
+    game_id: str
+    title: str
+    delay: int
+    tags: tuple[str, ...]
+    content_classification_labels: tuple[Literal["DebatedSocialIssuesAndPolitics", "DrugsIntoxication", "Gambling", "MatureGame", "ProfanityVulgarity", "SexualThemes", "ViolentGraphic"], ...]
+    is_branded_content: bool
+
+@dataclass(frozen=True)
 class Clip:
     id: str
     url: str
