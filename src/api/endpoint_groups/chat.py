@@ -47,8 +47,32 @@ class Chat:
         return tuple(emotes), res["template"]
 
     # https://dev.twitch.tv/docs/api/reference/#get-global-emotes
-    def get_global_emotes(self):
-        pass
+    def get_global_emotes(self) -> tuple[tuple[Emote, ...], str] | None:
+        url = self.client._url + "chat/emotes/global"
+
+        req = httpx.get(url, headers=self.client._headers, timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()
+
+        emotes = list()
+        for emote in res["data"]:
+            formats = list()
+            for emote_format in emote["format"]: formats.append(EmoteFormat(emote_format))
+            scales = list()
+            for scale in emote["scale"]: formats.append(scale)
+            themes_modes = list()
+            for theme_mode in emote["theme_mode"]: themes_modes.append(EmoteThemeMode(theme_mode))
+            emotes.append(Emote(id=emote["id"],
+                                name=emote["name"],
+                                images=tuple(sorted((str(k), str(v)) for k, v in emote["images"].items())),
+                                tier=None,
+                                emote_type=None,
+                                emote_set_id=None,
+                                format=tuple(formats),
+                                scale=tuple(scales),
+                                theme_mode=tuple(themes_modes)))
+
+        return tuple(emotes), res["template"]
 
     # https://dev.twitch.tv/docs/api/reference/#get-emote-sets
     def get_emote_sets(self):

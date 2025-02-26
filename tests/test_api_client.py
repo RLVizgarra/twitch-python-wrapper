@@ -46,3 +46,6 @@ class TestAPIClient:
     def test_get_channel_emotes(self):
         assert hash(self.client.chat.get_channel_emotes(broadcaster_id="141981764")) == 1068135883675233598
         assert hash(self.client.chat.get_channel_emotes(broadcaster_id="12826")) == 7332780091495282608
+
+    def test_get_global_emotes(self):
+        assert hash(self.client.chat.get_global_emotes()) == 3963848735475788229
