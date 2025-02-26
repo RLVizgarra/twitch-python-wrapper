@@ -43,12 +43,36 @@ class Conduits:
                        shard_count=res["shard_count"])
 
     # https://dev.twitch.tv/docs/api/reference/#update-conduits
-    def update_conduits(self):
-        pass
+    def update_conduits(self,
+                        conduit_id: str,
+                        shard_count: int) -> Conduit:
+        url = self.client._url + "eventsub/conduits"
+
+        req = httpx.patch(url,
+                          json={"id": conduit_id, "shard_count": shard_count},
+                          headers=self.client._headers,
+                          timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()["data"][0]
+
+        return Conduit(id=res["id"],
+                       shard_count=res["shard_count"])
 
     # https://dev.twitch.tv/docs/api/reference/#delete-conduit
-    def delete_conduit(self):
-        pass
+    def delete_conduit(self,
+                        conduit_id: str,
+                        shard_count: int) -> Conduit:
+        url = self.client._url + "eventsub/conduits"
+
+        req = httpx.patch(url,
+                          json={"id": conduit_id, "shard_count": shard_count},
+                          headers=self.client._headers,
+                          timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()["data"][0]
+
+        return Conduit(id=res["id"],
+                       shard_count=res["shard_count"])
 
     # https://dev.twitch.tv/docs/api/reference/#get-conduit-shards
     def get_conduit_shards(self):
