@@ -58,3 +58,6 @@ class TestAPIClient:
     def test_get_channel_chat_badges(self):
         assert hash(self.client.chat.get_channel_chat_badges("12826")) ==8269109171712613325
         assert hash(self.client.chat.get_channel_chat_badges("197886470")) == -3076710540262200488
+
+    def test_get_global_chat_badges(self):
+        assert hash(self.client.chat.get_global_chat_badges()) == -2677478051108591865

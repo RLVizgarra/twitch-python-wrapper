@@ -156,8 +156,32 @@ class Chat:
         return tuple(badge_sets)
 
     # https://dev.twitch.tv/docs/api/reference/#get-global-chat-badges
-    def get_global_chat_badges(self):
-        pass
+    def get_global_chat_badges(self) -> tuple[ChatBadgeSet, ...]:
+        url = self.client._url + "chat/badges/global"
+
+        req = httpx.get(url,
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()["data"]
+
+        badge_sets = list()
+        for badges_set in res:
+            badges = list()
+            for badge in badges_set["versions"]:
+                badges.append(ChatBadge(id=badge["id"],
+                                        image_url_1x=badge["image_url_1x"],
+                                        image_url_2x=badge["image_url_2x"],
+                                        image_url_4x=badge["image_url_4x"],
+                                        title=badge["title"],
+                                        description=badge["description"],
+                                        click_action=badge["click_action"],
+                                        click_url=badge["click_url"]))
+
+            badge_sets.append(ChatBadgeSet(set_id=badges_set["set_id"],
+                                           versions=tuple(badges)))
+
+        return tuple(badge_sets)
 
     # https://dev.twitch.tv/docs/api/reference/#get-chat-settings
     def get_chat_settings(self):
