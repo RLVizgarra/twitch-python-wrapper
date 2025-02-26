@@ -44,8 +44,13 @@ class TestAPIClient:
         assert hash(self.client.channels.get_channel_information(broadcaster_id=["141981764", "12826"])) == -5573906658155913568
 
     def test_get_channel_emotes(self):
-        assert hash(self.client.chat.get_channel_emotes(broadcaster_id="141981764")) == 1068135883675233598
-        assert hash(self.client.chat.get_channel_emotes(broadcaster_id="12826")) == 7332780091495282608
+        assert hash(self.client.chat.get_channel_emotes(broadcaster_id="141981764")) == 196265680831279960
+        assert hash(self.client.chat.get_channel_emotes(broadcaster_id="12826")) == -5584805614351045098
 
     def test_get_global_emotes(self):
-        assert hash(self.client.chat.get_global_emotes()) == 3963848735475788229
+        assert hash(self.client.chat.get_global_emotes()) == -1911754963837804676
+
+    def test_get_emote_sets(self):
+        assert hash(self.client.chat.get_emote_sets(emote_set_id="301590448")) == 8199447653793326264
+        assert hash(self.client.chat.get_emote_sets(emote_set_id="374814395")) == -1838195492418291180
+        assert hash(self.client.chat.get_emote_sets(emote_set_id=["301590448", "374814395"])) == -8056364215214985908

@@ -67,6 +67,7 @@ class Emote:
     tier: str | None
     emote_type: EmoteType | None
     emote_set_id: str | None
+    owner_id: str | None
     format: tuple[EmoteFormat, ...]
     scale: tuple[Literal["1.0", "2.0", "3.0"], ...]
     theme_mode: tuple[EmoteThemeMode, ...]
