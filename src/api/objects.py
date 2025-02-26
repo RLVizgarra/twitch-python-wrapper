@@ -56,7 +56,7 @@ class Channel:
     title: str
     delay: int
     tags: tuple[str, ...]
-    content_classification_labels: tuple[Literal["DebatedSocialIssuesAndPolitics", "DrugsIntoxication", "Gambling", "MatureGame", "ProfanityVulgarity", "SexualThemes", "ViolentGraphic"], ...]
+    content_classification_labels: tuple[ContentClassificationLabel, ...]
     is_branded_content: bool
 
 @dataclass(frozen=True)

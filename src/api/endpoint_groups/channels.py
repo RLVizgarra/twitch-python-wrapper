@@ -1,6 +1,7 @@
 import httpx
 
 from api.client import APIClient
+from api.enums import ContentClassificationLabel
 from api.objects import Channel
 
 
@@ -24,6 +25,9 @@ class Channels:
 
         channels = list()
         for channel in res["data"]:
+            content_classification_labels = list()
+            for label in channel["content_classification_labels"]:
+                content_classification_labels.append(ContentClassificationLabel(label))
             channels.append(Channel(broadcaster_id=channel["broadcaster_id"],
                                     broadcaster_login=channel["broadcaster_login"],
                                     broadcaster_name=channel["broadcaster_name"],
@@ -33,7 +37,7 @@ class Channels:
                                     title=channel["title"],
                                     delay=channel["delay"],
                                     tags=tuple(channel["tags"]),
-                                    content_classification_labels=tuple(channel["content_classification_labels"]),
+                                    content_classification_labels=tuple(content_classification_labels),
                                     is_branded_content=channel["is_branded_content"]))
 
         if len(channels) < 2: return channels[0]
