@@ -1,7 +1,11 @@
 from enum import Enum
 
 
-class SubscriptionType(str, Enum):
+class Enums(str, Enum):
+    def __repr__(self):
+        return f"{self.__class__.__name__}.{self.name}"
+
+class SubscriptionType(Enums):
     AUTOMOD_MESSAGE_HOLD = "automod.message.hold"
     AUTOMOD_MESSAGE_UPDATE = "automod.message.update"
     AUTOMOD_SETTINGS_UPDATE = "automod.settings.update"
@@ -75,6 +79,3 @@ class SubscriptionType(str, Enum):
     USER_AUTHORIZATION_REVOKE = "user.authorization.revoke"
     USER_UPDATE = "user.update"
     USER_WHISPER_MESSAGE = "user.whisper.message"
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}.{self.name}"

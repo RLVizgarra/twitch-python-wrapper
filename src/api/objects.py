@@ -3,19 +3,16 @@ from typing import Literal
 
 from api.enums import *
 from shared_enums import SubscriptionType
-from shared_objects import SubscriptionTransport
+from shared_objects import SubscriptionTransport, Objects
 
 
 # https://dev.twitch.tv/docs/api/guide/#pagination
 @dataclass(frozen=True)
-class Pagination:
+class Pagination(Objects):
     cursor: str
 
-    def __iter__(self):
-        return iter(self.__dict__.items())
-
 @dataclass(frozen=True)
-class CheerTier:
+class CheerTier(Objects):
     min_bits: int
     id: Literal["1", "100", "500", "1000", "5000", "10000", "10000"]
     color: str
@@ -23,11 +20,8 @@ class CheerTier:
     can_cheer: bool
     show_in_bits_card: bool
 
-    def __iter__(self):
-        return iter(self.__dict__.items())
-
 @dataclass(frozen=True)
-class Cheermote:
+class Cheermote(Objects):
     prefix: str
     tiers: tuple[CheerTier, ...]
     type: CheermoteType
@@ -35,18 +29,8 @@ class Cheermote:
     last_update: int
     is_charitable: bool
 
-    def __repr__(self):
-        attributes = ", ".join(
-            f"{key}={value if isinstance(value, Enum) else repr(value)}"
-            for key, value in self.__dict__.items()
-        )
-        return f"Cheermote({attributes})"
-
-    def __iter__(self):
-        return iter(self.__dict__.items())
-
 @dataclass(frozen=True)
-class Channel:
+class Channel(Objects):
     broadcaster_id: str
     broadcaster_login: str
     broadcaster_name: str
@@ -60,7 +44,7 @@ class Channel:
     is_branded_content: bool
 
 @dataclass(frozen=True)
-class Emote:
+class Emote(Objects):
     id: str
     name: str
     images: tuple[tuple[str, str], ...]
@@ -73,7 +57,7 @@ class Emote:
     theme_mode: tuple[EmoteThemeMode, ...]
 
 @dataclass(frozen=True)
-class ChatBadge:
+class ChatBadge(Objects):
     id: str
     image_url_1x: str
     image_url_2x: str
@@ -84,12 +68,12 @@ class ChatBadge:
     click_url: str | None
 
 @dataclass(frozen=True)
-class ChatBadgeSet:
+class ChatBadgeSet(Objects):
     set_id: str
     versions: tuple[ChatBadge, ...]
 
 @dataclass(frozen=True)
-class ChatSettings:
+class ChatSettings(Objects):
     broadcaster_id: str
     emote_mode: bool
     follower_mode: bool
@@ -103,11 +87,11 @@ class ChatSettings:
     unique_chat_mode: bool
 
 @dataclass(frozen=True)
-class SharedChatSessionParticipant:
+class SharedChatSessionParticipant(Objects):
     broadcaster_id: str
 
 @dataclass(frozen=True)
-class SharedChatSession:
+class SharedChatSession(Objects):
     session_id: str
     host_broadcaster_id: str
     participants: tuple[SharedChatSessionParticipant, ...]
@@ -134,11 +118,8 @@ class Clip:
     vod_offset: int
     is_featured: bool
 
-    def __iter__(self):
-        return iter(self.__dict__.items())
-
 @dataclass(frozen=True)
-class Subscription:
+class Subscription(Objects):
     id: str
     status: Literal["enabled", "webhook_callback_verification_pending"]
     type: SubscriptionType
@@ -149,7 +130,7 @@ class Subscription:
     cost: int
 
 @dataclass(frozen=True)
-class User:
+class User(Objects):
     id: str
     login: str
     display_name: str
@@ -161,28 +142,15 @@ class User:
     email: str | None
     created_at: int
 
-    def __repr__(self):
-        attributes = ", ".join(
-            f"{key}={value if isinstance(value, Enum) else repr(value)}"
-            for key, value in self.__dict__.items()
-        )
-        return f"User({attributes})"
-
-    def __iter__(self):
-        return iter(self.__dict__.items())
-
 
 @dataclass(frozen=True)
-class MutedSegment:
+class MutedSegment(Objects):
     duration: int
     offset: int
 
-    def __iter__(self):
-        return iter(self.__dict__.items())
-
 
 @dataclass(frozen=True)
-class Video:
+class Video(Objects):
     id: str
     stream_id: str | None
     user_id: str
@@ -200,13 +168,3 @@ class Video:
     type: VideoType
     duration: str
     muted_segments: tuple[MutedSegment, ...]
-
-    def __repr__(self):
-        attributes = ", ".join(
-            f"{key}={value if isinstance(value, Enum) else repr(value)}"
-            for key, value in self.__dict__.items()
-        )
-        return f"Video({attributes})"
-
-    def __iter__(self):
-        return iter(self.__dict__.items())

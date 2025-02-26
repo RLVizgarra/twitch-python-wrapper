@@ -1,8 +1,5 @@
-from enum import Enum
+from shared_enums import Enums
 
-class Enums(str, Enum):
-    def __repr__(self):
-        return f"{self.__class__.__name__}.{self.name}"
 
 class CheermoteType(Enums):
     GLOBAL_FIRST_PARTY = "global_first_party"
