@@ -33,7 +33,6 @@ class APIClient:
         from api.endpoint_groups.search import Search
         from api.endpoint_groups.streams import Streams
         from api.endpoint_groups.subscriptions import Subscriptions
-        from api.endpoint_groups.tags import Tags
         from api.endpoint_groups.teams import Teams
         from api.endpoint_groups.users import Users
         from api.endpoint_groups.videos import Videos
@@ -62,7 +61,6 @@ class APIClient:
         self.search = Search(self)
         self.streams = Streams(self)
         self.subscriptions = Subscriptions(self)
-        self.tags = Tags(self)
         self.teams = Teams(self)
         self.users = Users(self)
         self.videos = Videos(self)
