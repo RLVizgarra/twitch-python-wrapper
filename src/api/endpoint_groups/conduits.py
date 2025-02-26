@@ -28,8 +28,19 @@ class Conduits:
         return tuple(conduits)
 
     # https://dev.twitch.tv/docs/api/reference/#create-conduits
-    def create_conduits(self):
-        pass
+    def create_conduits(self,
+                        shard_count: int) -> Conduit:
+        url = self.client._url + "eventsub/conduits"
+
+        req = httpx.post(url,
+                         json={"shard_count": shard_count},
+                         headers=self.client._headers,
+                         timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()["data"][0]
+
+        return Conduit(id=res["id"],
+                       shard_count=res["shard_count"])
 
     # https://dev.twitch.tv/docs/api/reference/#update-conduits
     def update_conduits(self):
