@@ -15,7 +15,7 @@ class Channels:
         url = self.client._url + "channels"
 
         if isinstance(broadcaster_id, list) and (len(broadcaster_id) < 1 or len(broadcaster_id) > 100):
-            raise ValueError("Cannot look up for 100+ IDs and/or logins")
+            raise ValueError("Cannot look up for 100+ broadcaster IDs")
 
         req = httpx.get(url, params={"broadcaster_id": broadcaster_id}, headers=self.client._headers, timeout=self.client._timeout)
         req.raise_for_status()

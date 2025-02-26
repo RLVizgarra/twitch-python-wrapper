@@ -26,7 +26,7 @@ class Users:
 
         # TODO: Remove check for user_id and login being mutually exclusive only if token is user access token
         if sum_of_lookups > 100:
-            raise ValueError("Cannot look up for 100+ IDs and/or logins")
+            raise ValueError("Cannot look up for 100+ user IDs and/or logins")
 
         if user_id and login: parameters = {"id": user_id, "login": login}
         elif user_id: parameters = {"id": user_id}
