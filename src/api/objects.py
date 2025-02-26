@@ -89,6 +89,20 @@ class ChatBadgeSet:
     versions: tuple[ChatBadge, ...]
 
 @dataclass(frozen=True)
+class ChatSettings:
+    broadcaster_id: str
+    emote_mode: bool
+    follower_mode: bool
+    follower_mode_duration: int | None
+    moderator_id: str | None
+    non_moderator_chat_delay: bool | None
+    non_moderator_chat_delay_duration: int | None
+    slow_mode: bool
+    slow_mode_wait_time: int | None
+    subscriber_mode: bool
+    unique_chat_mode: bool
+
+@dataclass(frozen=True)
 class Clip:
     id: str
     url: str

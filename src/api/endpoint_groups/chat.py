@@ -2,7 +2,7 @@ import httpx
 
 from api.client import APIClient
 from api.enums import EmoteType, EmoteFormat, EmoteThemeMode
-from api.objects import Emote, ChatBadgeSet, ChatBadge
+from api.objects import Emote, ChatBadgeSet, ChatBadge, ChatSettings
 
 
 class Chat:
@@ -184,8 +184,38 @@ class Chat:
         return tuple(badge_sets)
 
     # https://dev.twitch.tv/docs/api/reference/#get-chat-settings
-    def get_chat_settings(self):
-        pass
+    def get_chat_settings(self,
+                          broadcaster_id: str,
+                          moderator_id: str = None) -> ChatSettings:
+        url = self.client._url + "chat/settings"
+
+        parameters = {"broadcaster_id": broadcaster_id}
+
+        optional_params = {
+            "moderator_id": moderator_id
+        }
+
+        for key, value in optional_params.items():
+            if value: parameters[key] = value
+
+        req = httpx.get(url,
+                        params=parameters,
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()["data"][0]
+
+        return ChatSettings(broadcaster_id=res["broadcaster_id"],
+                            emote_mode=res["emote_mode"],
+                            follower_mode=res["follower_mode"],
+                            follower_mode_duration=res["follower_mode_duration"],
+                            moderator_id=res["moderator_id"] if "moderator_id" in res else None,
+                            non_moderator_chat_delay=res["non_moderator_chat_delay"] if "non_moderator_chat_delay" in res else None,
+                            non_moderator_chat_delay_duration=res["non_moderator_chat_delay_duration"] if "non_moderator_chat_delay_duration" in res else None,
+                            slow_mode=res["slow_mode"],
+                            slow_mode_wait_time=res["slow_mode_wait_time"],
+                            subscriber_mode=res["subscriber_mode"],
+                            unique_chat_mode=res["unique_chat_mode"])
 
     # https://dev.twitch.tv/docs/api/reference/#get-shared-chat-session
     def get_shared_chat_session(self):
