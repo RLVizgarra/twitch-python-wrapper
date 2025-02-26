@@ -31,7 +31,7 @@ class Clips:
 
         validation = {
             (broadcaster_id is None and game_id is None and clip_id is None): "Parameters broadcaster_id, game_id and clip_id are mutually exclusive",
-            (type(clip_id) is list and len(clip_id) > 100): "Cannot look up for 100+ IDs",
+            (isinstance(clip_id, list) and (len(clip_id) < 1 or len(clip_id) > 100)): "Cannot look up for 100+ IDs",
             (first and (first < 1 or first > 100)): "Parameter first must be between 1 and 100"
         }
 

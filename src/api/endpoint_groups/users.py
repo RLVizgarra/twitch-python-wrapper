@@ -18,19 +18,15 @@ class Users:
 
         sum_of_lookups = 0
 
-        if type(user_id) is list: sum_of_lookups += len(user_id)
+        if isinstance(user_id, list): sum_of_lookups += len(user_id)
         elif user_id: sum_of_lookups += 1
 
-        if type(login) is list: sum_of_lookups += len(login)
+        if isinstance(login, list): sum_of_lookups += len(login)
         elif login: sum_of_lookups += 1
 
         # TODO: Remove check for user_id and login being mutually exclusive only if token is user access token
-        validation = {
-            (sum_of_lookups > 100): "Cannot look up for 100+ IDs and/or logins"
-        }
-
-        for condition, error in validation.items():
-            if condition: raise ValueError(error)
+        if sum_of_lookups > 100:
+            raise ValueError("Cannot look up for 100+ IDs and/or logins")
 
         if user_id and login: parameters = {"id": user_id, "login": login}
         elif user_id: parameters = {"id": user_id}
