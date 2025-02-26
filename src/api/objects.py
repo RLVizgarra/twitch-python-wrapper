@@ -73,6 +73,22 @@ class Emote:
     theme_mode: tuple[EmoteThemeMode, ...]
 
 @dataclass(frozen=True)
+class ChatBadge:
+    id: str
+    image_url_1x: str
+    image_url_2x: str
+    image_url_4x: str
+    title: str
+    description: str
+    click_action: str | None
+    click_url: str | None
+
+@dataclass(frozen=True)
+class ChatBadgeSet:
+    set_id: str
+    versions: tuple[ChatBadge, ...]
+
+@dataclass(frozen=True)
 class Clip:
     id: str
     url: str

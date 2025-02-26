@@ -54,3 +54,7 @@ class TestAPIClient:
         assert hash(self.client.chat.get_emote_sets(emote_set_id="301590448")) == 8199447653793326264
         assert hash(self.client.chat.get_emote_sets(emote_set_id="374814395")) == -1838195492418291180
         assert hash(self.client.chat.get_emote_sets(emote_set_id=["301590448", "374814395"])) == -8056364215214985908
+
+    def test_get_channel_chat_badges(self):
+        assert hash(self.client.chat.get_channel_chat_badges("12826")) ==8269109171712613325
+        assert hash(self.client.chat.get_channel_chat_badges("197886470")) == -3076710540262200488

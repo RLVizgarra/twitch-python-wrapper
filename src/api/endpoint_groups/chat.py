@@ -2,7 +2,7 @@ import httpx
 
 from api.client import APIClient
 from api.enums import EmoteType, EmoteFormat, EmoteThemeMode
-from api.objects import Emote
+from api.objects import Emote, ChatBadgeSet, ChatBadge
 
 
 class Chat:
@@ -122,8 +122,38 @@ class Chat:
         return tuple(emotes), res["template"]
 
     # https://dev.twitch.tv/docs/api/reference/#get-channel-chat-badges
-    def get_channel_chat_badges(self):
-        pass
+    def get_channel_chat_badges(self,
+                                broadcaster_id: str) -> ChatBadgeSet | tuple[ChatBadgeSet, ...] | None:
+        url = self.client._url + "chat/badges"
+
+        req = httpx.get(url,
+                        params={"broadcaster_id": broadcaster_id},
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()
+
+        if len(res["data"]) < 1: return None
+
+        badge_sets = list()
+        for badges_set in res["data"]:
+            badges = list()
+            for badge in badges_set["versions"]:
+                badges.append(ChatBadge(id=badge["id"],
+                                        image_url_1x=badge["image_url_1x"],
+                                        image_url_2x=badge["image_url_2x"],
+                                        image_url_4x=badge["image_url_4x"],
+                                        title=badge["title"],
+                                        description=badge["description"],
+                                        click_action=badge["click_action"],
+                                        click_url=badge["click_url"]))
+
+            badge_sets.append(ChatBadgeSet(set_id=badges_set["set_id"],
+                                           versions=tuple(badges)))
+
+        if len(badge_sets) < 2: return badge_sets[0]
+
+        return tuple(badge_sets)
 
     # https://dev.twitch.tv/docs/api/reference/#get-global-chat-badges
     def get_global_chat_badges(self):

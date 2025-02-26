@@ -78,6 +78,7 @@ class Videos:
             if video["muted_segments"]:
                 for segment in video["muted_segments"]:
                     muted_segments.append(MutedSegment(segment["duration"], segment["offset"]))
+
             videos.append(Video(id=video["id"],
                                 stream_id=video["stream_id"],
                                 user_id=video["user_id"],
