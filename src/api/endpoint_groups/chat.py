@@ -67,8 +67,8 @@ class Chat:
             for emote_format in emote["format"]: formats.append(EmoteFormat(emote_format))
             scales = list()
             for scale in emote["scale"]: formats.append(scale)
-            themes_modes = list()
-            for theme_mode in emote["theme_mode"]: themes_modes.append(EmoteThemeMode(theme_mode))
+            themes = list()
+            for theme in emote["theme_mode"]: themes.append(EmoteThemeMode(theme))
             emotes.append(Emote(id=emote["id"],
                                 name=emote["name"],
                                 images=tuple(sorted((str(k), str(v)) for k, v in emote["images"].items())),
@@ -78,7 +78,7 @@ class Chat:
                                 owner_id=None,
                                 format=tuple(formats),
                                 scale=tuple(scales),
-                                theme_mode=tuple(themes_modes)))
+                                theme_mode=tuple(themes)))
 
         return tuple(emotes), res["template"]
 

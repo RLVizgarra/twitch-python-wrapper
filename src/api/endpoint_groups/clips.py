@@ -60,8 +60,7 @@ class Clips:
                         headers=self.client._headers,
                         timeout=self.client._timeout)
 
-        if req.status_code == 404:
-            return None
+        if req.status_code == 404: return None
 
         req.raise_for_status()
         res = req.json()
