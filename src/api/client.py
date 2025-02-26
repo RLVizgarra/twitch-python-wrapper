@@ -20,6 +20,26 @@ class APIClient:
         }
         self._timeout = timeout
 
+    # https://dev.twitch.tv/docs/api/reference/#start-commercial
+    def start_commercial(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-ad-schedule
+    def get_ad_schedule(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#snooze-next-ad
+    def snooze_next_ad(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-extension-analytics
+    def get_extension_analytics(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-bits-leaderboard
+    def get_bits_leaderboard(self):
+        pass
+
     # https://dev.twitch.tv/docs/api/reference/#get-cheermotes
     def get_cheermotes(self,
                        broadcaster_id: str = None) -> tuple[Cheermote, ...]:
@@ -51,6 +71,122 @@ class APIClient:
                                         is_charitable=cheermote["is_charitable"]))
 
         return tuple(cheermotes)
+
+    # https://dev.twitch.tv/docs/api/reference/#get-extension-transactions
+    def get_extension_transactions(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-channel-information
+    def get_channel_information(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#modify-channel-information
+    def modify_channel_information(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-channel-editors
+    def get_channel_editors(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-followed-channels
+    def get_followed_channels(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#create-custom-rewards
+    def create_custom_rewards(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#delete-custom-reward
+    def delete_custom_reward(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-custom-reward
+    def get_custom_reward(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-custom-reward-redemption
+    def get_custom_reward_redemption(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-custom-reward
+    def update_custom_reward(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-redemption-status
+    def update_redemption_status(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-charity-campaign
+    def get_charity_campaign(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-charity-campaign-donations
+    def get_charity_campaign_donations(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-chatters
+    def get_chatters(self):
+        pass
+    
+    # https://dev.twitch.tv/docs/api/reference/#get-channel-emotes
+    def get_channel_emotes(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-global-emotes
+    def get_global_emotes(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-emote-sets
+    def get_emote_sets(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-channel-chat-badges
+    def get_channel_chat_badges(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-global-chat-badges
+    def get_global_chat_badges(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-chat-settings
+    def get_chat_settings(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-shared-chat-session
+    def get_shared_chat_session(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-user-emotes
+    def get_user_emotes(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-chat-settings
+    def update_chat_settings(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#send-chat-announcement
+    def send_chat_announcement(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#send-a-shoutout
+    def send_a_shoutout(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#send-chat-message
+    def send_chat_message(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-user-chat-color
+    def get_user_chat_color(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-user-chat-color
+    def update_user_chat_color(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#create-clip
+    def create_clip(self):
+        pass
 
     # https://dev.twitch.tv/docs/api/reference/#get-clips
     def get_clips(self,
@@ -127,6 +263,90 @@ class APIClient:
 
         return tuple(clips)
 
+    # https://dev.twitch.tv/docs/api/reference/#get-conduits
+    def get_conduits(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#create-conduits
+    def create_conduits(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-conduits
+    def update_conduits(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#delete-conduit
+    def delete_conduit(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-conduit-shards
+    def get_conduit_shards(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-conduit-shards
+    def update_conduit_shards(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-content-classification-labels
+    def get_content_classification_labels(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-drops-entitlements
+    def get_drops_entitlements(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-drops-entitlements
+    def update_drops_entitlements(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-extension-configuration-segment
+    def get_extension_configuration_segment(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#set-extension-configuration-segment
+    def set_extension_configuration_segment(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#set-extension-required-configuration
+    def set_extension_required_configuration(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#send-extension-pubsub-message
+    def send_extension_pubsub_message(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-extension-live-channels
+    def get_extension_live_channels(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-extension-secrets
+    def get_extension_secrets(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#create-extension-secret
+    def create_extension_secret(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#send-extension-chat-message
+    def send_extension_chat_message(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-extensions
+    def get_extensions(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-released-extensions
+    def get_released_extensions(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-extension-bits-products
+    def get_extension_bits_products(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-extension-bits-product
+    def update_extension_bits_product(self):
+        pass
+
     # https://dev.twitch.tv/docs/api/reference/#create-eventsub-subscription
     def create_eventsub_subscription(self,
                                      subscription_type: SubscriptionType,
@@ -189,6 +409,230 @@ class APIClient:
 
         return subscription, res["total"], res["total_cost"], res["max_total_cost"]
 
+    # https://dev.twitch.tv/docs/api/reference/#delete-eventsub-subscription
+    def delete_eventsub_subscription(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-eventsub-subscriptions
+    def get_eventsub_subscriptions(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-top-games
+    def get_top_games(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-games
+    def get_games(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-creator-goals
+    def get_creator_goals(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-hype-train-events
+    def get_hype_train_events(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#check-automod-status
+    def check_automod_status(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#manage-held-automod-messages
+    def manage_held_automod_messages(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-automod-settings
+    def get_automod_settings(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-automod-settings
+    def update_automod_settings(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-banned-users
+    def get_banned_users(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#ban-user
+    def ban_user(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#unban-user
+    def unban_user(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-unban-requests
+    def get_unban_requests(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#resolve-unban-requests
+    def resolve_unban_requests(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-blocked-terms
+    def get_blocked_terms(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#add-blocked-term
+    def add_blocked_terms(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#remove-blocked-term
+    def remove_blocked_term(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#delete-chat-messages
+    def delete_chat_messages(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-moderated-channels
+    def get_moderated_channels(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-moderators
+    def get_moderators(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#add-channel-moderator
+    def add_channel_moderator(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#remove-channel-moderator
+    def remove_channel_moderator(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-vips
+    def get_vips(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#add-channel-vip
+    def add_channel_vip(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#remove-channel-vip
+    def remove_channel_vip(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-shield-mode-status
+    def update_shield_mode_status(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-shield-mode-status
+    def get_shield_mode_status(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#warn-chat-user
+    def warn_chat_user(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-polls
+    def get_polls(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#create-poll
+    def create_poll(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#end-poll
+    def end_poll(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-predictions
+    def get_predictions(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#create-prediction
+    def create_prediction(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#end-prediction
+    def end_prediction(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#start-a-raid
+    def start_a_raid(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#cancel-a-raid
+    def cancel_a_raid(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-channel-stream-schedule
+    def get_channel_stream_schedule(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-channel-icalendar
+    def get_channel_icalendar(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-channel-stream-schedule
+    def update_channel_stream_schedule(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#create-channel-stream-schedule-segment
+    def create_channel_stream_schedule_segment(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-channel-stream-schedule-segment
+    def update_channel_stream_schedule_segment(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#delete-channel-stream-schedule-segment
+    def delete_channel_stream_schedule_segment(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#search-categories
+    def search_categories(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#search-channels
+    def search_channels(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-stream-key
+    def get_stream_key(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-streams
+    def get_streams(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-followed-streams
+    def get_followed_streams(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#create-stream-marker
+    def create_stream_marker(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-stream-markers
+    def get_stream_markers(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-broadcaster-subscriptions
+    def get_broadcaster_subscriptions(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#check-user-subscription
+    def check_user_subscription(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-all-stream-tags
+    def get_all_stream_tags(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-stream-tags
+    def get_stream_tags(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-channel-teams
+    def get_channel_teams(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-teams
+    def get_teams(self):
+        pass
+
     # https://dev.twitch.tv/docs/api/reference/#get-users
     def get_users(self,
                   user_id: str | list[str] = None,
@@ -238,6 +682,34 @@ class APIClient:
         if len(users) < 2: return users[0]
 
         return tuple(users)
+
+    # https://dev.twitch.tv/docs/api/reference/#update-user
+    def update_user(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-user-block-list
+    def get_user_block_list(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#block-user
+    def block_user(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#unblock-user
+    def unblock_user(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-user-extensions
+    def get_user_extensions(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#get-user-active-extensions
+    def get_user_active_extensions(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#update-user-extensions
+    def update_user_extensions(self):
+        pass
 
     # https://dev.twitch.tv/docs/api/reference/#get-videos
     def get_videos(self,
@@ -325,3 +797,11 @@ class APIClient:
         if len(res["pagination"]) > 0: return tuple(videos), Pagination(res["pagination"]["cursor"])
 
         return tuple(videos)
+
+    # https://dev.twitch.tv/docs/api/reference/#delete-videos
+    def delete_videos(self):
+        pass
+
+    # https://dev.twitch.tv/docs/api/reference/#send-whisper
+    def send_whisper(self):
+        pass
