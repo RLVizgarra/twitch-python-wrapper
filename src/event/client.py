@@ -58,7 +58,7 @@ class EventClient:
     def __register(self, handler: dict, session_id: str):
         if handler["registered"]: return
 
-        self._api.create_eventsub_subscription(subscription_type=handler["subscription"],
+        self._api.eventsub.create_eventsub_subscription(subscription_type=handler["subscription"],
                                                version=handler["version"],
                                                condition=handler["condition"],
                                                transport=SubscriptionTransport(method="websocket",
