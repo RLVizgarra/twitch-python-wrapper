@@ -11,8 +11,8 @@ from dateutil.parser import isoparse
 from api.client import APIClient
 from event.enums import MessageType
 from event.objects import Metadata
-from shared_enums import SubscriptionType
-from shared_objects import SubscriptionTransport
+from shared_enums import SubscriptionType, NotificationTransportMethod
+from shared_objects import NotificationTransport
 
 BuiltinNotifications = Literal["builtins.message.welcome",
                          "builtins.message.keepalive",
@@ -61,7 +61,7 @@ class EventClient:
         self._api.eventsub.create_eventsub_subscription(subscription_type=handler["subscription"],
                                                version=handler["version"],
                                                condition=handler["condition"],
-                                               transport=SubscriptionTransport(method="websocket",
+                                               transport=NotificationTransport(method=NotificationTransportMethod.WEBSOCKET,
                                                                                session_id=session_id))
         handler["registered"] = True
 

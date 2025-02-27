@@ -4,7 +4,7 @@ from dateutil.parser import isoparse
 from api.client import APIClient
 from api.objects import Subscription
 from shared_enums import SubscriptionType
-from shared_objects import SubscriptionTransport
+from shared_objects import NotificationTransport
 
 
 class EventSub:
@@ -16,7 +16,7 @@ class EventSub:
                                      subscription_type: SubscriptionType,
                                      version: str,
                                      condition: dict,
-                                     transport: SubscriptionTransport) -> tuple[Subscription, int, int, int]:
+                                     transport: NotificationTransport) -> tuple[Subscription, int, int, int]:
         url = self.client._url + "eventsub/subscriptions"
 
         validation = {
@@ -54,7 +54,7 @@ class EventSub:
 
         sub = res["data"][0]
         raw_res_transport = sub["transport"]
-        res_transport = SubscriptionTransport(method=raw_res_transport["method"])
+        res_transport = NotificationTransport(method=raw_res_transport["method"])
 
         match res_transport.method:
             case "webhook":

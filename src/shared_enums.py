@@ -5,6 +5,11 @@ class Enums(str, Enum):
     def __repr__(self):
         return f"{self.__class__.__name__}.{self.name}"
 
+class NotificationTransportMethod(Enums):
+    WEBHOOK = "webhook"
+    WEBSOCKET = "websocket"
+    CONDUIT = "conduit"
+
 class SubscriptionType(Enums):
     AUTOMOD_MESSAGE_HOLD = "automod.message.hold"
     AUTOMOD_MESSAGE_UPDATE = "automod.message.update"

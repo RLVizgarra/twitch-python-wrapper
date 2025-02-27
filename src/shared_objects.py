@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Literal
+
+from shared_enums import NotificationTransportMethod
+
 
 class Objects:
     def __repr__(self):
@@ -14,8 +16,8 @@ class Objects:
         return iter(self.__dict__.items())
 
 @dataclass
-class SubscriptionTransport(Objects):
-    method: Literal["webhook", "websocket", "conduit"]
+class NotificationTransport(Objects):
+    method: NotificationTransportMethod
     callback: str = None
     secret: str = None
     session_id: str = None

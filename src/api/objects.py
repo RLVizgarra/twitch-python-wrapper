@@ -138,7 +138,7 @@ class Subscription(Objects):
     version: str
     condition: tuple[tuple[str, str], ...]
     created_at: int
-    transport: SubscriptionTransport
+    transport: NotificationTransport
     cost: int
 
 @dataclass(frozen=True)
