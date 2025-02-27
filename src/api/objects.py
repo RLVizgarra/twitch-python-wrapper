@@ -131,6 +131,12 @@ class Conduit(Objects):
     shard_count: int
 
 @dataclass(frozen=True)
+class ConduitShard(Objects):
+    id: str
+    status: ConduitShardStatus
+    transport: NotificationTransport
+
+@dataclass(frozen=True)
 class Subscription(Objects):
     id: str
     status: Literal["enabled", "webhook_callback_verification_pending"]

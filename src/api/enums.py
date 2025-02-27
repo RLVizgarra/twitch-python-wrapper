@@ -30,10 +30,18 @@ class EmoteThemeMode(Enums):
     DARK = "dark"
     LIGHT = "light"
 
-class VideoType(Enums):
-    ARCHIVE = "archive"
-    HIGHLIGHT = "highlight"
-    UPLOAD = "upload"
+class ConduitShardStatus(Enums):
+    ENABLED = "enabled"
+    WEBHOOK_CALLBACK_VERIFICATION_PENDING = "webhook_callback_verification_pending"
+    WEBHOOK_CALLBACK_VERIFICATION_FAILED = "webhook_callback_verification_failed"
+    NOTIFICATION_FAILURES_EXCEEDED = "notification_failures_exceeded"
+    WEBSOCKET_DISCONNECTED = "websocket_disconnected"
+    WEBSOCKET_FAILED_PING_PONG = "websocket_failed_ping_pong"
+    WEBSOCKET_RECEIVED_INBOUND_TRAFFIC = "websocket_received_inbound_traffic"
+    WEBSOCKET_INTERNAL_ERROR = "websocket_internal_error"
+    WEBSOCKET_NETWORK_FAILURE = "websocket_network_timeout"
+    WEBSOCKET_NETWORK_ERROR = "websocket_network_error"
+    WEBSOCKET_FAILED_TO_RECONNECT = "websocket_failed_to_reconnect"
 
 class UserType(Enums):
     ADMIN = "admin"
