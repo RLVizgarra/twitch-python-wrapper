@@ -41,8 +41,12 @@ class UserType(Enums):
     STAFF = "staff"
     NORMAL = ""
 
-
 class BroadcasterType(Enums):
     AFFILIATE = "affiliate"
     PARTNER = "partner"
     NORMAL = ""
+
+class VideoType(Enums):
+    ARCHIVE = "archive"
+    HIGHLIGHT = "highlight"
+    UPLOAD = "upload"

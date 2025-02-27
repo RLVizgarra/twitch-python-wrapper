@@ -3,7 +3,7 @@ from typing import Literal
 
 from api.enums import *
 from shared_enums import SubscriptionType
-from shared_objects import SubscriptionTransport, Objects
+from shared_objects import NotificationTransport, Objects
 
 
 # https://dev.twitch.tv/docs/api/guide/#pagination

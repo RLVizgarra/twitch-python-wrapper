@@ -62,7 +62,12 @@ class EventClient:
                                                version=handler["version"],
                                                condition=handler["condition"],
                                                transport=NotificationTransport(method=NotificationTransportMethod.WEBSOCKET,
-                                                                               session_id=session_id))
+                                                                               callback=None,
+                                                                               secret=None,
+                                                                               session_id=session_id,
+                                                                               conduit_id=None,
+                                                                               connected_at=None,
+                                                                               disconnected_at=None))
         handler["registered"] = True
 
     def _trigger_notification(self, metadata: Metadata, payload: dict):

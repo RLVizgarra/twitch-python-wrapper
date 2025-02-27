@@ -53,17 +53,13 @@ class EventSub:
         res = req.json()
 
         sub = res["data"][0]
-        raw_res_transport = sub["transport"]
-        res_transport = NotificationTransport(method=raw_res_transport["method"])
-
-        match res_transport.method:
-            case "webhook":
-                res_transport.callback = raw_res_transport["callback"]
-                res_transport.secret = raw_res_transport["secret"]
-            case "websocket":
-                res_transport.session_id = raw_res_transport["session_id"]
-            case "conduit":
-                res_transport.conduit_id = raw_res_transport["conduit_id"]
+        transport = NotificationTransport(method=sub["transport"]["method"],
+                                              callback=sub["transport"]["callback"] if "callback" in sub["transport"] else None,
+                                              secret=sub["transport"]["secret"] if "secret" in sub["transport"] else None,
+                                              session_id=sub["transport"]["session_id"] if "session_id" in sub["transport"] else None,
+                                              conduit_id=sub["transport"]["conduit_id"] if "conduit_id" in sub["transport"] else None,
+                                              connected_at=sub["transport"]["connected_at"] if "connected_at" in sub["transport"] else None,
+                                              disconnected_at=sub["transport"]["disconnected_at"] if "disconnected_at" in sub["transport"] else None)
 
         subscription = Subscription(id=sub["id"],
                                     status=sub["status"],
@@ -71,7 +67,7 @@ class EventSub:
                                     version=sub["version"],
                                     condition=tuple(sorted((str(k), str(v)) for k, v in sub["condition"].items())),
                                     created_at=int(isoparse(sub["created_at"]).timestamp()),
-                                    transport=res_transport,
+                                    transport=transport,
                                     cost=sub["cost"])
 
         return subscription, res["total"], res["total_cost"], res["max_total_cost"]

@@ -18,7 +18,9 @@ class Objects:
 @dataclass
 class NotificationTransport(Objects):
     method: NotificationTransportMethod
-    callback: str = None
-    secret: str = None
-    session_id: str = None
-    conduit_id: str = None
+    callback: str | None
+    secret: str | None
+    session_id: str | None
+    conduit_id: str | None
+    connected_at: int | None
+    disconnected_at: int | None
