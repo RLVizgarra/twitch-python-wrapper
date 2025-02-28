@@ -40,7 +40,7 @@ class Channel(Objects):
     title: str
     delay: int
     tags: tuple[str, ...]
-    content_classification_labels: tuple[ContentClassificationLabel, ...]
+    content_classification_labels: tuple[ContentClassificationLabelId, ...]
     is_branded_content: bool
 
 @dataclass(frozen=True)

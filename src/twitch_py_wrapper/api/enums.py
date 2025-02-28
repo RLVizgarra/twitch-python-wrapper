@@ -8,15 +8,6 @@ class CheermoteType(Enums):
     DISPLAY_ONLY = "display_only"
     SPONSORED = "sponsored"
 
-class ContentClassificationLabel(Enums):
-    DEBATED_SOCIAL_ISSUES_AND_POLITICS = "DebatedSocialIssuesAndPolitics"
-    DRUGS_INTOXICATION = "DrugsIntoxication"
-    GAMBLING = "Gambling"
-    MATURE_GAME = "MatureGame"
-    PROFANITY_VULGARITY = "ProfanityVulgarity"
-    SEXUAL_THEMES = "SexualThemes"
-    VIOLENT_GRAPHIC = "ViolentGraphic"
-
 class EmoteType(Enums):
     BITSTIER = "bitstier"
     FOLLOWER = "follower"
@@ -42,6 +33,15 @@ class ConduitShardStatus(Enums):
     WEBSOCKET_NETWORK_FAILURE = "websocket_network_timeout"
     WEBSOCKET_NETWORK_ERROR = "websocket_network_error"
     WEBSOCKET_FAILED_TO_RECONNECT = "websocket_failed_to_reconnect"
+
+class ContentClassificationLabelId(Enums):
+    DEBATED_SOCIAL_ISSUES_AND_POLITICS = "DebatedSocialIssuesAndPolitics"
+    DRUGS_INTOXICATION = "DrugsIntoxication"
+    GAMBLING = "Gambling"
+    MATURE_GAME = "MatureGame"
+    PROFANITY_VULGARITY = "ProfanityVulgarity"
+    SEXUAL_THEMES = "SexualThemes"
+    VIOLENT_GRAPHIC = "ViolentGraphic"
 
 class UserType(Enums):
     ADMIN = "admin"

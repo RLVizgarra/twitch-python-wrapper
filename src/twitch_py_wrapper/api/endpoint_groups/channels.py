@@ -1,7 +1,7 @@
 import httpx
 
 from twitch_py_wrapper.api.client import APIClient
-from twitch_py_wrapper.api.enums import ContentClassificationLabel
+from twitch_py_wrapper.api.enums import ContentClassificationLabelId
 from twitch_py_wrapper.api.objects import Channel
 
 
@@ -30,7 +30,7 @@ class Channels:
         for channel in res:
             content_classification_labels = list()
             for label in channel["content_classification_labels"]:
-                content_classification_labels.append(ContentClassificationLabel(label))
+                content_classification_labels.append(ContentClassificationLabelId(label))
             channels.append(Channel(broadcaster_id=channel["broadcaster_id"],
                                     broadcaster_login=channel["broadcaster_login"],
                                     broadcaster_name=channel["broadcaster_name"],
