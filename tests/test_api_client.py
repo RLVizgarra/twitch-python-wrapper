@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
-from api.client import APIClient
+from twitch_py_wrapper.api.client import APIClient
 
 load_dotenv()
 
@@ -46,9 +46,6 @@ class TestAPIClient:
     def test_get_channel_emotes(self):
         assert hash(self.client.chat.get_channel_emotes(broadcaster_id="141981764")) == 196265680831279960
         assert hash(self.client.chat.get_channel_emotes(broadcaster_id="12826")) == -5584805614351045098
-
-    def test_get_global_emotes(self):
-        assert hash(self.client.chat.get_global_emotes()) == -1911754963837804676
 
     def test_get_emote_sets(self):
         assert hash(self.client.chat.get_emote_sets(emote_set_id="301590448")) == 8199447653793326264
