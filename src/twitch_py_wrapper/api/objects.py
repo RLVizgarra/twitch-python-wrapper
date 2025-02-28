@@ -130,7 +130,7 @@ class Conduit(Objects):
     id: str
     shard_count: int
 
-@dataclass(frozen=True)
+@dataclass
 class ConduitShard(Objects):
     id: str
     status: ConduitShardStatus
