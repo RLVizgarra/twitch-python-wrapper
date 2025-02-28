@@ -1,4 +1,10 @@
+from typing import Literal
+
+import httpx
+
 from twitch_py_wrapper.api.client import APIClient
+from twitch_py_wrapper.api.enums import ContentClassificationLabelId
+from twitch_py_wrapper.api.objects import ContentClassificationLabel
 
 
 class CCLs:
@@ -6,5 +12,21 @@ class CCLs:
         self.client = client
 
     # https://dev.twitch.tv/docs/api/reference/#get-content-classification-labels
-    def get_content_classification_labels(self):
-        pass
+    def get_content_classification_labels(self,
+                                          locale: Literal["bg-BG", "cs-CZ", "da-DK", "da-DK", "de-DE", "el-GR", "en-GB", "en-US", "es-ES", "es-MX", "fi-FI", "fr-FR", "hu-HU", "it-IT", "ja-JP", "ko-KR", "nl-NL", "no-NO", "pl-PL", "pt-BT", "pt-PT", "ro-RO", "ru-RU", "sk-SK", "sv-SE", "th-TH", "tr-TR", "vi-VN", "zh-CN", "zh-TW"] = "en-US") -> tuple[ContentClassificationLabel, ...]:
+        url = self.client._url + "content_classification_labels"
+
+        req = httpx.get(url,
+                        params={"locale": locale},
+                        headers=self.client._headers,
+                        timeout=self.client._timeout)
+        req.raise_for_status()
+        res = req.json()["data"]
+
+        labels = list()
+        for label in res:
+            labels.append(ContentClassificationLabel(id=ContentClassificationLabelId(label["id"]),
+                                                     description=label["description"],
+                                                     name=label["name"]))
+
+        return tuple(labels)

@@ -65,3 +65,6 @@ class TestAPIClient:
     def test_get_user_chat_color(self):
         assert hash(self.client.chat.get_user_chat_color("141981764")) == 8406074055112061289
         assert hash(self.client.chat.get_user_chat_color("12826")) == 7968065401081294306
+
+    def test_get_content_classification_labels(self):
+        assert hash(self.client.ccls.get_content_classification_labels("en-US")) == -4466657788493661200

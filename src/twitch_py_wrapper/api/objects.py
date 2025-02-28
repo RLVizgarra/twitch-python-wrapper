@@ -137,6 +137,12 @@ class ConduitShard(Objects):
     transport: NotificationTransport
 
 @dataclass(frozen=True)
+class ContentClassificationLabel(Objects):
+    id: ContentClassificationLabelId
+    description: str
+    name: str
+
+@dataclass(frozen=True)
 class Subscription(Objects):
     id: str
     status: Literal["enabled", "webhook_callback_verification_pending"]
