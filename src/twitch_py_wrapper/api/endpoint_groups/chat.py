@@ -54,7 +54,7 @@ class Chat:
         return tuple(emotes), res["template"]
 
     # https://dev.twitch.tv/docs/api/reference/#get-global-emotes
-    def get_global_emotes(self) -> tuple[tuple[Emote, ...], str] | None:
+    def get_global_emotes(self) -> tuple[tuple[Emote, ...], str]:
         url = self.client._url + "chat/emotes/global"
 
         req = httpx.get(url,
