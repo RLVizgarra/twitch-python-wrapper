@@ -15,6 +15,7 @@ class SubscriptionType(Enums):
     AUTOMOD_MESSAGE_UPDATE = "automod.message.update"
     AUTOMOD_SETTINGS_UPDATE = "automod.settings.update"
     AUTOMOD_TERMS_UPDATE = "automod.terms.update"
+    CHANNEL_BITS_USE = "channel.bits.use"
     CHANNEL_UPDATE = "channel.update"
     CHANNEL_FOLLOW = "channel.follow"
     CHANNEL_AD_BREAK_BEGIN = "channel.ad_break.begin"
