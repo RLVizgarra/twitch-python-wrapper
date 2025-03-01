@@ -21,7 +21,7 @@ class EmoteThemeMode(Enums):
     DARK = "dark"
     LIGHT = "light"
 
-class ConduitShardStatus(Enums):
+class SubscriptionStatus(Enums):
     ENABLED = "enabled"
     WEBHOOK_CALLBACK_VERIFICATION_PENDING = "webhook_callback_verification_pending"
     WEBHOOK_CALLBACK_VERIFICATION_FAILED = "webhook_callback_verification_failed"

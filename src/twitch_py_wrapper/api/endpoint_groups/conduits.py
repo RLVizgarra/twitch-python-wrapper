@@ -1,7 +1,7 @@
 import httpx
 
 from twitch_py_wrapper.api.client import APIClient
-from twitch_py_wrapper.api.enums import ConduitShardStatus
+from twitch_py_wrapper.api.enums import SubscriptionStatus
 from twitch_py_wrapper.api.objects import Conduit, Pagination, ConduitShard
 from twitch_py_wrapper.shared_enums import NotificationTransportMethod
 from twitch_py_wrapper.shared_objects import NotificationTransport
@@ -77,7 +77,7 @@ class Conduits:
     # https://dev.twitch.tv/docs/api/reference/#get-conduit-shards
     def get_conduit_shards(self,
                            conduit_id: str,
-                           status: ConduitShardStatus | None,
+                           status: SubscriptionStatus | None,
                            after: Pagination | None) -> ConduitShard | tuple[ConduitShard, ...] | tuple[tuple[ConduitShard, ...], Pagination] | None:
         url = self.client._url + "eventsub/conduits/shards"
 
@@ -111,7 +111,7 @@ class Conduits:
                                               disconnected_at=shard["transport"]["disconnected_at"] if shard["transport"]["disconnected_at"] else None)
 
             shards.append(ConduitShard(id=shard["id"],
-                                       status=ConduitShardStatus(shard["status"]),
+                                       status=SubscriptionStatus(shard["status"]),
                                        transport=transport))
 
         if len(shards) < 2: return shards[0]

@@ -133,7 +133,7 @@ class Conduit(Objects):
 @dataclass
 class ConduitShard(Objects):
     id: str
-    status: ConduitShardStatus
+    status: SubscriptionStatus
     transport: NotificationTransport
 
 @dataclass(frozen=True)
