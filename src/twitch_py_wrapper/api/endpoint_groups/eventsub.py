@@ -73,8 +73,15 @@ class EventSub:
         return subscription, res["total"], res["total_cost"], res["max_total_cost"]
 
     # https://dev.twitch.tv/docs/api/reference/#delete-eventsub-subscription
-    def delete_eventsub_subscription(self):
-        pass
+    def delete_eventsub_subscription(self,
+                                     subscription_id: str):
+        url = self.client._url + "eventsub/subscriptions"
+
+        req = httpx.delete(url,
+                           params={"id": subscription_id},
+                           headers=self.client._headers,
+                           timeout=self.client._timeout)
+        req.raise_for_status()
 
     # https://dev.twitch.tv/docs/api/reference/#get-eventsub-subscriptions
     def get_eventsub_subscriptions(self):
