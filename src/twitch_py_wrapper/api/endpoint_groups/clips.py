@@ -38,12 +38,12 @@ class Clips:
         for condition, error in validation.items():
             if condition: raise ValueError(error)
 
-        if clip_id: parameters = {"id": clip_id}
-        elif broadcaster_id and game_id: parameters = {"broadcaster_id": broadcaster_id, "game_id": game_id}
-        elif broadcaster_id: parameters = {"broadcaster_id": broadcaster_id}
-        else: parameters = {"game_id": game_id}
+        parameters = {}
 
         optional_params = {
+            "broadcaster_id": broadcaster_id,
+            "game_id": game_id,
+            "id": clip_id,
             "started_at": datetime.fromtimestamp(started_at, tz=pytz.utc).isoformat("T")[:-6] + "Z" if started_at else None,
             "ended_at": datetime.fromtimestamp(ended_at, tz=pytz.utc).isoformat("T")[:-6] + "Z" if ended_at else None,
             "first": first,
