@@ -154,6 +154,13 @@ class Subscription(Objects):
     cost: int
 
 @dataclass(frozen=True)
+class Game(Objects):
+    id: str
+    name: str
+    box_art_url: str
+    igdb_id: str | None
+
+@dataclass(frozen=True)
 class User(Objects):
     id: str
     login: str
