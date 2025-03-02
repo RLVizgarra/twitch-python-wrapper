@@ -1,7 +1,7 @@
 import httpx
 
 from twitch_py_wrapper.api.client import APIClient
-from twitch_py_wrapper.api.objects import Pagination, Game
+from twitch_py_wrapper.api.objects import Pagination, Category
 
 
 class Games:
@@ -12,7 +12,7 @@ class Games:
     def get_top_games(self,
                       first: int = None,
                       after: Pagination = None,
-                      before: Pagination = None) -> tuple[Game, ...] | tuple[tuple[Game, ...], Pagination]:
+                      before: Pagination = None) -> tuple[Category, ...] | tuple[tuple[Category, ...], Pagination]:
         url = self.client._url + "games/top"
 
         if first and (first < 1 or first > 100):
@@ -38,10 +38,10 @@ class Games:
 
         games = list()
         for game in res["data"]:
-            games.append(Game(id=game["id"],
-                              name=game["name"],
-                              box_art_url=game["box_art_url"],
-                              igdb_id=game["igdb_id"] if game["igdb_id"] != "" else None))
+            games.append(Category(id=game["id"],
+                                  name=game["name"],
+                                  box_art_url=game["box_art_url"],
+                                  igdb_id=game["igdb_id"] if game["igdb_id"] != "" else None))
 
         if len(res["pagination"]) > 0: return tuple(games), Pagination(res["pagination"]["cursor"])
 
@@ -51,7 +51,7 @@ class Games:
     def get_games(self,
                   game_id: str | list[str] = None,
                   name: str | list[str] = None,
-                  igdb_id: str | list[str] = None) -> Game | tuple[Game, ...] | None:
+                  igdb_id: str | list[str] = None) -> Category | tuple[Category, ...] | None:
         url = self.client._url + "games"
 
         sum_of_lookups = 0
@@ -96,10 +96,10 @@ class Games:
 
         games = list()
         for game in res:
-            games.append(Game(id=game["id"],
-                              name=game["name"],
-                              box_art_url=game["box_art_url"],
-                              igdb_id=game["igdb_id"]))
+            games.append(Category(id=game["id"],
+                                  name=game["name"],
+                                  box_art_url=game["box_art_url"],
+                                  igdb_id=game["igdb_id"]))
 
         if len(games) < 2: return games[0]
 

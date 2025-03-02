@@ -5,7 +5,7 @@ import pytz
 from dateutil.parser import isoparse
 
 from twitch_py_wrapper.api.client import APIClient
-from twitch_py_wrapper.api.objects import Pagination, ScheduleSegment, Game, BroadcasterSchedule, ScheduleVacation
+from twitch_py_wrapper.api.objects import Pagination, ScheduleSegment, Category, BroadcasterSchedule, ScheduleVacation
 
 
 class Schedule:
@@ -59,10 +59,10 @@ class Schedule:
                                             end_time=int(isoparse(segment["end_time"]).timestamp()),
                                             title=segment["title"],
                                             canceled_until=int(isoparse(segment["canceled_until"]).timestamp()) if segment["canceled_until"] else None,
-                                            category=Game(id=segment["category"]["id"],
-                                                          name=segment["category"]["name"],
-                                                          box_art_url="https://static-cdn.jtvnw.net/ttv-boxart/" + segment["category"]["id"] + "-{width}x{height}.jpg",
-                                                          igdb_id=None) if segment["category"] else None,
+                                            category=Category(id=segment["category"]["id"],
+                                                              name=segment["category"]["name"],
+                                                              box_art_url="https://static-cdn.jtvnw.net/ttv-boxart/" + segment["category"]["id"] + "-{width}x{height}.jpg",
+                                                              igdb_id=None) if segment["category"] else None,
                                             is_recurring=segment["is_recurring"]))
 
         schedule = BroadcasterSchedule(segments=tuple(segments),

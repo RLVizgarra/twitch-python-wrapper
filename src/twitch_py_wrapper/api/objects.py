@@ -154,7 +154,7 @@ class Subscription(Objects):
     cost: int
 
 @dataclass(frozen=True)
-class Game(Objects):
+class Category(Objects):
     id: str
     name: str
     box_art_url: str
@@ -167,7 +167,7 @@ class ScheduleSegment(Objects):
     end_time: int
     title: str
     canceled_until: int | None
-    category: Game | None
+    category: Category | None
     is_recurring: bool
 
 @dataclass(frozen=True)
