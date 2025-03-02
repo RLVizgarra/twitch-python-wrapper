@@ -176,9 +176,17 @@ class ScheduleVacation(Objects):
     start_time: int
     end_time: int
 
+@dataclass(frozen=True)
+class BroadcasterSchedule(Objects):
+    segments: tuple[ScheduleSegment, ...]
+    broadcaster_id: str
+    broadcaster_name: str
+    broadcaster_login: str
+    vacation: ScheduleVacation | None
+
 # TODO: Evaluate if and how to possibly combine this object with Channel (line 33)
 @dataclass(frozen=True)
-class ChannelSearched:
+class ChannelSearched(Objects):
     broadcaster_language: str
     broadcaster_login: str
     display_name: str
@@ -190,14 +198,6 @@ class ChannelSearched:
     thumbnail_url: str
     title: str
     started_at: int
-
-@dataclass(frozen=True)
-class BroadcasterSchedule(Objects):
-    segments: tuple[ScheduleSegment, ...]
-    broadcaster_id: str
-    broadcaster_name: str
-    broadcaster_login: str
-    vacation: ScheduleVacation | None
 
 @dataclass(frozen=True)
 class User(Objects):
@@ -212,12 +212,10 @@ class User(Objects):
     email: str | None
     created_at: int
 
-
 @dataclass(frozen=True)
 class MutedSegment(Objects):
     duration: int
     offset: int
-
 
 @dataclass(frozen=True)
 class Video(Objects):
