@@ -161,6 +161,29 @@ class Game(Objects):
     igdb_id: str | None
 
 @dataclass(frozen=True)
+class ScheduleSegment(Objects):
+    id: str
+    start_time: int
+    end_time: int
+    title: str
+    canceled_until: int | None
+    category: Game | None
+    is_recurring: bool
+
+@dataclass(frozen=True)
+class ScheduleVacation(Objects):
+    start_time: int
+    end_time: int
+
+@dataclass(frozen=True)
+class BroadcasterSchedule(Objects):
+    segments: tuple[ScheduleSegment, ...]
+    broadcaster_id: str
+    broadcaster_name: str
+    broadcaster_login: str
+    vacation: ScheduleVacation | None
+
+@dataclass(frozen=True)
 class User(Objects):
     id: str
     login: str
