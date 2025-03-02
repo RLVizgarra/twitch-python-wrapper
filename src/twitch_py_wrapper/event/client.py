@@ -45,17 +45,20 @@ class EventClient:
                 raise ValueError(error)
 
         def callback(function: Callable[[Metadata, dict], None]):
-            self._registered_event_handlers.append({
-                "subscription": subscription,
-                "condition": condition,
-                "version": version,
-                "callback": function,
-                "registered": False
-            })
+            self.register(function, subscription, version, condition)
             return function
         return callback
 
-    def __register(self, handler: dict, session_id: str):
+    def register(self, function: Callable[[Metadata, dict], None], subscription: SubscriptionType | BuiltinNotifications, version: str = None, condition: dict = None):
+        self._registered_event_handlers.append({
+            "subscription": subscription,
+            "condition": condition,
+            "version": version,
+            "callback": function,
+            "registered": False
+        })
+
+    def __create_subscription(self, handler: dict, session_id: str):
         if handler["registered"]: return
 
         self._api.eventsub.create_eventsub_subscription(subscription_type=handler["subscription"],
@@ -116,7 +119,7 @@ class EventClient:
                                 if not self._timeout: self._timeout = payload["session"]["keepalive_timeout_seconds"]
                                 for handler in self._registered_event_handlers:
                                     if not isinstance(handler["subscription"], SubscriptionType): continue
-                                    self.__register(handler, session_id)
+                                    self.__create_subscription(handler, session_id)
 
                             case MessageType.NOTIFICATION:
                                 self._trigger_notification(metadata, payload)
