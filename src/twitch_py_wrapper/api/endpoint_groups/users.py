@@ -28,10 +28,15 @@ class Users:
         if sum_of_lookups > 100:
             raise ValueError("Cannot look up for 100+ user IDs and/or logins")
 
-        if user_id and login: parameters = {"id": user_id, "login": login}
-        elif user_id: parameters = {"id": user_id}
-        elif login: parameters = {"login": login}
-        else: parameters = {}
+        parameters = {}
+
+        optional_params = {
+            "id": user_id,
+            "login": login
+        }
+
+        for key, value in optional_params.items():
+            if value: parameters[key] = value
 
         req = httpx.get(url,
                         params=parameters,
