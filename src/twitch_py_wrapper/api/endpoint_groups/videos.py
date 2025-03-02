@@ -42,12 +42,12 @@ class Videos:
         for condition, error in validation.items():
             if condition: raise ValueError(error)
 
-        if video_id: parameters = {"id": video_id}
-        elif user_id and game_id: parameters = {"user_id": user_id, "game_id": game_id}
-        elif user_id: parameters = {"user_id": user_id}
-        else: parameters = {"game_id": game_id}
+        parameters = {}
 
         optional_params = {
+            "id": video_id,
+            "user_id": user_id,
+            "game_id": game_id,
             "language": language,
             "period": period,
             "sort": sort,
