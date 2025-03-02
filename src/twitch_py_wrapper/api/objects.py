@@ -217,6 +217,21 @@ class Stream(Objects):
     is_mature: bool
 
 @dataclass(frozen=True)
+class BroadcasterTeams(Objects):
+    broadcaster_id: str
+    broadcaster_login: str
+    broadcaster_name: str
+    background_image_url: str | None
+    banner: str | None
+    created_at: int
+    updated_at: int
+    info: str
+    thumbnail_url: str
+    team_name: str
+    team_display_name: str
+    id: str
+
+@dataclass(frozen=True)
 class User(Objects):
     id: str
     login: str

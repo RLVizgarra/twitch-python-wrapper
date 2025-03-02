@@ -84,3 +84,6 @@ class TestAPIClient:
         for g in gs:
             h = hash(g)
             assert h == -9147344911711028063 or h == -4867558018606174595
+
+    def test_get_channel_teams(self):
+        assert hash(self.client.teams.get_channel_teams(broadcaster_id="96909659")) == 8370246977236723964
