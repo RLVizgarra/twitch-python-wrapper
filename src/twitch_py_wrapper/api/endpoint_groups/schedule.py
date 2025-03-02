@@ -77,8 +77,14 @@ class Schedule:
         return schedule
 
     # https://dev.twitch.tv/docs/api/reference/#get-channel-icalendar
-    def get_channel_icalendar(self):
-        pass
+    def get_channel_icalendar(self,
+                              broadcaster_id: str) -> str:
+        url = self.client._url + "schedule/icalendar"
+
+        req = httpx.get(url,
+                        params={"broadcaster_id": broadcaster_id})
+        req.raise_for_status()
+        return req.text
 
     # https://dev.twitch.tv/docs/api/reference/#update-channel-stream-schedule
     def update_channel_stream_schedule(self):
