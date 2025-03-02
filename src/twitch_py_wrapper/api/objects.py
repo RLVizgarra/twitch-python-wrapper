@@ -29,6 +29,7 @@ class Cheermote(Objects):
     last_update: int
     is_charitable: bool
 
+# TODO: See at line 179 (object ChannelSearched)
 @dataclass(frozen=True)
 class Channel(Objects):
     broadcaster_id: str
@@ -174,6 +175,21 @@ class ScheduleSegment(Objects):
 class ScheduleVacation(Objects):
     start_time: int
     end_time: int
+
+# TODO: Evaluate if and how to possibly combine this object with Channel (line 33)
+@dataclass(frozen=True)
+class ChannelSearched:
+    broadcaster_language: str
+    broadcaster_login: str
+    display_name: str
+    game_id: str
+    game_name: str
+    id: str
+    is_live: bool
+    tags: tuple[str, ...]
+    thumbnail_url: str
+    title: str
+    started_at: int
 
 @dataclass(frozen=True)
 class BroadcasterSchedule(Objects):
