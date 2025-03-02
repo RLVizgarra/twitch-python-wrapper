@@ -77,8 +77,8 @@ class Conduits:
     # https://dev.twitch.tv/docs/api/reference/#get-conduit-shards
     def get_conduit_shards(self,
                            conduit_id: str,
-                           status: SubscriptionStatus | None,
-                           after: Pagination | None) -> ConduitShard | tuple[ConduitShard, ...] | tuple[tuple[ConduitShard, ...], Pagination] | None:
+                           status: SubscriptionStatus = None,
+                           after: Pagination = None) -> ConduitShard | tuple[ConduitShard, ...] | tuple[tuple[ConduitShard, ...], Pagination] | None:
         url = self.client._url + "eventsub/conduits/shards"
 
         parameters = {"conduit_id": conduit_id}

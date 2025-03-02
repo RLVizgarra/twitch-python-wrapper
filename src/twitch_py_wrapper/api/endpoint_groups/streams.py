@@ -17,14 +17,14 @@ class Streams:
 
     # https://dev.twitch.tv/docs/api/reference/#get-streams
     def get_streams(self,
-                    user_id: str | list[str] | None,
-                    user_login: str | list[str] | None,
-                    game_id: str | list[str] | None,
-                    stream_type: Literal["all", "live"] | None,
-                    language: str | None,
-                    first: int | None,
-                    before: Pagination | None,
-                    after: Pagination | None) -> Stream | tuple[Stream, ...] | tuple[tuple[Stream, ...], Pagination] | None:
+                    user_id: str | list[str] = None,
+                    user_login: str | list[str] = None,
+                    game_id: str | list[str] = None,
+                    stream_type: Literal["all", "live"] = None,
+                    language: str = None,
+                    first: int = None,
+                    before: Pagination = None,
+                    after: Pagination = None) -> Stream | tuple[Stream, ...] | tuple[tuple[Stream, ...], Pagination] | None:
         url = self.client._url + "streams"
 
         validation = {

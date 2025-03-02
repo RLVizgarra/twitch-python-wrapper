@@ -86,10 +86,10 @@ class EventSub:
 
     # https://dev.twitch.tv/docs/api/reference/#get-eventsub-subscriptions
     def get_eventsub_subscriptions(self,
-                                   status: SubscriptionStatus | None,
-                                   subscription_type: SubscriptionType | None,
-                                   user_id: str | None,
-                                   after: Pagination | None) -> None | tuple[tuple[Subscription, ...], int, int, int] | tuple[tuple[Subscription, ...], int, int, int, Pagination]:
+                                   status: SubscriptionStatus = None,
+                                   subscription_type: SubscriptionType = None,
+                                   user_id: str = None,
+                                   after: Pagination = None) -> None | tuple[tuple[Subscription, ...], int, int, int] | tuple[tuple[Subscription, ...], int, int, int, Pagination]:
         url = self.client.users + "eventsub/subscriptions"
 
         parameters = {}

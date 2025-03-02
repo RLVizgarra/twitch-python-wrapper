@@ -87,3 +87,7 @@ class TestAPIClient:
 
     def test_get_channel_teams(self):
         assert hash(self.client.teams.get_channel_teams(broadcaster_id="96909659")) == 8370246977236723964
+
+    def test_get_teams(self):
+        assert hash(self.client.teams.get_teams(team_id="6358")) == -7706323918799319966
+        assert hash(self.client.teams.get_teams(name="livecoders")) == -7706323918799319966
