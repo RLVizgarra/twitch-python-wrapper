@@ -217,7 +217,7 @@ class Stream(Objects):
     is_mature: bool
 
 @dataclass(frozen=True)
-class BroadcasterTeams(Objects):
+class BroadcasterTeam(Objects):
     broadcaster_id: str
     broadcaster_login: str
     broadcaster_name: str
