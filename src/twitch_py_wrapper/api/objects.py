@@ -200,6 +200,23 @@ class ChannelSearched(Objects):
     started_at: int
 
 @dataclass(frozen=True)
+class Stream(Objects):
+    id: str
+    user_id: str
+    user_login: str
+    user_name: str
+    game_id: str
+    game_name: str
+    type: Literal["live"] | None
+    title: str
+    tags: tuple[str, ...]
+    viewer_count: int
+    started_at: int
+    language: str
+    thumbnail_url: str
+    is_mature: bool
+
+@dataclass(frozen=True)
 class User(Objects):
     id: str
     login: str
