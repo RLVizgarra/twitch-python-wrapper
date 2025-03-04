@@ -191,10 +191,14 @@ class Conduits:
         url = self.client._url + "eventsub/conduits/shards"
 
         validation = {
-            (not shards.status): "shards.status must be None",
-            (shards.transport.method == NotificationTransportMethod.CONDUIT): "shards.transport.method can't be CONDUIT",
-            (shards.transport.callback is None and shards.transport.secret is None and shards.transport.session_id is None): "shards.transport.callback, shards.transport.secret and shards.transport.session_id are mutually exclusive",
-            (shards.transport.conduit_id is not None or shards.transport.connected_at is not None or shards.transport.disconnected_at is not None): "shards.transport.conduit_id, shards.transport.connected_at and shards.transport.disconnected_at must be None"
+            (not shards.status):
+                "shards.status must be None",
+            (shards.transport.method == NotificationTransportMethod.CONDUIT):
+                "shards.transport.method can't be CONDUIT",
+            (shards.transport.callback is None and shards.transport.secret is None and shards.transport.session_id is None):
+                "shards.transport.callback, shards.transport.secret and shards.transport.session_id are mutually exclusive",
+            (shards.transport.conduit_id is not None or shards.transport.connected_at is not None or shards.transport.disconnected_at is not None):
+                "shards.transport.conduit_id, shards.transport.connected_at and shards.transport.disconnected_at must be None"
         }
 
         for condition, error in validation.items():
@@ -222,12 +226,15 @@ class Conduits:
         req.raise_for_status()
         res = req.json()["data"][0]
 
-        transport = NotificationTransport(method=NotificationTransportMethod(res["transport"]["method"]),
-                                          callback=res["transport"]["callback"],
-                                          secret=None,
-                                          session_id=res["transport"]["session_id"],
-                                          conduit_id=None,
-                                          connected_at=res["transport"]["connected_at"],
-                                          disconnected_at=res["transport"]["disconnected_at"])
-        return ConduitShard(id=res["id"],
-                            transport=transport)
+        transport = NotificationTransport(
+            method=NotificationTransportMethod(res["transport"]["method"]),
+            callback=res["transport"]["callback"],
+            secret=None,
+            session_id=res["transport"]["session_id"],
+            conduit_id=None,
+            connected_at=res["transport"]["connected_at"],
+            disconnected_at=res["transport"]["disconnected_at"])
+        return ConduitShard(
+            id=res["id"],
+            transport=transport
+        )

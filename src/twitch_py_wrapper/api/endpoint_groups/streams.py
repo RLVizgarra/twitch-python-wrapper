@@ -70,11 +70,16 @@ class Streams:
         url = self.client._url + "streams"
 
         validation = {
-            (isinstance(user_id, list) and (len(user_id) < 1 or len(user_id) > 100)): "Cannot look up for 100+ user IDs",
-            (isinstance(user_login, list) and (len(user_login) < 1 or len(user_login) > 100)): "Cannot look up for 100+ user logins",
-            (isinstance(game_id, list) and (len(game_id) < 1 or len(game_id) > 100)): "Cannot look up for 100+ game IDs",
-            (language and language != "other" and len(language) != 2): "Parameter language must be a two-letter language code or 'other'",
-            (first and (first < 1 or first > 100)): "Parameter first must be between 1 and 100"
+            (isinstance(user_id, list) and (len(user_id) < 1 or len(user_id) > 100)):
+                "Cannot look up for 100+ user IDs",
+            (isinstance(user_login, list) and (len(user_login) < 1 or len(user_login) > 100)):
+                "Cannot look up for 100+ user logins",
+            (isinstance(game_id, list) and (len(game_id) < 1 or len(game_id) > 100)):
+                "Cannot look up for 100+ game IDs",
+            (language and language != "other" and len(language) != 2):
+                "Parameter language must be a two-letter language code or 'other'",
+            (first and (first < 1 or first > 100)):
+                "Parameter first must be between 1 and 100"
         }
 
         for condition, error in validation.items():
@@ -105,20 +110,22 @@ class Streams:
 
         streams = list()
         for stream in res["data"]:
-            streams.append(Stream(id=stream["id"],
-                                  user_id=stream["user_id"],
-                                  user_login=stream["user_login"],
-                                  user_name=stream["user_name"],
-                                  game_id=stream["game_id"],
-                                  game_name=stream["game_name"],
-                                  type=stream["type"] if stream["type"] != "" else None,
-                                  title=stream["title"],
-                                  tags=tuple(stream["tags"]),
-                                  viewer_count=stream["viewer_count"],
-                                  started_at=int(isoparse(stream["started_at"]).timestamp()),
-                                  language=stream["language"],
-                                  thumbnail_url=stream["thumbnail_url"],
-                                  is_mature=stream["is_mature"]))
+            streams.append(Stream(
+                id=stream["id"],
+                user_id=stream["user_id"],
+                user_login=stream["user_login"],
+                user_name=stream["user_name"],
+                game_id=stream["game_id"],
+                game_name=stream["game_name"],
+                type=stream["type"] if stream["type"] != "" else None,
+                title=stream["title"],
+                tags=tuple(stream["tags"]),
+                viewer_count=stream["viewer_count"],
+                started_at=int(isoparse(stream["started_at"]).timestamp()),
+                language=stream["language"],
+                thumbnail_url=stream["thumbnail_url"],
+                is_mature=stream["is_mature"]
+            ))
 
         if len(streams) < 2: return streams[0]
 

@@ -78,9 +78,12 @@ class Clips:
         url = self.client._url + "clips"
 
         validation = {
-            (broadcaster_id is None and game_id is None and clip_id is None): "Parameters broadcaster_id, game_id and clip_id are mutually exclusive",
-            (isinstance(clip_id, list) and (len(clip_id) < 1 or len(clip_id) > 100)): "Cannot look up for clip 100+ IDs",
-            (first and (first < 1 or first > 100)): "Parameter first must be between 1 and 100"
+            (broadcaster_id is None and game_id is None and clip_id is None):
+                "Parameters broadcaster_id, game_id and clip_id are mutually exclusive",
+            (isinstance(clip_id, list) and (len(clip_id) < 1 or len(clip_id) > 100)):
+                "Cannot look up for clip 100+ IDs",
+            (first and (first < 1 or first > 100)):
+                "Parameter first must be between 1 and 100"
         }
 
         for condition, error in validation.items():
@@ -117,23 +120,25 @@ class Clips:
 
         clips = list()
         for clip in res["data"]:
-            clips.append(Clip(id=clip["id"],
-                              url=clip["url"],
-                              embed_url=clip["embed_url"],
-                              broadcaster_id=clip["broadcaster_id"],
-                              broadcaster_name=clip["broadcaster_name"],
-                              creator_id=clip["creator_id"],
-                              creator_name=clip["creator_name"],
-                              video_id=clip["video_id"] if clip["video_id"] != "" else None,
-                              game_id=clip["game_id"],
-                              language=clip["language"],
-                              title=clip["title"],
-                              view_count=clip["view_count"],
-                              created_at=int(isoparse(clip["created_at"]).timestamp()),
-                              thumbnail_url=clip["thumbnail_url"],
-                              duration=clip["duration"],
-                              vod_offset=clip["vod_offset"],
-                              is_featured=clip["is_featured"]))
+            clips.append(Clip(
+                id=clip["id"],
+                url=clip["url"],
+                embed_url=clip["embed_url"],
+                broadcaster_id=clip["broadcaster_id"],
+                broadcaster_name=clip["broadcaster_name"],
+                creator_id=clip["creator_id"],
+                creator_name=clip["creator_name"],
+                video_id=clip["video_id"] if clip["video_id"] != "" else None,
+                game_id=clip["game_id"],
+                language=clip["language"],
+                title=clip["title"],
+                view_count=clip["view_count"],
+                created_at=int(isoparse(clip["created_at"]).timestamp()),
+                thumbnail_url=clip["thumbnail_url"],
+                duration=clip["duration"],
+                vod_offset=clip["vod_offset"],
+                is_featured=clip["is_featured"]
+            ))
 
         if len(clips) < 2: return clips[0]
 

@@ -45,13 +45,10 @@ class Schedule:
 
         sum_of_lookups = 0
 
-        if isinstance(segment_id, list):
-            sum_of_lookups += len(segment_id)
-        elif segment_id:
-            sum_of_lookups += 1
+        if isinstance(segment_id, list): sum_of_lookups += len(segment_id)
+        elif segment_id: sum_of_lookups += 1
 
-        if sum_of_lookups > 100:
-            raise ValueError("Cannot look up for 100+ IDs")
+        if sum_of_lookups > 100: raise ValueError("Cannot look up for 100+ IDs")
 
         parameters = {"broadcaster_id": broadcaster_id}
 
@@ -76,23 +73,31 @@ class Schedule:
 
         segments = list()
         for segment in res["data"]["segments"]:
-            segments.append(ScheduleSegment(id=segment["id"],
-                                            start_time=int(isoparse(segment["start_time"]).timestamp()),
-                                            end_time=int(isoparse(segment["end_time"]).timestamp()),
-                                            title=segment["title"],
-                                            canceled_until=int(isoparse(segment["canceled_until"]).timestamp()) if segment["canceled_until"] else None,
-                                            category=Category(id=segment["category"]["id"],
-                                                              name=segment["category"]["name"],
-                                                              box_art_url="https://static-cdn.jtvnw.net/ttv-boxart/" + segment["category"]["id"] + "-{width}x{height}.jpg",
-                                                              igdb_id=None) if segment["category"] else None,
-                                            is_recurring=segment["is_recurring"]))
+            segments.append(ScheduleSegment(
+                id=segment["id"],
+                start_time=int(isoparse(segment["start_time"]).timestamp()),
+                end_time=int(isoparse(segment["end_time"]).timestamp()),
+                title=segment["title"],
+                canceled_until=int(isoparse(segment["canceled_until"]).timestamp()) if segment["canceled_until"] else None,
+                category=Category(
+                    id=segment["category"]["id"],
+                    name=segment["category"]["name"],
+                    box_art_url="https://static-cdn.jtvnw.net/ttv-boxart/" + segment["category"]["id"] + "-{width}x{height}.jpg",
+                    igdb_id=None
+                ) if segment["category"] else None,
+                is_recurring=segment["is_recurring"]
+            ))
 
-        schedule = BroadcasterSchedule(segments=tuple(segments),
-                                       broadcaster_id=res["data"]["broadcaster_id"],
-                                       broadcaster_name=res["data"]["broadcaster_name"],
-                                       broadcaster_login=res["data"]["broadcaster_login"],
-                                       vacation=ScheduleVacation(start_time=int(isoparse(res["data"]["vacation"]["start_time"]).timestamp()),
-                                                                 end_time=int(isoparse(res["data"]["vacation"]["end_time"]).timestamp())) if res["data"]["vacation"] else None)
+        schedule = BroadcasterSchedule(
+            segments=tuple(segments),
+            broadcaster_id=res["data"]["broadcaster_id"],
+            broadcaster_name=res["data"]["broadcaster_name"],
+            broadcaster_login=res["data"]["broadcaster_login"],
+            vacation=ScheduleVacation(
+                start_time=int(isoparse(res["data"]["vacation"]["start_time"]).timestamp()),
+                end_time=int(isoparse(res["data"]["vacation"]["end_time"]).timestamp())
+            ) if res["data"]["vacation"] else None
+        )
 
         if len(res["pagination"]) > 0: return schedule, Pagination(res["pagination"]["cursor"])
 

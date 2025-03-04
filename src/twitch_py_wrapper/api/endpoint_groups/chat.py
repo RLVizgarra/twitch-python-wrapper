@@ -62,16 +62,18 @@ class Chat:
             for scale in emote["scale"]: formats.append(scale)
             themes_modes = list()
             for theme_mode in emote["theme_mode"]: themes_modes.append(EmoteThemeMode(theme_mode))
-            emotes.append(Emote(id=emote["id"],
-                                name=emote["name"],
-                                images=tuple(sorted((str(k), str(v)) for k, v in emote["images"].items())),
-                                tier=emote["tier"] if emote["tier"] != "" else None,
-                                emote_type=EmoteType(emote["emote_type"]),
-                                emote_set_id=emote["emote_set_id"],
-                                owner_id=None,
-                                format=tuple(formats),
-                                scale=tuple(scales),
-                                theme_mode=tuple(themes_modes)))
+            emotes.append(Emote(
+                id=emote["id"],
+                name=emote["name"],
+                images=tuple(sorted((str(k), str(v)) for k, v in emote["images"].items())),
+                tier=emote["tier"] if emote["tier"] != "" else None,
+                emote_type=EmoteType(emote["emote_type"]),
+                emote_set_id=emote["emote_set_id"],
+                owner_id=None,
+                format=tuple(formats),
+                scale=tuple(scales),
+                theme_mode=tuple(themes_modes)
+            ))
 
         if len(emotes) < 2: return emotes[0], res["template"]
 
@@ -415,10 +417,12 @@ class Chat:
 
         users = list()
         for user in res:
-            users.append(UserChatColor(user_id=user["user_id"],
-                                       user_login=user["user_login"],
-                                       user_name=user["user_name"],
-                                       color=user["color"] if user["color"] != "" else None))
+            users.append(UserChatColor(
+                user_id=user["user_id"],
+                user_login=user["user_login"],
+                user_name=user["user_name"],
+                color=user["color"] if user["color"] != "" else None
+            ))
 
         if len(users) < 2: return users[0]
 

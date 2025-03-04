@@ -53,8 +53,7 @@ class EventClient:
         }
 
         for validation_condition, error in validation.items():
-            if validation_condition:
-                raise ValueError(error)
+            if validation_condition: raise ValueError(error)
 
         def callback(function: Callable[[Metadata, dict], None]):
             self.register(function, subscription, version, condition)
@@ -136,11 +135,13 @@ class EventClient:
                     while True:
                         raw_message = await asyncio.wait_for(self.__ws.recv(), timeout=self._timeout + 1)
                         message = json.loads(raw_message)
-                        metadata = Metadata(message_id=message["metadata"]["message_id"],
-                                 message_type=MessageType(message["metadata"]["message_type"]),
-                                 message_timestamp=int(isoparse(message["metadata"]["message_timestamp"]).timestamp()),
-                                 subscription_type=SubscriptionType(message["metadata"]["subscription_type"]) if "subscription_type" in message["metadata"] else None,
-                                 subscription_version=message["metadata"]["subscription_version"] if "subscription_version" in message["metadata"] else None)
+                        metadata = Metadata(
+                            message_id=message["metadata"]["message_id"],
+                            message_type=MessageType(message["metadata"]["message_type"]),
+                            message_timestamp=int(isoparse(message["metadata"]["message_timestamp"]).timestamp()),
+                            subscription_type=SubscriptionType(message["metadata"]["subscription_type"]) if "subscription_type" in message["metadata"] else None,
+                            subscription_version=message["metadata"]["subscription_version"] if "subscription_version" in message["metadata"] else None
+                        )
                         payload = message["payload"]
 
                         if metadata.message_timestamp < time.time() - 10*60 or self._previous_messages.count(metadata.message_id) > 0: continue

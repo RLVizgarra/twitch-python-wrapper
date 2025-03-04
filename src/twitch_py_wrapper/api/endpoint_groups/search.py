@@ -35,8 +35,7 @@ class Search:
 
         url = self.client._url + "search/categories"
 
-        if first and (first < 1 or first > 100):
-            raise ValueError("Parameter first must be between 1 and 100")
+        if first and (first < 1 or first > 100): raise ValueError("Parameter first must be between 1 and 100")
 
         parameters = {"query": query}
 
@@ -59,10 +58,12 @@ class Search:
 
         categories = list()
         for category in res["data"]:
-            categories.append(Category(id=category["id"],
-                                       name=category["name"],
-                                       box_art_url="https://static-cdn.jtvnw.net/ttv-boxart/" + category["id"] + "-{width}x{height}.jpg",
-                                       igdb_id=None))
+            categories.append(Category(
+                id=category["id"],
+                name=category["name"],
+                box_art_url="https://static-cdn.jtvnw.net/ttv-boxart/" + category["id"] + "-{width}x{height}.jpg",
+                igdb_id=None
+            ))
 
         if len(categories) < 2: return categories[0]
 
@@ -108,8 +109,7 @@ class Search:
 
         url = self.client._url + "search/channels"
 
-        if first and (first < 1 or first > 100):
-            raise ValueError("Parameter first must be between 1 and 100")
+        if first and (first < 1 or first > 100): raise ValueError("Parameter first must be between 1 and 100")
 
         parameters = {"query": query}
 
@@ -133,17 +133,19 @@ class Search:
 
         channels = list()
         for channel in res["data"]:
-            channels.append(ChannelSearched(broadcaster_language=channel["broadcaster_language"],
-                                            broadcaster_login=channel["broadcaster_login"],
-                                            display_name=channel["display_name"],
-                                            game_id=channel["game_id"],
-                                            game_name=channel["game_name"],
-                                            id=channel["id"],
-                                            is_live=channel["is_live"],
-                                            tags=tuple(channel["tags"]),
-                                            thumbnail_url=channel["thumbnail_url"],
-                                            title=channel["title"],
-                                            started_at=int(isoparse(channel["started_at"]).timestamp())))
+            channels.append(ChannelSearched(
+                broadcaster_language=channel["broadcaster_language"],
+                broadcaster_login=channel["broadcaster_login"],
+                display_name=channel["display_name"],
+                game_id=channel["game_id"],
+                game_name=channel["game_name"],
+                id=channel["id"],
+                is_live=channel["is_live"],
+                tags=tuple(channel["tags"]),
+                thumbnail_url=channel["thumbnail_url"],
+                title=channel["title"],
+                started_at=int(isoparse(channel["started_at"]).timestamp())
+            ))
 
         if len(channels) < 2: return channels[0]
 

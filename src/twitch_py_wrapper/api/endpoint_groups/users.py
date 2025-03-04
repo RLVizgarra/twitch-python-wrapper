@@ -48,8 +48,7 @@ class Users:
         elif login: sum_of_lookups += 1
 
         # TODO: Remove check for user_id and login being mutually exclusive only if token is user access token
-        if sum_of_lookups > 100:
-            raise ValueError("Cannot look up for 100+ user IDs and/or logins")
+        if sum_of_lookups > 100: raise ValueError("Cannot look up for 100+ user IDs and/or logins")
 
         parameters = {}
 
@@ -72,16 +71,18 @@ class Users:
 
         users = list()
         for user in res:
-            users.append(User(id=user["id"],
-                              login=user["login"],
-                              display_name=user["display_name"],
-                              type=UserType(user["type"]),
-                              broadcaster_type=BroadcasterType(user["broadcaster_type"]),
-                              description=user["description"],
-                              profile_image_url=user["profile_image_url"],
-                              offline_image_url=user["offline_image_url"],
-                              email=user["email"] if "email" in user else None,
-                              created_at=int(isoparse(user["created_at"]).timestamp())))
+            users.append(User(
+                id=user["id"],
+                login=user["login"],
+                display_name=user["display_name"],
+                type=UserType(user["type"]),
+                broadcaster_type=BroadcasterType(user["broadcaster_type"]),
+                description=user["description"],
+                profile_image_url=user["profile_image_url"],
+                offline_image_url=user["offline_image_url"],
+                email=user["email"] if "email" in user else None,
+                created_at=int(isoparse(user["created_at"]).timestamp())
+            ))
 
         if len(users) < 2: return users[0]
 

@@ -29,8 +29,7 @@ class Games:
 
         url = self.client._url + "games/top"
 
-        if first and (first < 1 or first > 100):
-            raise ValueError("Parameter first must be between 1 and 100")
+        if first and (first < 1 or first > 100): raise ValueError("Parameter first must be between 1 and 100")
 
         parameters = {}
 
@@ -52,10 +51,12 @@ class Games:
 
         games = list()
         for game in res["data"]:
-            games.append(Category(id=game["id"],
-                                  name=game["name"],
-                                  box_art_url=game["box_art_url"],
-                                  igdb_id=game["igdb_id"] if game["igdb_id"] != "" else None))
+            games.append(Category(
+                id=game["id"],
+                name=game["name"],
+                box_art_url=game["box_art_url"],
+                igdb_id=game["igdb_id"] if game["igdb_id"] != "" else None
+            ))
 
         if len(res["pagination"]) > 0: return tuple(games), Pagination(res["pagination"]["cursor"])
 
@@ -94,23 +95,16 @@ class Games:
 
         sum_of_lookups = 0
 
-        if isinstance(game_id, list):
-            sum_of_lookups += len(game_id)
-        elif game_id:
-            sum_of_lookups += 1
+        if isinstance(game_id, list): sum_of_lookups += len(game_id)
+        elif game_id: sum_of_lookups += 1
 
-        if isinstance(name, list):
-            sum_of_lookups += len(name)
-        elif name:
-            sum_of_lookups += 1
+        if isinstance(name, list): sum_of_lookups += len(name)
+        elif name: sum_of_lookups += 1
 
-        if isinstance(igdb_id, list):
-            sum_of_lookups += len(igdb_id)
-        elif igdb_id:
-            sum_of_lookups += 1
+        if isinstance(igdb_id, list): sum_of_lookups += len(igdb_id)
+        elif igdb_id: sum_of_lookups += 1
 
-        if sum_of_lookups > 100:
-            raise ValueError("Cannot look up for 100+ IDs and/or names")
+        if sum_of_lookups > 100: raise ValueError("Cannot look up for 100+ IDs and/or names")
 
         parameters = {}
 
@@ -134,10 +128,12 @@ class Games:
 
         games = list()
         for game in res:
-            games.append(Category(id=game["id"],
-                                  name=game["name"],
-                                  box_art_url=game["box_art_url"],
-                                  igdb_id=game["igdb_id"]))
+            games.append(Category(
+                id=game["id"],
+                name=game["name"],
+                box_art_url=game["box_art_url"],
+                igdb_id=game["igdb_id"]
+            ))
 
         if len(games) < 2: return games[0]
 

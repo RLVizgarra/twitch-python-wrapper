@@ -37,8 +37,10 @@ class CCLs:
 
         labels = list()
         for label in res:
-            labels.append(ContentClassificationLabel(id=ContentClassificationLabelId(label["id"]),
-                                                     description=label["description"],
-                                                     name=label["name"]))
+            labels.append(ContentClassificationLabel(
+                id=ContentClassificationLabelId(label["id"]),
+                description=label["description"],
+                name=label["name"])
+            )
 
         return tuple(labels)

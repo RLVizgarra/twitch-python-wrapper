@@ -43,9 +43,12 @@ class EventSub:
         url = self.client._url + "eventsub/subscriptions"
 
         validation = {
-            (transport.method == "webhook" and ((transport.callback is None or transport.secret is None) and (transport.session_id is not None or transport.conduit_id is not None))): "If transport.method is webhook then transport.callback and transport.secret must not be None and transport.session_id and transport.conduit_id must be None",
-            (transport.method == "websocket" and ((transport.session_id is None) and (transport.callback is not None or transport.secret is not None or transport.conduit_id is not None))): "If transport.method is websocket then transport.session_id must not be None and transport.callback, transport.secret and transport.conduit_id must be None",
-            (transport.method == "conduit" and ((transport.conduit_id is None) and (transport.callback is not None or transport.secret is not None or transport.session_id is not None))): "If transport.method is conduit then transport.conduit_id must not be None and transport.callback, transport.secret and transport.session_id must be None"
+            (transport.method == "webhook" and ((transport.callback is None or transport.secret is None) and (transport.session_id is not None or transport.conduit_id is not None))):
+                "If transport.method is webhook then transport.callback and transport.secret must not be None and transport.session_id and transport.conduit_id must be None",
+            (transport.method == "websocket" and ((transport.session_id is None) and (transport.callback is not None or transport.secret is not None or transport.conduit_id is not None))):
+                "If transport.method is websocket then transport.session_id must not be None and transport.callback, transport.secret and transport.conduit_id must be None",
+            (transport.method == "conduit" and ((transport.conduit_id is None) and (transport.callback is not None or transport.secret is not None or transport.session_id is not None))):
+                "If transport.method is conduit then transport.conduit_id must not be None and transport.callback, transport.secret and transport.session_id must be None"
         }
 
         for validation_condition, error in validation.items():
@@ -76,22 +79,26 @@ class EventSub:
         res = req.json()
 
         sub = res["data"][0]
-        transport = NotificationTransport(method=sub["transport"]["method"],
-                                              callback=sub["transport"]["callback"] if "callback" in sub["transport"] else None,
-                                              secret=sub["transport"]["secret"] if "secret" in sub["transport"] else None,
-                                              session_id=sub["transport"]["session_id"] if "session_id" in sub["transport"] else None,
-                                              conduit_id=sub["transport"]["conduit_id"] if "conduit_id" in sub["transport"] else None,
-                                              connected_at=sub["transport"]["connected_at"] if "connected_at" in sub["transport"] else None,
-                                              disconnected_at=sub["transport"]["disconnected_at"] if "disconnected_at" in sub["transport"] else None)
+        transport = NotificationTransport(
+            method=sub["transport"]["method"],
+            callback=sub["transport"]["callback"] if "callback" in sub["transport"] else None,
+            secret=sub["transport"]["secret"] if "secret" in sub["transport"] else None,
+            session_id=sub["transport"]["session_id"] if "session_id" in sub["transport"] else None,
+            conduit_id=sub["transport"]["conduit_id"] if "conduit_id" in sub["transport"] else None,
+            connected_at=sub["transport"]["connected_at"] if "connected_at" in sub["transport"] else None,
+            disconnected_at=sub["transport"]["disconnected_at"] if "disconnected_at" in sub["transport"] else None
+        )
 
-        subscription = Subscription(id=sub["id"],
-                                    status=sub["status"],
-                                    type=SubscriptionType(sub["type"]),
-                                    version=sub["version"],
-                                    condition=tuple(sorted((str(k), str(v)) for k, v in sub["condition"].items())),
-                                    created_at=int(isoparse(sub["created_at"]).timestamp()),
-                                    transport=transport,
-                                    cost=sub["cost"])
+        subscription = Subscription(
+            id=sub["id"],
+            status=sub["status"],
+            type=SubscriptionType(sub["type"]),
+            version=sub["version"],
+            condition=tuple(sorted((str(k), str(v)) for k, v in sub["condition"].items())),
+            created_at=int(isoparse(sub["created_at"]).timestamp()),
+            transport=transport,
+            cost=sub["cost"]
+        )
 
         return subscription, res["total"], res["total_cost"], res["max_total_cost"]
 
@@ -148,23 +155,28 @@ class EventSub:
 
         subscriptions = list()
         for sub in res["data"]:
-            transport = NotificationTransport(method=sub["transport"]["method"],
-                                              callback=sub["transport"]["callback"] if "callback" in sub["transport"] else None,
-                                              secret=sub["transport"]["secret"] if "secret" in sub["transport"] else None,
-                                              session_id=sub["transport"]["session_id"] if "session_id" in sub["transport"] else None,
-                                              conduit_id=sub["transport"]["conduit_id"] if "conduit_id" in sub["transport"] else None,
-                                              connected_at=sub["transport"]["connected_at"] if "connected_at" in sub["transport"] else None,
-                                              disconnected_at=sub["transport"]["disconnected_at"] if "disconnected_at" in sub["transport"] else None)
+            transport = NotificationTransport(
+                method=sub["transport"]["method"],
+                callback=sub["transport"]["callback"] if "callback" in sub["transport"] else None,
+                secret=sub["transport"]["secret"] if "secret" in sub["transport"] else None,
+                session_id=sub["transport"]["session_id"] if "session_id" in sub["transport"] else None,
+                conduit_id=sub["transport"]["conduit_id"] if "conduit_id" in sub["transport"] else None,
+                connected_at=sub["transport"]["connected_at"] if "connected_at" in sub["transport"] else None,
+                disconnected_at=sub["transport"]["disconnected_at"] if "disconnected_at" in sub["transport"] else None
+            )
 
-            subscriptions.append(Subscription(id=sub["id"],
-                                              status=sub["status"],
-                                              type=SubscriptionType(sub["type"]),
-                                              version=sub["version"],
-                                              condition=tuple(sorted((str(k), str(v)) for k, v in sub["condition"].items())),
-                                              created_at=int(isoparse(sub["created_at"]).timestamp()),
-                                              transport=transport,
-                                              cost=sub["cost"]))
+            subscriptions.append(Subscription(
+                id=sub["id"],
+                status=sub["status"],
+                type=SubscriptionType(sub["type"]),
+                version=sub["version"],
+                condition=tuple(sorted((str(k), str(v)) for k, v in sub["condition"].items())),
+                created_at=int(isoparse(sub["created_at"]).timestamp()),
+                transport=transport,
+                cost=sub["cost"]
+            ))
 
-        if len(res["pagination"]) > 0: tuple(subscriptions), res["total"], res["total_cost"], res["max_total_cost"], Pagination(res["pagination"]["cursor"])
+        if len(res["pagination"]) > 0:
+            return tuple(subscriptions), res["total"], res["total_cost"], res["max_total_cost"], Pagination(res["pagination"]["cursor"])
 
         return tuple(subscriptions), res["total"], res["total_cost"], res["max_total_cost"]

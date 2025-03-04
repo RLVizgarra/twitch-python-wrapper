@@ -35,18 +35,20 @@ class Teams:
 
         teams = list()
         for team in res:
-            teams.append(BroadcasterTeam(broadcaster_id=team["broadcaster_id"],
-                                         broadcaster_login=team["broadcaster_login"],
-                                         broadcaster_name=team["broadcaster_name"],
-                                         background_image_url=team["background_image_url"],
-                                         banner=team["banner"],
-                                         created_at=int(isoparse(team["created_at"]).timestamp()),
-                                         updated_at=int(isoparse(team["updated_at"]).timestamp()),
-                                         info=team["info"],
-                                         thumbnail_url=team["thumbnail_url"],
-                                         team_name=team["team_name"],
-                                         team_display_name=team["team_display_name"],
-                                         id=team["id"]))
+            teams.append(BroadcasterTeam(
+                broadcaster_id=team["broadcaster_id"],
+                broadcaster_login=team["broadcaster_login"],
+                broadcaster_name=team["broadcaster_name"],
+                background_image_url=team["background_image_url"],
+                banner=team["banner"],
+                created_at=int(isoparse(team["created_at"]).timestamp()),
+                updated_at=int(isoparse(team["updated_at"]).timestamp()),
+                info=team["info"],
+                thumbnail_url=team["thumbnail_url"],
+                team_name=team["team_name"],
+                team_display_name=team["team_display_name"],
+                id=team["id"]
+            ))
 
         if len(teams) < 2: return teams[0]
 
@@ -73,8 +75,7 @@ class Teams:
 
         url = self.client._url + "teams"
 
-        if name is None and team_id is None:
-            raise ValueError("Parameters name and team_id are mutually exclusive")
+        if name is None and team_id is None: raise ValueError("Parameters name and team_id are mutually exclusive")
 
         parameters = {}
 
@@ -98,17 +99,21 @@ class Teams:
 
         users = list()
         for user in res["users"]:
-            users.append(TeamUser(user_id=user["user_id"],
-                                  user_login=user["user_login"],
-                                  user_name=user["user_name"]))
+            users.append(TeamUser(
+                user_id=user["user_id"],
+                user_login=user["user_login"],
+                user_name=user["user_name"]
+            ))
 
-        return Team(users=tuple(users),
-                    background_image_url=res["background_image_url"],
-                    banner=res["banner"],
-                    created_at=int(isoparse(res["created_at"]).timestamp()),
-                    updated_at=int(isoparse(res["updated_at"]).timestamp()),
-                    info=res["info"],
-                    thumbnail_url=res["thumbnail_url"],
-                    team_name=res["team_name"],
-                    team_display_name=res["team_display_name"],
-                    id=res["id"])
+        return Team(
+            users=tuple(users),
+            background_image_url=res["background_image_url"],
+            banner=res["banner"],
+            created_at=int(isoparse(res["created_at"]).timestamp()),
+            updated_at=int(isoparse(res["updated_at"]).timestamp()),
+            info=res["info"],
+            thumbnail_url=res["thumbnail_url"],
+            team_name=res["team_name"],
+            team_display_name=res["team_display_name"],
+            id=res["id"]
+        )
