@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Literal
 
-from twitch_py_wrapper.event.enums import MessageType
+from twitch_py_wrapper.eventsub.enums import MessageType
 from twitch_py_wrapper.shared_enums import SubscriptionType
 from twitch_py_wrapper.shared_objects import Objects
 

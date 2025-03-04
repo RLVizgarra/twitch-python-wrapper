@@ -9,8 +9,8 @@ import websockets
 from dateutil.parser import isoparse
 
 from twitch_py_wrapper.api.client import APIClient
-from twitch_py_wrapper.event.enums import MessageType
-from twitch_py_wrapper.event.objects import Metadata
+from twitch_py_wrapper.eventsub.enums import MessageType
+from twitch_py_wrapper.eventsub.objects import Metadata
 from twitch_py_wrapper.shared_enums import SubscriptionType, NotificationTransportMethod
 from twitch_py_wrapper.shared_objects import NotificationTransport
 
