@@ -21,6 +21,7 @@ BuiltinNotifications = Literal["builtins.message.welcome",
                          "builtins.message.revocation"]
 
 class EventClient:
+    session_id = None
     _ssl = ssl.create_default_context()
     _ssl.load_verify_locations(certifi.where())
 
@@ -50,13 +51,17 @@ class EventClient:
         return callback
 
     def register(self, function: Callable[[Metadata, dict], None], subscription: SubscriptionType | BuiltinNotifications, version: str = None, condition: dict = None):
-        self._registered_event_handlers.append({
+        handler = {
             "subscription": subscription,
             "condition": condition,
             "version": version,
             "callback": function,
             "registered": False
-        })
+        }
+
+        self._registered_event_handlers.append(handler)
+
+        if self.session_id: self.__create_subscription(handler, self.session_id)
 
     def __create_subscription(self, handler: dict, session_id: str):
         if handler["registered"]: return
@@ -117,6 +122,7 @@ class EventClient:
                             case MessageType.SESSION_WELCOME:
                                 session_id: str = payload["session"]["id"]
                                 if not self._timeout: self._timeout = payload["session"]["keepalive_timeout_seconds"]
+                                self.session_id = session_id
                                 for handler in self._registered_event_handlers:
                                     if not isinstance(handler["subscription"], SubscriptionType): continue
                                     self.__create_subscription(handler, session_id)
