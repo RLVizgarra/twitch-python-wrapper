@@ -6,9 +6,12 @@ from twitch_py_wrapper.shared_enums import SubscriptionType
 from twitch_py_wrapper.shared_objects import NotificationTransport, Objects
 
 
-# https://dev.twitch.tv/docs/api/guide/#pagination
 @dataclass(frozen=True)
 class Pagination(Objects):
+    """
+    `Twitch pagination object <https://dev.twitch.tv/docs/api/guide/#pagination>`_
+    """
+
     cursor: str
 
 @dataclass(frozen=True)
