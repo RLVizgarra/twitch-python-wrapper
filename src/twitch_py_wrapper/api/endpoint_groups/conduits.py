@@ -11,8 +11,15 @@ class Conduits:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-conduits
     def get_conduits(self) -> Conduit | tuple[Conduit, ...] | None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-conduits>`_
+
+        Returns the `conduits <https://dev.twitch.tv/docs/eventsub/handling-conduit-events/>`_ for a client ID.
+
+        :return: Tuple of information about the client's conduits. If there's just one, that one is returned
+        """
+
         url = self.client._url + "eventsub/conduits"
 
         req = httpx.get(url,
@@ -32,9 +39,18 @@ class Conduits:
 
         return tuple(conduits)
 
-    # https://dev.twitch.tv/docs/api/reference/#create-conduits
     def create_conduits(self,
                         shard_count: int) -> Conduit:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#create-conduits>`_
+
+        Creates a new `conduit <https://dev.twitch.tv/docs/eventsub/handling-conduit-events/>`_.
+
+        :param shard_count: The number of shards to create for this conduit.
+
+        :return: The conduit created.
+        """
+
         url = self.client._url + "eventsub/conduits"
 
         req = httpx.post(url,
@@ -47,10 +63,23 @@ class Conduits:
         return Conduit(id=res["id"],
                        shard_count=res["shard_count"])
 
-    # https://dev.twitch.tv/docs/api/reference/#update-conduits
     def update_conduits(self,
                         conduit_id: str,
                         shard_count: int) -> Conduit:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#update-conduits>`_
+
+        Updates a `conduit's <https://dev.twitch.tv/docs/eventsub/handling-conduit-events/>`_ shard count. To delete
+        shards, update the count to a lower number, and the shards above the count will be deleted. For example, if the
+        existing shard count is 100, by resetting shard count to 50, shards 50-99 are disabled.
+
+        :param conduit_id: Conduit ID.
+
+        :param shard_count: The new number of shards for this conduit.
+
+        :return: The updated conduit.
+        """
+
         url = self.client._url + "eventsub/conduits"
 
         req = httpx.patch(url,
@@ -63,9 +92,18 @@ class Conduits:
         return Conduit(id=res["id"],
                        shard_count=res["shard_count"])
 
-    # https://dev.twitch.tv/docs/api/reference/#delete-conduit
     def delete_conduit(self,
                         conduit_id: str) -> None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#delete-conduit>`_
+
+        Deletes a specified `conduit <https://dev.twitch.tv/docs/eventsub/handling-conduit-events/>`_. Note that it may
+        take some time for Eventsub subscriptions on a deleted `conduit
+        <https://dev.twitch.tv/docs/eventsub/handling-conduit-events/>`_ to show as disabled when calling ``eventsub.get_eventsub_subscriptions()``
+
+        :param conduit_id: Conduit ID.
+        """
+
         url = self.client._url + "eventsub/conduits"
 
         req = httpx.delete(url,
@@ -74,11 +112,24 @@ class Conduits:
                            timeout=self.client._timeout)
         req.raise_for_status()
 
-    # https://dev.twitch.tv/docs/api/reference/#get-conduit-shards
     def get_conduit_shards(self,
                            conduit_id: str,
                            status: SubscriptionStatus = None,
                            after: Pagination = None) -> ConduitShard | tuple[ConduitShard, ...] | tuple[tuple[ConduitShard, ...], Pagination] | None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-conduit-shards>`_
+
+        Returns a tuple of all shards for a `conduit <https://dev.twitch.tv/docs/eventsub/handling-conduit-events/>`_.
+
+        :param conduit_id: Conduit ID.
+
+        :param status: Status to filter by.
+
+        :param after: The ``Pagination`` object to get the next page of results.
+
+        :return: Tuple of information about a conduit's shards.
+        """
+
         url = self.client._url + "eventsub/conduits/shards"
 
         parameters = {"conduit_id": conduit_id}
@@ -121,10 +172,22 @@ class Conduits:
         return tuple(shards)
 
     # TODO: Allow the update of multiple conduit shards
-    # https://dev.twitch.tv/docs/api/reference/#update-conduit-shards
     def update_conduit_shards(self,
                               conduit_id: str,
                               shards: ConduitShard) -> ConduitShard:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#update-conduit-shards>`_
+
+        Updates a shard for a `conduit <https://dev.twitch.tv/docs/eventsub/handling-conduit-events/>`_.
+
+        :param conduit_id: Conduit ID.
+
+        :param shards: Shard to update.
+
+        :return: Updated shard.
+
+        """
+
         url = self.client._url + "eventsub/conduits/shards"
 
         validation = {

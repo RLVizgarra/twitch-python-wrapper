@@ -5,10 +5,20 @@ class Entitlements:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-drops-entitlements
     def get_drops_entitlements(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-drops-entitlements>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#update-drops-entitlements
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def update_drops_entitlements(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#update-drops-entitlements>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

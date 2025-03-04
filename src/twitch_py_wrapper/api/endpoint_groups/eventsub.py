@@ -12,12 +12,34 @@ class EventSub:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#create-eventsub-subscription
     def create_eventsub_subscription(self,
                                      subscription_type: SubscriptionType,
                                      version: str,
                                      condition: dict,
                                      transport: NotificationTransport) -> tuple[Subscription, int, int, int]:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#create-eventsub-subscription>`_
+
+        Creates an EventSub subscription.
+
+        :param subscription_type: The type of subscription to create. For a list of subscription that you can create,
+            see `Subscription Types
+            <https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types#subscription-types>`_.
+
+        :param version: The version number that identifies the definition of the subscription type that you want the
+            response to use.
+
+        :param condition: A dictionary object that contains the parameter values that are specific to the specified
+            subscription type. For the object's required and optional fields, see the subscription type's documentation.
+
+        :param transport: The transport details that you want Twitch to use when sending you notifications.
+
+        :return: The subscription you created, the total number of subscriptions you've created, the sum of all of your
+            subscription costs. `Learn More
+            <https://dev.twitch.tv/docs/eventsub/manage-subscriptions/#subscription-limits>`_, and the maximum total cost
+            that you're allowed to incur for all subscriptions you create.
+        """
+
         url = self.client._url + "eventsub/subscriptions"
 
         validation = {
@@ -73,9 +95,16 @@ class EventSub:
 
         return subscription, res["total"], res["total_cost"], res["max_total_cost"]
 
-    # https://dev.twitch.tv/docs/api/reference/#delete-eventsub-subscription
     def delete_eventsub_subscription(self,
-                                     subscription_id: str):
+                                     subscription_id: str) -> None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#delete-eventsub-subscription>`_
+
+        Deletes an EventSub subscription
+
+        :param subscription_id: The ID of the subscription to delete
+        """
+
         url = self.client._url + "eventsub/subscriptions"
 
         req = httpx.delete(url,

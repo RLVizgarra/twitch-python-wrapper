@@ -10,13 +10,30 @@ class Bits:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-bits-leaderboard
     def get_bits_leaderboard(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-bits-leaderboard>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-cheermotes
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_cheermotes(self,
                        broadcaster_id: str = None) -> tuple[Cheermote, ...]:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-cheermotes>`_
+
+        Returns a tuple of Cheermotes that users can use to cheer Bits in any Bits-enabled channel's chat room.
+        Cheermotes are animated emotes that viewers can assign Bits to.
+
+        :param broadcaster_id: The ID of the broadcaster whose custom Cheermotes you want to get. Specify the
+            broadcaster's ID if you want to include the broadcaster's Cheermotes in the response (not all broadcasters
+            upload Cheermotes). If not specified, the response contains only global Cheermotes. If the broadcaster uploaded
+            Cheermotes, the ``type`` field in the response is set to **channel_custom**.
+
+        :return: A tuple of Cheermotes. The list is in ascending order by the ``order`` field's value.
+        """
+
         url = self.client._url + "bits/cheermotes"
 
         if broadcaster_id: parameters = {"broadcaster_id": broadcaster_id}
@@ -49,6 +66,11 @@ class Bits:
 
         return tuple(cheermotes)
 
-    # https://dev.twitch.tv/docs/api/reference/#get-extension-transactions
     def get_extension_transactions(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-extension-transactions>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

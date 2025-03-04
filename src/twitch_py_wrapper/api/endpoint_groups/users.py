@@ -10,10 +10,33 @@ class Users:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-users
     def get_users(self,
                   user_id: str | list[str] = None,
                   login: str | list[str] = None) -> User | tuple[User, ...] | None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-users>`_
+
+        Returns information about one or more users.
+
+        You may look up users using their user ID, login name, or both but the sum total of the number of users you may
+        look up is 100. For example, you may specify 50 IDs and 50 names or 100 IDs or names, but you cannot specify 100
+        IDs and 100 names.
+
+        If you don’t specify IDs or login names, the request returns information about the user in the access token if
+        you specify a user access token.
+
+        To include the user’s verified email address in the response, you must use a user access token that includes the
+        **user:read:email** scope.
+
+        :param user_id: The ID of the user to get. To specify more than one user, set this parameter to a list for each
+            user to get. The maximum of IDs you may specify is 100.
+
+        :param login: The login name of the user to get. To specify more than one user, set this parameter to a list for
+            each user to get. The maximum number of login names you may specify is 100.
+
+        :return: A tuple of users.
+        """
+
         url = self.client._url + "users"
 
         sum_of_lookups = 0
@@ -64,30 +87,65 @@ class Users:
 
         return tuple(users)
 
-    # https://dev.twitch.tv/docs/api/reference/#update-user
     def update_user(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#update-user>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-user-block-list
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_user_block_list(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-user-block-list>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#block-user
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def block_user(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#block-user>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#unblock-user
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def unblock_user(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#unblock-user>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-user-extensions
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_user_extensions(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-user-extensions>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-user-active-extensions
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_user_active_extensions(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-user-active-extensions>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#update-user-extensions
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def update_user_extensions(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#update-user-extensions>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

@@ -5,14 +5,29 @@ class Polls:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-polls
     def get_polls(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-polls>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#create-poll
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def create_poll(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#create-poll>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#end-poll
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def end_poll(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#end-poll>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

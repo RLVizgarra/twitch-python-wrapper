@@ -12,13 +12,35 @@ class Schedule:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-channel-stream-schedule
     def get_channel_stream_schedule(self,
                                     broadcaster_id: str,
                                     segment_id: str | list[str] = None,
                                     start_time: int = None,
                                     first: int = None,
                                     after: Pagination = None) -> BroadcasterSchedule | tuple[BroadcasterSchedule, Pagination] | None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-channel-stream-schedule>`_
+
+        Returns the broadcaster's streaming schedule. You can get the entire schedule or specific segments of the
+            schedule. `Learn More <https://help.twitch.tv/s/article/channel-page-setup#Schedule>`_
+
+        :param broadcaster_id: The ID of the broadcaster that owns the streaming schedule you want to get.
+
+        :param segment_id: The ID of the scheduled segment to return. Set this parameter to a list for each segment you
+            want to get. You May specify a maximum of 100 IDs.
+
+        :param start_time: The UTC timestamp that identifies when in the broadcaster's schedule to start returning
+            segments. If not specified, the request returns segments starting after the current UTC timestamp. Specify
+            the timestamp in seconds.
+
+        :param first: The maximum number of items to return per page in the response. The minimum page size is 1 per
+            page and the maximum is 25 items per page. The default is 20.
+
+        :param after: The ``Pagination`` object to get the next page of results.
+
+        :return: The broadcaster's streaming schedule.
+        """
+
         url = self.client._url + "schedule"
 
         sum_of_lookups = 0
@@ -76,9 +98,18 @@ class Schedule:
 
         return schedule
 
-    # https://dev.twitch.tv/docs/api/reference/#get-channel-icalendar
     def get_channel_icalendar(self,
                               broadcaster_id: str) -> str:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-channel-icalendar>`_
+
+        Returns the broadcaster's streaming schedule as an `iCalendar <https://datatracker.ietf.org/doc/html/rfc5545>`_.
+
+        :param broadcaster_id: The ID of the broadcaster that owns the streaming schedule you want to get.
+
+        :return: iCalendar data (see `RFC5545 <https://datatracker.ietf.org/doc/html/rfc5545>`_)
+        """
+
         url = self.client._url + "schedule/icalendar"
 
         req = httpx.get(url,
@@ -86,18 +117,38 @@ class Schedule:
         req.raise_for_status()
         return req.text
 
-    # https://dev.twitch.tv/docs/api/reference/#update-channel-stream-schedule
     def update_channel_stream_schedule(self):
-        pass
+        """
+        `Twitch API Reference https://dev.twitch.tv/docs/api/reference/#update-channel-stream-schedule`_
 
-    # https://dev.twitch.tv/docs/api/reference/#create-channel-stream-schedule-segment
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def create_channel_stream_schedule_segment(self):
-        pass
+        """
+        `Twitch API Reference https://dev.twitch.tv/docs/api/reference/#create-channel-stream-schedule-segment`_
 
-    # https://dev.twitch.tv/docs/api/reference/#update-channel-stream-schedule-segment
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def update_channel_stream_schedule_segment(self):
-        pass
+        """
+        `Twitch API Reference https://dev.twitch.tv/docs/api/reference/#update-channel-stream-schedule-segment`_
 
-    # https://dev.twitch.tv/docs/api/reference/#delete-channel-stream-schedule-segment
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def delete_channel_stream_schedule_segment(self):
-        pass
+        """
+        `Twitch API Reference https://dev.twitch.tv/docs/api/reference/#delete-channel-stream-schedule-segment`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

@@ -5,10 +5,20 @@ class Raids:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#start-a-raid
     def start_a_raid(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#start-a-raid>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#cancel-a-raid
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def cancel_a_raid(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#cancel-a-raid>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

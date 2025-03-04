@@ -9,9 +9,20 @@ class Channels:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-channel-information
     def get_channel_information(self,
                                 broadcaster_id: str | list[str]) -> Channel | tuple[Channel, ...] | None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-channel-information>`_
+
+        Gets information about one or more channels
+
+        :param broadcaster_id: The ID of the broadcaster whose channel you want to get. To specify more than one ID,
+            set this parameter to a list of each broadcaster you want to get. You may specify a maximum of 100 IDs.
+
+        :return: A tuple that contains information about the specified channels. If it's just one channel just that
+            object is returned. If the specified channel(s) weren't found it'll return None
+        """
+
         url = self.client._url + "channels"
 
         if isinstance(broadcaster_id, list) and (len(broadcaster_id) < 1 or len(broadcaster_id) > 100):
@@ -47,18 +58,38 @@ class Channels:
 
         return tuple(channels)
 
-    # https://dev.twitch.tv/docs/api/reference/#modify-channel-information
     def modify_channel_information(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#modify-channel-information>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-channel-editors
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_channel_editors(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-channel-editors>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-followed-channels
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_followed_channels(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-followed-channels>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-channel-followers
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_channel_followers(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-channel-followers>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

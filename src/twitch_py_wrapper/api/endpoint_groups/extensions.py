@@ -5,50 +5,110 @@ class Extensions:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-extension-configuration-segment
     def get_extension_configuration_segment(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-extension-configuration-segment>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#set-extension-configuration-segment
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def set_extension_configuration_segment(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#set-extension-configuration-segment>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#set-extension-required-configuration
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def set_extension_required_configuration(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#set-extension-required-configuration>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#send-extension-pubsub-message
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def send_extension_pubsub_message(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#send-extension-pubsub-message>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-extension-live-channels
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_extension_live_channels(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-extension-live-channels>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-extension-secrets
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_extension_secrets(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-extension-secrets>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#create-extension-secret
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def create_extension_secret(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#create-extension-secret>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#send-extension-chat-message
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def send_extension_chat_message(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#send-extension-chat-message>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-extensions
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_extensions(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-extensions>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-released-extensions
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_released_extensions(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-released-extensions>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-extension-bits-products
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_extension_bits_products(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-extension-bits-products>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#update-extension-bits-product
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def update_extension_bits_product(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#update-extension-bits-product>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

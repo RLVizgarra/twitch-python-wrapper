@@ -12,7 +12,6 @@ class Videos:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-videos
     def get_videos(self,
                    video_id: str | list[str] = None,
                    user_id: str = None,
@@ -24,6 +23,58 @@ class Videos:
                    first: int = None,
                    after: Pagination = None,
                    before: Pagination = None) -> Video | tuple[Video, ...] | tuple[tuple[Video, ...], Pagination] | None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-videos>`_
+
+        Returns information about one or more published videos. You may get videos by ID, by user, or by game/category.
+
+        You may apply several filters to get a subset of the videos. The filters are applied as an AND operation to each
+        video. For example, if *language* is set to ‘de’ and *game_id* is set to 21779, the response includes only videos
+        that show playing League of Legends by users that stream in German. The filters apply only if you get videos by
+        user ID or game ID.
+
+        :param video_id: IDs that identify the videos you want to get. To get more than one video, set this parameter to
+            a list for each video you want to get. Yoy may specify a maximum of 100 IDs. The *video_id*, *user_id*, and
+            *game_id* parameters are mutually exclusive.
+
+        :param user_id: The ID of the user whose list of videos you want to get. The *video_id*, *user_id*, and
+            *game_id* parameters are mutually exclusive.
+
+        :param game_id: A category or game ID. The response contains a maximum of 500 videos that show this content. To
+        get category/game IDs, use the ``search.search_categories()`` function. The *video_id*, *user_id*, and *game_id*
+        parameters are mutually exclusive.
+
+        :param language: A filter used to filter the list of videos by the language that the video owner broadcasts in.
+            For example, to get videos that were broadcast in German, set this parameter to the ISO 639-1 two-letter
+            code for German (i.e., DE). For a list of supported languages, see `Supported Stream Language
+            <https://help.twitch.tv/s/article/languages-on-twitch#streamlang>`_. If the language is not supported, use
+            “other.” Specify this parameter only if you specify the *game_id* parameter.
+
+        :param period: A filter used to filter the list of videos by when they were published. For example, videos
+            published in the last week. Possible values are: all, day. month and week The default is "all", which
+            returns videos published in all periods. Specify this parameter only if you specify the *game_id* or
+            *user_id* parameter.
+
+        :param sort: The order to sort the returned videos in. Possible values are: time, trending and views. The
+            default is "time". Specify this parameter only if you specify the *game_id* or *user_id* parameter.
+
+        :param video_type: A filter used to filter the list of videos by the video's type. Possible case-sensitive
+            values are: all, archive, highlight and upload. The default is "all", which returns all video types. Specify
+            this parameter only if you specify the *game_id* or *user_id* parameter.
+
+        :param first: The maximum number of items to return per page in the response. The minimum page size is 1 item
+        per page and the maximum is 100. The default is 20. Specify this parameter only if you specify the *game_id* or
+        *user_id* parameter.
+
+        :param after: The ``Pagination`` object to get the next page of results. Specify this parameter only if you
+            specify the *game_id* or *user_id* query parameter.
+
+        :param before: The ``Pagination`` object to get the previous page of results. Specify this parameter only if you
+            specify the *game_id* or *user_id* query parameter.
+
+        :return: A tuple of published videos that match the filter criteria.
+        """
+
         url = self.client._url + "videos"
 
         validation = {
@@ -104,6 +155,11 @@ class Videos:
 
         return tuple(videos)
 
-    # https://dev.twitch.tv/docs/api/reference/#delete-videos
     def delete_videos(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#delete-videos>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")

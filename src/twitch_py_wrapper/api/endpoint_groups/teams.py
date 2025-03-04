@@ -9,9 +9,19 @@ class Teams:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#get-channel-teams
     def get_channel_teams(self,
                           broadcaster_id: str) -> BroadcasterTeam | tuple[BroadcasterTeam, ...] | None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-channel-teams>`_
+
+        Returns the list of Twitch teams that the broadcaster is a member of.
+
+        :param broadcaster_id: The ID of the broadcaster whose teams you want to get.
+
+        :return: A tuple of teams that the broadcaster is a member of. Returns None if the broadcaster is not a member
+            of a team.
+        """
+
         url = self.client._url + "teams/channel"
 
         req = httpx.get(url,
@@ -42,10 +52,25 @@ class Teams:
 
         return tuple(teams)
 
-    # https://dev.twitch.tv/docs/api/reference/#get-teams
     def get_teams(self,
                   name: str = None,
                   team_id: str = None) -> Team | None:
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-teams>`_
+
+        Gets information about the specified Twitch team. `Read More <https://help.twitch.tv/s/article/twitch-teams>`.
+
+        :param name: The name of the team to get. This parameter and the *team_id* parameter are mutually exclusive; you
+            must specify the team’s name or ID but not both.
+
+        :param team_id: The ID of the team to get. This parameter and the *name* parameter are mutually exclusive; you
+            must specify the team’s name or ID but not both.
+
+        :return: A tuple that contains the single team that you requested.
+
+        :raise ValueError: If name and team_id are none.
+        """
+
         url = self.client._url + "teams"
 
         if name is None and team_id is None:

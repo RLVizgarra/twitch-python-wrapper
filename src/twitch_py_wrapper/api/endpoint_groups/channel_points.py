@@ -5,26 +5,56 @@ class ChannelPoints:
     def __init__(self, client: APIClient):
         self.client = client
 
-    # https://dev.twitch.tv/docs/api/reference/#create-custom-rewards
     def create_custom_rewards(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#create-custom-rewards>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#delete-custom-reward
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def delete_custom_reward(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#delete-custom-reward>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-custom-reward
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_custom_reward(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-custom-reward>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#get-custom-reward-redemption
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def get_custom_reward_redemption(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-custom-reward-redemption>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#update-custom-reward
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def update_custom_reward(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#update-custom-reward>`_
 
-    # https://dev.twitch.tv/docs/api/reference/#update-redemption-status
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
+
     def update_redemption_status(self):
-        pass
+        """
+        `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#update-redemption-status>`_
+
+        :raise NotImplementedError: This feature is not implemented yet.
+        """
+
+        raise NotImplementedError("Not Implemented Yet")
