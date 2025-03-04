@@ -188,6 +188,7 @@ class EventClient:
             async with websockets.connect(self._url, ssl=self._ssl if self._url.startswith("wss") else None) as self.__ws:
                 try:
                     while True:
+                        # Receiving raw message, then parsing to JSON, and finally parsing to respective objects
                         raw_message = await asyncio.wait_for(self.__ws.recv(), timeout=self._timeout + 1)
                         message = json.loads(raw_message)
                         metadata = Metadata(
@@ -199,10 +200,15 @@ class EventClient:
                         )
                         payload = message["payload"]
 
+                        # Resiliency against replay attacks:
+                        # Checks if message_timestamp is older than 10 minutes, or
+                        # if the received message_id has been received before
+                        # See https://dev.twitch.tv/docs/eventsub/#guarding-against-replay-attacks
                         if metadata.message_timestamp < time.time() - 10*60 or self._previous_messages.count(metadata.message_id) > 0: continue
                         self._previous_messages.append(metadata.message_id)
 
                         match metadata.message_type:
+                            # https://dev.twitch.tv/docs/eventsub/handling-websocket-events/#welcome-message
                             case MessageType.SESSION_WELCOME:
                                 self.session_id = payload["session"]["id"]
                                 if not self._timeout: self._timeout = payload["session"]["keepalive_timeout_seconds"]
@@ -211,9 +217,11 @@ class EventClient:
                                     if not isinstance(handler["subscription"], SubscriptionType): continue
                                     self.__create_subscription(handler, self.session_id)
 
+                            # https://dev.twitch.tv/docs/eventsub/handling-websocket-events/#notification-message
                             case MessageType.NOTIFICATION:
                                 self._trigger_notification(metadata, payload)
 
+                            # https://dev.twitch.tv/docs/eventsub/handling-websocket-events/#revocation-message
                             case MessageType.REVOCATION:
                                 handler = None
 
@@ -226,6 +234,7 @@ class EventClient:
 
                                 if handler: self._registered_event_handlers.remove(handler)
 
+                            # https://dev.twitch.tv/docs/eventsub/handling-websocket-events/#reconnect-message
                             case MessageType.SESSION_RECONNECT:
                                 self._url = payload["session"]["reconnect_url"]
                                 await self.__ws.close()
@@ -241,4 +250,5 @@ class EventClient:
                     await self.__ws.close()
                     break
 
+            # Waits 5 seconds before attempting a reconnection
             await asyncio.sleep(5)
