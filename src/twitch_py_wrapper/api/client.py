@@ -1,8 +1,21 @@
+"""
+Twitch API client
+"""
 class APIClient:
     def __init__(self,
                  client_id: str,
                  access_token: str,
-                 timeout: float = 5.0):
+                 timeout: float = 5.0) -> None:
+        """
+        Initializer of Twitch's API client
+
+        :param client_id: Twitch application client ID, see `step 9
+            <https://dev.twitch.tv/docs/authentication/register-app/>`_
+        :param access_token: Twitch application access token. In future updates this will be managed by the wrapper, but
+            until then see `Twitch application authentication <https://dev.twitch.tv/docs/authentication/>`_
+        :param timeout: Timeout in seconds used when making the endpoint requests, default is ``5.0``
+        """
+
         self._url = "https://api.twitch.tv/helix/"
         self.__headers = {
             "Authorization": "Bearer " + access_token,
@@ -67,5 +80,5 @@ class APIClient:
         self.whispers = Whispers(self)
 
     @property
-    def _headers(self):
+    def _headers(self) -> dict:
         return self.__headers
