@@ -35,6 +35,7 @@ class EventClient:
                  timeout: int = 10) -> None:
         self._api = APIClient(client_id, access_token)
         self._timeout = timeout
+        self._api = APIClient(client_id, access_token, self._timeout - 1)
 
         self._url = url if url else "wss://eventsub.wss.twitch.tv/ws?keepalive_timeout_seconds=" + str(self._timeout)
         self._registered_event_handlers: list[dict] = []
