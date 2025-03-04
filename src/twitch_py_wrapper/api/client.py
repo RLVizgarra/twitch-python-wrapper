@@ -1,7 +1,8 @@
-"""
-Twitch API client
-"""
 class APIClient:
+    """
+    Twitch API client
+    """
+
     def __init__(self,
                  client_id: str,
                  access_token: str,
