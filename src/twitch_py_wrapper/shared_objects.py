@@ -10,7 +10,7 @@ class Objects:
             f"{key}={value if isinstance(value, Enum) else repr(value)}"
             for key, value in self.__dict__.items()
         )
-        return f"Cheermote({attributes})"
+        return f"{self.__class__.__name__}({attributes})"
 
     def __iter__(self):
         return iter(self.__dict__.items())
