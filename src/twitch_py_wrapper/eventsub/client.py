@@ -22,7 +22,7 @@ BuiltinNotifications = Literal[
     "builtins.message.revocation"
 ]
 
-class EventClient:
+class EventSubClient:
     """
     Twitch EventSub client
     """
