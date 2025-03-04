@@ -8,13 +8,13 @@ class APIClient:
                  access_token: str,
                  timeout: float = 5.0) -> None:
         """
-        Initializer of Twitch's API client
+        Initializer of Twitch's API client.
 
         :param client_id: Twitch application client ID, see `step 9
-            <https://dev.twitch.tv/docs/authentication/register-app/>`_
+            <https://dev.twitch.tv/docs/authentication/register-app/>`_.
         :param access_token: Twitch application access token. In future updates this will be managed by the wrapper, but
-            until then see `Twitch application authentication <https://dev.twitch.tv/docs/authentication/>`_
-        :param timeout: Timeout in seconds used when making the endpoint requests, default is ``5.0``
+            until then see `Twitch application authentication <https://dev.twitch.tv/docs/authentication/>`_.
+        :param timeout: Timeout in seconds used when making the endpoint requests, default is ``5.0``.
         """
 
         self._url = "https://api.twitch.tv/helix/"
