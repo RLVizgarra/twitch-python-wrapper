@@ -11,6 +11,10 @@ class NotificationTransportMethod(Enums):
     CONDUIT = "conduit"
 
 class SubscriptionType(Enums):
+    """
+    `EventSub Subscription Types <https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/>`_
+    """
+
     AUTOMOD_MESSAGE_HOLD = "automod.message.hold"
     AUTOMOD_MESSAGE_UPDATE = "automod.message.update"
     AUTOMOD_SETTINGS_UPDATE = "automod.settings.update"
