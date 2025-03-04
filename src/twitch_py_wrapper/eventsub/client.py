@@ -23,6 +23,10 @@ BuiltinNotifications = Literal[
 ]
 
 class EventClient:
+    """
+    Twitch EventSub client
+    """
+
     session_id = None
     _ssl = ssl.create_default_context()
     _ssl.load_verify_locations(certifi.where())
@@ -34,6 +38,21 @@ class EventClient:
                  url: str = None,
                  timeout: int = 10) -> None:
         self._api = APIClient(client_id, access_token)
+        """
+        Initializer of Twitch's EventSub client.
+
+        :param client_id: Twitch application client ID, see `step 9
+            <https://dev.twitch.tv/docs/authentication/register-app/>`_.
+
+        :param access_token: Twitch application access token. In future updates this will be managed by the wrapper, but
+            until then see `Twitch application authentication <https://dev.twitch.tv/docs/authentication/>`_.
+
+        :param url: Twitch's EventSub WebSocket server URL, no need to specify it unless reconnection (which is handled
+            automatically). Valid values are between 10 and 600
+
+        :param timeout: Timeout in seconds used when expecting keepalive messages, default is ``10``.
+        """
+
         self._timeout = timeout
         self._api = APIClient(client_id, access_token, self._timeout - 1)
 
@@ -46,6 +65,20 @@ class EventClient:
            subscription: SubscriptionType | BuiltinNotifications,
            version: str = None,
            condition: dict = None):
+        """
+        Decorator for setting a function as an event handler.
+        Use ``register()`` when needing to set multiple subscriptions to a single function.
+
+        :param subscription: Subscription to receive notifications, see `column "Name"
+            <https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/>`_.
+
+        :param version: Version of the subscription, see `column "Version"
+            <https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/>`_
+
+        :param condition: Conditions of the subscription, look up for `your subscription type here
+            <https://dev.twitch.tv/docs/eventsub/eventsub-reference/#conditions>`_
+        """
+
         validation = {
             ((not version and not condition) and isinstance(subscription, SubscriptionType)):
                 "When subscription is a SubscriptionType, version and condition must be supplied",
@@ -66,7 +99,23 @@ class EventClient:
                  function: Callable[[Metadata, dict], None],
                  subscription: SubscriptionType | BuiltinNotifications,
                  version: str = None,
-                 condition: dict = None):
+                 condition: dict = None) -> None:
+        """
+        Registers a function as an event handler.
+        Use ``@on()`` when needing to set one subscription to one function.
+
+        :param function: Function to register as an event handler.
+
+        :param subscription: Subscription to receive notifications, see `column "Name"
+            <https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/>`_.
+
+        :param version: Version of the subscription, see `column "Version"
+            <https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types/>`_
+
+        :param condition: Conditions of the subscription, look up for `your subscription type here
+            <https://dev.twitch.tv/docs/eventsub/eventsub-reference/#conditions>`_
+        """
+
         handler = {
             "subscription": subscription,
             "condition": condition,
@@ -130,6 +179,10 @@ class EventClient:
         if handler: handler["callback"](metadata, payload)
 
     async def connect(self):
+        """
+        Connect to the Twitch EventSub
+        """
+
         while True:
             async with websockets.connect(self._url, ssl=self._ssl if self._url.startswith("wss") else None) as self.__ws:
                 try:
