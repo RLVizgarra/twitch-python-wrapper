@@ -3,8 +3,8 @@ import httpx
 from twitch_py_wrapper.api.client import APIClient
 from twitch_py_wrapper.api.enums import SubscriptionStatus
 from twitch_py_wrapper.api.objects import Conduit, Pagination, ConduitShard
-from twitch_py_wrapper.shared_enums import NotificationTransportMethod
-from twitch_py_wrapper.shared_objects import NotificationTransport
+from twitch_py_wrapper.enums import NotificationTransportMethod
+from twitch_py_wrapper.objects import NotificationTransport
 
 
 class Conduits:

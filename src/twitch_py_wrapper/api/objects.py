@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from typing import Literal
 
 from twitch_py_wrapper.api.enums import *
-from twitch_py_wrapper.shared_enums import SubscriptionType
-from twitch_py_wrapper.shared_objects import NotificationTransport, Objects
+from twitch_py_wrapper.enums import SubscriptionType
+from twitch_py_wrapper.objects import NotificationTransport, Objects
 
 
 @dataclass(frozen=True)

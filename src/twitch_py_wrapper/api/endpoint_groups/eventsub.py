@@ -4,8 +4,8 @@ from dateutil.parser import isoparse
 from twitch_py_wrapper.api.client import APIClient
 from twitch_py_wrapper.api.enums import SubscriptionStatus
 from twitch_py_wrapper.api.objects import Subscription, Pagination
-from twitch_py_wrapper.shared_enums import SubscriptionType
-from twitch_py_wrapper.shared_objects import NotificationTransport
+from twitch_py_wrapper.enums import SubscriptionType
+from twitch_py_wrapper.objects import NotificationTransport
 
 
 class EventSub:

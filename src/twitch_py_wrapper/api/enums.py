@@ -1,4 +1,4 @@
-from twitch_py_wrapper.shared_enums import Enums
+from twitch_py_wrapper.enums import Enums
 
 
 class CheermoteType(Enums):

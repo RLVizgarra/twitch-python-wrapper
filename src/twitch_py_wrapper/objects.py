@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from twitch_py_wrapper.shared_enums import NotificationTransportMethod
+from twitch_py_wrapper.enums import NotificationTransportMethod
 
 
 class Objects:
