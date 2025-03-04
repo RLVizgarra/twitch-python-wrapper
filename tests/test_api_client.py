@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
-from twitch_py_wrapper.api.client import APIClient
+from twitch_python_wrapper.api.client import APIClient
 
 load_dotenv()
 
