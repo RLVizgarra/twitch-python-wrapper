@@ -37,7 +37,6 @@ class EventClient:
                  access_token: str,
                  url: str = None,
                  timeout: int = 10) -> None:
-        self._api = APIClient(client_id, access_token)
         """
         Initializer of Twitch's EventSub client.
 
@@ -52,6 +51,8 @@ class EventClient:
 
         :param timeout: Timeout in seconds used when expecting keepalive messages, default is ``10``.
         """
+
+        if timeout < 10 or timeout > 600: raise ValueError("Parameter timeout must be between 10 and 600")
 
         self._timeout = timeout
         self._api = APIClient(client_id, access_token, self._timeout - 1)
