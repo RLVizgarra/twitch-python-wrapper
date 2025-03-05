@@ -33,7 +33,7 @@ class Search:
         :return: A tuple of games or categories that match the query. Returns None if there are no matches.
         """
 
-        url = self.client._url + "search/categories"
+        url = self.client.url + "search/categories"
 
         if first and (first < 1 or first > 100): raise ValueError("Parameter first must be between 1 and 100")
 
@@ -49,8 +49,8 @@ class Search:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -107,7 +107,7 @@ class Search:
         :return: A tuple of channels that match the query. Returns none if there are no matches.
         """
 
-        url = self.client._url + "search/channels"
+        url = self.client.url + "search/channels"
 
         if first and (first < 1 or first > 100): raise ValueError("Parameter first must be between 1 and 100")
 
@@ -124,8 +124,8 @@ class Search:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 

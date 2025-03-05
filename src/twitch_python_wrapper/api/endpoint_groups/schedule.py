@@ -42,7 +42,7 @@ class Schedule:
         :return: The broadcaster's streaming schedule.
         """
 
-        url = self.client._url + "schedule"
+        url = self.client.url + "schedule"
 
         sum_of_lookups = 0
 
@@ -65,8 +65,8 @@ class Schedule:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -116,7 +116,7 @@ class Schedule:
         :return: iCalendar data (see `RFC5545 <https://datatracker.ietf.org/doc/html/rfc5545>`_)
         """
 
-        url = self.client._url + "schedule/icalendar"
+        url = self.client.url + "schedule/icalendar"
 
         req = httpx.get(url,
                         params={"broadcaster_id": broadcaster_id})

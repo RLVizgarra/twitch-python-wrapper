@@ -22,12 +22,12 @@ class Teams:
             of a team.
         """
 
-        url = self.client._url + "teams/channel"
+        url = self.client.url + "teams/channel"
 
         req = httpx.get(url,
                         params={"broadcaster_id": broadcaster_id},
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 
@@ -73,7 +73,7 @@ class Teams:
         :raise ValueError: If name and team_id are none.
         """
 
-        url = self.client._url + "teams"
+        url = self.client.url + "teams"
 
         if name is None and team_id is None: raise ValueError("Parameters name and team_id are mutually exclusive")
 
@@ -89,8 +89,8 @@ class Teams:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 

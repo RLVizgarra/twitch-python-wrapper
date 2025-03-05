@@ -37,7 +37,7 @@ class Users:
         :return: A tuple of users.
         """
 
-        url = self.client._url + "users"
+        url = self.client.url + "users"
 
         sum_of_lookups = 0
 
@@ -62,8 +62,8 @@ class Users:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 

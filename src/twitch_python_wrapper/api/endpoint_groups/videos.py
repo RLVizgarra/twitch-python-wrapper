@@ -75,7 +75,7 @@ class Videos:
         :return: A tuple of published videos that match the filter criteria.
         """
 
-        url = self.client._url + "videos"
+        url = self.client.url + "videos"
 
         validation = {
             (video_id is None and user_id is None and game_id is None):
@@ -125,8 +125,8 @@ class Videos:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
 
         if req.status_code == 404: return None
 

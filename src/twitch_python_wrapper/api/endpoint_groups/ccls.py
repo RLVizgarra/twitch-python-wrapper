@@ -26,12 +26,12 @@ class CCLs:
         :return: A tuple that contains information about the available content classification labels
         """
 
-        url = self.client._url + "content_classification_labels"
+        url = self.client.url + "content_classification_labels"
 
         req = httpx.get(url,
                         params={"locale": locale},
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 

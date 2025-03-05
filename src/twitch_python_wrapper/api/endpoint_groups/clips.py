@@ -75,7 +75,7 @@ class Clips:
 
         """
 
-        url = self.client._url + "clips"
+        url = self.client.url + "clips"
 
         validation = {
             (broadcaster_id is None and game_id is None and clip_id is None):
@@ -108,8 +108,8 @@ class Clips:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
 
         if req.status_code == 404: return None
 

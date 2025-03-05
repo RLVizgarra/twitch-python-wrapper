@@ -67,7 +67,7 @@ class Streams:
         :return: A tuple of streams.
         """
 
-        url = self.client._url + "streams"
+        url = self.client.url + "streams"
 
         validation = {
             (isinstance(user_id, list) and (len(user_id) < 1 or len(user_id) > 100)):
@@ -103,8 +103,8 @@ class Streams:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 

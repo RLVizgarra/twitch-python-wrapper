@@ -20,11 +20,11 @@ class Conduits:
         :return: Tuple of information about the client's conduits. If there's just one, that one is returned
         """
 
-        url = self.client._url + "eventsub/conduits"
+        url = self.client.url + "eventsub/conduits"
 
         req = httpx.get(url,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 
@@ -51,12 +51,12 @@ class Conduits:
         :return: The conduit created.
         """
 
-        url = self.client._url + "eventsub/conduits"
+        url = self.client.url + "eventsub/conduits"
 
         req = httpx.post(url,
                          json={"shard_count": shard_count},
-                         headers=self.client._headers,
-                         timeout=self.client._timeout)
+                         headers=self.client.headers,
+                         timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"][0]
 
@@ -80,12 +80,12 @@ class Conduits:
         :return: The updated conduit.
         """
 
-        url = self.client._url + "eventsub/conduits"
+        url = self.client.url + "eventsub/conduits"
 
         req = httpx.patch(url,
                           json={"id": conduit_id, "shard_count": shard_count},
-                          headers=self.client._headers,
-                          timeout=self.client._timeout)
+                          headers=self.client.headers,
+                          timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"][0]
 
@@ -104,12 +104,12 @@ class Conduits:
         :param conduit_id: Conduit ID.
         """
 
-        url = self.client._url + "eventsub/conduits"
+        url = self.client.url + "eventsub/conduits"
 
         req = httpx.delete(url,
                            params={"id": conduit_id},
-                           headers=self.client._headers,
-                           timeout=self.client._timeout)
+                           headers=self.client.headers,
+                           timeout=self.client.timeout)
         req.raise_for_status()
 
     def get_conduit_shards(self,
@@ -130,7 +130,7 @@ class Conduits:
         :return: Tuple of information about a conduit's shards.
         """
 
-        url = self.client._url + "eventsub/conduits/shards"
+        url = self.client.url + "eventsub/conduits/shards"
 
         parameters = {"conduit_id": conduit_id}
 
@@ -144,8 +144,8 @@ class Conduits:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -188,7 +188,7 @@ class Conduits:
 
         """
 
-        url = self.client._url + "eventsub/conduits/shards"
+        url = self.client.url + "eventsub/conduits/shards"
 
         validation = {
             (not shards.status):
@@ -221,8 +221,8 @@ class Conduits:
 
         req = httpx.patch(url,
                           json=body,
-                          headers=self.client._headers,
-                          timeout=self.client._timeout)
+                          headers=self.client.headers,
+                          timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"][0]
 

@@ -27,7 +27,7 @@ class Games:
         :return: A tuple of broadcasts. The broadcasts are sorted by the number of viewers, with the mos popular first.
         """
 
-        url = self.client._url + "games/top"
+        url = self.client.url + "games/top"
 
         if first and (first < 1 or first > 100): raise ValueError("Parameter first must be between 1 and 100")
 
@@ -43,9 +43,9 @@ class Games:
             if value: parameters[key] = value
 
         req = httpx.get(url,
-                  params=parameters,
-                  headers=self.client._headers,
-                  timeout=self.client._timeout)
+                        params=parameters,
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -91,7 +91,7 @@ class Games:
             total.
         """
 
-        url = self.client._url + "games"
+        url = self.client.url + "games"
 
         sum_of_lookups = 0
 
@@ -119,8 +119,8 @@ class Games:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 

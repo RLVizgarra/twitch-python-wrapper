@@ -43,12 +43,12 @@ class Chat:
             emotes, this returns None.
         """
 
-        url = self.client._url + "chat/emotes"
+        url = self.client.url + "chat/emotes"
 
         req = httpx.get(url,
                         params={"broadcaster_id": broadcaster_id},
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -91,11 +91,11 @@ class Chat:
         :return: A tuple of global emotes and the emote URL template.
         """
 
-        url = self.client._url + "chat/emotes/global"
+        url = self.client.url + "chat/emotes/global"
 
         req = httpx.get(url,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -140,15 +140,15 @@ class Chat:
         :return: A tuple of emotes found in the specified emote sets. None if none of the IDs were found.
         """
 
-        url = self.client._url + "chat/emotes/set"
+        url = self.client.url + "chat/emotes/set"
 
         if isinstance(emote_set_id, list) and (len(emote_set_id) < 1 or len(emote_set_id) > 25):
             raise ValueError("Cannot look up for 25+ emote set IDs")
 
         req = httpx.get(url,
                         params={"emote_set_id": emote_set_id},
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -193,12 +193,12 @@ class Chat:
             sorted in ascending order by ``id``.
         """
 
-        url = self.client._url + "chat/badges"
+        url = self.client.url + "chat/badges"
 
         req = httpx.get(url,
                         params={"broadcaster_id": broadcaster_id},
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 
@@ -235,11 +235,11 @@ class Chat:
         tuple is sorted n ascending order by ``ìd``.
         """
 
-        url = self.client._url + "chat/badges/global"
+        url = self.client.url + "chat/badges/global"
 
         req = httpx.get(url,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 
@@ -282,7 +282,7 @@ class Chat:
         :return: The chat settings
         """
 
-        url = self.client._url + "chat/settings"
+        url = self.client.url + "chat/settings"
 
         parameters = {"broadcaster_id": broadcaster_id}
 
@@ -295,8 +295,8 @@ class Chat:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"][0]
 
@@ -324,12 +324,12 @@ class Chat:
         :return: The active shared chat session
         """
 
-        url = self.client._url + "shared_chat/session"
+        url = self.client.url + "shared_chat/session"
 
         req = httpx.get(url,
                         params={"broadcaster_id": broadcaster_id},
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"][0]
 
@@ -401,15 +401,15 @@ class Chat:
         :return: The user(s) chat color the use for their name
         """
 
-        url = self.client._url + "chat/color"
+        url = self.client.url + "chat/color"
 
         if isinstance(user_id, list) and (len(user_id) < 1 or len(user_id) > 100):
             raise ValueError("Cannot look up for 100+ user IDs")
 
         req = httpx.get(url,
                         params={"user_id": user_id},
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 

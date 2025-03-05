@@ -34,15 +34,15 @@ class Bits:
         :return: A tuple of Cheermotes. The list is in ascending order by the ``order`` field's value.
         """
 
-        url = self.client._url + "bits/cheermotes"
+        url = self.client.url + "bits/cheermotes"
 
         if broadcaster_id: parameters = {"broadcaster_id": broadcaster_id}
         else: parameters = {}
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()["data"]
 

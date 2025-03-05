@@ -40,7 +40,7 @@ class EventSub:
             that you're allowed to incur for all subscriptions you create.
         """
 
-        url = self.client._url + "eventsub/subscriptions"
+        url = self.client.url + "eventsub/subscriptions"
 
         validation = {
             (transport.method == "webhook" and ((transport.callback is None or transport.secret is None) and (transport.session_id is not None or transport.conduit_id is not None))):
@@ -73,8 +73,8 @@ class EventSub:
 
         req = httpx.post(url,
                          json=body,
-                         headers=self.client._headers,
-                         timeout=self.client._timeout)
+                         headers=self.client.headers,
+                         timeout=self.client.timeout)
         req.raise_for_status()
         res = req.json()
 
@@ -112,12 +112,12 @@ class EventSub:
         :param subscription_id: The ID of the subscription to delete
         """
 
-        url = self.client._url + "eventsub/subscriptions"
+        url = self.client.url + "eventsub/subscriptions"
 
         req = httpx.delete(url,
                            params={"id": subscription_id},
-                           headers=self.client._headers,
-                           timeout=self.client._timeout)
+                           headers=self.client.headers,
+                           timeout=self.client.timeout)
         req.raise_for_status()
 
     # https://dev.twitch.tv/docs/api/reference/#get-eventsub-subscriptions
@@ -145,8 +145,8 @@ class EventSub:
 
         req = httpx.get(url,
                         params=parameters,
-                        headers=self.client._headers,
-                        timeout=self.client._timeout)
+                        headers=self.client.headers,
+                        timeout=self.client.timeout)
 
         req.raise_for_status()
         res = req.json()

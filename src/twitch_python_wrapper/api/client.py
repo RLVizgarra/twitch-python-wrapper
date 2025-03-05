@@ -17,12 +17,12 @@ class APIClient:
         :param timeout: Timeout in seconds used when making the endpoint requests, default is ``5.0``.
         """
 
-        self._url = "https://api.twitch.tv/helix/"
+        self.url = "https://api.twitch.tv/helix/"
         self.__headers = {
             "Authorization": "Bearer " + access_token,
             "Client-Id": client_id
         }
-        self._timeout = timeout
+        self.timeout = timeout
 
         from twitch_python_wrapper.api.endpoint_groups.ads import Ads
         from twitch_python_wrapper.api.endpoint_groups.analytics import Analytics
@@ -81,5 +81,5 @@ class APIClient:
         self.whispers = Whispers(self)
 
     @property
-    def _headers(self) -> dict:
+    def headers(self) -> dict:
         return self.__headers
