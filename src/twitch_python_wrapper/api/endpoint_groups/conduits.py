@@ -236,5 +236,6 @@ class Conduits:
             disconnected_at=res["transport"]["disconnected_at"])
         return ConduitShard(
             id=res["id"],
+            status=None,
             transport=transport
         )
