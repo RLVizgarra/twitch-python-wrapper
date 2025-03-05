@@ -40,8 +40,8 @@ class TestAPIClient:
 
     def test_get_channel_information(self):
         assert hash(self.client.channels.get_channel_information(broadcaster_id="141981764")) == -3908995204320117461
-        assert hash(self.client.channels.get_channel_information(broadcaster_id="12826")) == 4114337027433697198
-        assert hash(self.client.channels.get_channel_information(broadcaster_id=["141981764", "12826"])) == -3703976413811041314
+        assert hash(self.client.channels.get_channel_information(broadcaster_id="12826")) == 5805505296450211110
+        assert hash(self.client.channels.get_channel_information(broadcaster_id=["141981764", "12826"])) == 1514345465058598088
 
     def test_get_channel_emotes(self):
         assert hash(self.client.chat.get_channel_emotes(broadcaster_id="141981764")) == 196265680831279960
@@ -60,7 +60,7 @@ class TestAPIClient:
 
     def test_get_chat_settings(self):
         assert hash(self.client.chat.get_chat_settings(broadcaster_id="141981764")) == 8585977543539151482
-        assert hash(self.client.chat.get_chat_settings(broadcaster_id="12826")) == -2700731223437012002
+        assert hash(self.client.chat.get_chat_settings(broadcaster_id="12826")) == -1391188202663767236
 
     def test_get_user_chat_color(self):
         assert hash(self.client.chat.get_user_chat_color(user_id="141981764")) == 8406074055112061289
