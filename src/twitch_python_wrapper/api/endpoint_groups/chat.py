@@ -393,7 +393,7 @@ class Chat:
         """
         `Twitch API Reference <https://dev.twitch.tv/docs/api/reference/#get-user-chat-color>`_
 
-        Retuns the color used for the user's name in chat
+        Returns the color used for the user's name in chat
 
         :param user_id: The ID o the user whose username color you want to get. To specify more than one user, set this
         parameter to a list for each user to get. The maximum number of IDs that you may specify is 100.
